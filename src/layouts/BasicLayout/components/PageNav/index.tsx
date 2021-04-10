@@ -96,7 +96,7 @@ const Navigation = (props, context) => {
 
   return (
     <Nav
-      type="normal"
+      type="primary"
       openKeys={openKeys}
       selectedKeys={[pathname]}
       defaultSelectedKeys={[pathname]}

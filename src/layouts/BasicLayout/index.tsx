@@ -71,8 +71,8 @@ export default function BasicLayout({
         style={{
           minHeight: '100vh',
         }}
-        type="brand"
-        fixedHeader={false}
+        type="dark"
+        fixedHeader
       >
         <Shell.Branding>
           <Logo
@@ -80,14 +80,14 @@ export default function BasicLayout({
             text="Logo"
           />
         </Shell.Branding>
-        <Shell.Navigation
+        {/* <Shell.Navigation
           direction="hoz"
           style={{
             marginRight: 10,
           }}
         >
           <GlobalSearch />
-        </Shell.Navigation>
+        </Shell.Navigation> */}
         <Shell.Action>
           <Notice />
           <SolutionLink />
