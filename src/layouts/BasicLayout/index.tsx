@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Shell, ConfigProvider } from '@alifd/next';
 import PageNav from './components/PageNav';
-import GlobalSearch from './components/GlobalSearch';
+// import GlobalSearch from './components/GlobalSearch';
 import Notice from './components/Notice';
 import SolutionLink from './components/SolutionLink';
 import HeaderAvatar from './components/HeaderAvatar';
@@ -74,12 +74,12 @@ export default function BasicLayout({
         type="dark"
         fixedHeader
       >
-        <Shell.Branding>
+        {/* <Shell.Branding>
           <Logo
             image="https://img.alicdn.com/tfs/TB1.ZBecq67gK0jSZFHXXa9jVXa-904-826.png"
             text="Logo"
           />
-        </Shell.Branding>
+        </Shell.Branding> */}
         {/* <Shell.Navigation
           direction="hoz"
           style={{
@@ -88,12 +88,12 @@ export default function BasicLayout({
         >
           <GlobalSearch />
         </Shell.Navigation> */}
-        <Shell.Action>
+        {/* <Shell.Action>
           <Notice />
           <SolutionLink />
           <HeaderAvatar />
-        </Shell.Action>
-        <Shell.Navigation>
+        </Shell.Action> */}
+        <Shell.Navigation trigger={null}>
           <PageNav />
         </Shell.Navigation>
 

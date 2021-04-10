@@ -96,6 +96,8 @@ const Navigation = (props, context) => {
 
   return (
     <Nav
+      header={<div>自定义 Header</div>}
+      footer={<div>自定义 Footer</div>}
       type="primary"
       openKeys={openKeys}
       selectedKeys={[pathname]}
