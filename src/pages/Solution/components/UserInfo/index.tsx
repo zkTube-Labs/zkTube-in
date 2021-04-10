@@ -3,10 +3,13 @@ import { Avatar, Card } from '@alifd/next';
 import store from '@/store';
 
 const UserInfo = () => {
-  const [userInfo, userDispatchers] = store.useModel('user');
+  const [userInfo, action] = store.useModel('user');
+  const effectsState = store.useModelEffectsState('user');
   useEffect(() => {
-    userDispatchers.fetchUserProfile();
+    action.fetchUserProfile({ a: 'b' });
   }, []);
+
+  console.log('userInfo', userInfo);
 
   return (
     <Card free>
@@ -15,6 +18,7 @@ const UserInfo = () => {
       />
       <Card.Divider />
       <Card.Content>
+        {effectsState.fetchUserProfile.isLoading && <div>loading...</div> }
         <Avatar size="small" src={userInfo.avatar} />
         <span style={{ marginLeft: 10 }}>{userInfo.name}</span>
       </Card.Content>

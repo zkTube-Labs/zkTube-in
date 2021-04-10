@@ -9,7 +9,7 @@ const appConfig: IAppConfig = {
   app: {
     rootId: 'ice-container',
     addProvider: ({ children }) => (
-      <LocaleProvider locale={locale}>{children}</LocaleProvider>
+      <LocaleProvider locale={locale}>{children as React.ReactElement}</LocaleProvider>
     ),
   },
   router: {
