@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import { Link, withRouter } from 'ice';
 import { Nav } from '@alifd/next';
 import { asideMenuConfig } from '../../menuConfig';
+import Header from '../NavHeader';
+import Footer from '../NavFooter';
+
+import styles from './index.module.scss';
 
 const { SubNav } = Nav;
 const NavItem = Nav.Item;
@@ -96,8 +100,8 @@ const Navigation = (props, context) => {
 
   return (
     <Nav
-      header={<div>自定义 Header</div>}
-      footer={<div>自定义 Footer</div>}
+      header={<Header />}
+      footer={<Footer />}
       type="primary"
       openKeys={openKeys}
       selectedKeys={[pathname]}
@@ -108,6 +112,7 @@ const Navigation = (props, context) => {
       hasArrow={false}
       mode={isCollapse ? 'popup' : 'inline'}
       onOpen={setOpenKeys}
+      className={styles.container}
     >
       {getNavMenuItems(asideMenuConfig, 0, AUTH_CONFIG)}
     </Nav>

@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { Shell, ConfigProvider } from '@alifd/next';
 import PageNav from './components/PageNav';
 // import GlobalSearch from './components/GlobalSearch';
-import Notice from './components/Notice';
-import SolutionLink from './components/SolutionLink';
-import HeaderAvatar from './components/HeaderAvatar';
-import Logo from './components/Logo';
+// import Notice from './components/Notice';
+// import SolutionLink from './components/SolutionLink';
+// import HeaderAvatar from './components/HeaderAvatar';
+// import Logo from './components/Logo';
 import Footer from './components/Footer';
 
 (function () {
@@ -69,7 +69,7 @@ export default function BasicLayout({
     <ConfigProvider device={device}>
       <Shell
         style={{
-          minHeight: '100vh',
+          height: '100vh',
         }}
         type="dark"
         fixedHeader
@@ -93,7 +93,7 @@ export default function BasicLayout({
           <SolutionLink />
           <HeaderAvatar />
         </Shell.Action> */}
-        <Shell.Navigation trigger={null}>
+        <Shell.Navigation trigger={null} style={{ padding: 0, width: 280 }}>
           <PageNav />
         </Shell.Navigation>
 

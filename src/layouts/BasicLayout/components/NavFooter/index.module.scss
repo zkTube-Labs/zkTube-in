@@ -1,0 +1,48 @@
+.container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.notes {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .text {
+    font-size: 12px;
+    height: 20px;
+    line-height: 20px;
+  }
+}
+.icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  :global {
+    i {
+      margin: 0 5px;
+      cursor: pointer;
+    }
+  }
+}
+.donation {
+  padding: 0 5px 20px 5px;
+  .title {
+    font-size: 14px;
+    font-weight: 600;
+    height: 20px;
+    line-height: 20px;
+  }
+  .text {
+    font-size: 12px;
+    height: 20px;
+    line-height: 20px;
+  }
+  :global {
+    i {
+      margin-left: 5px;
+      cursor: pointer;
+    }
+  }
+}

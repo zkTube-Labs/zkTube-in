@@ -1,0 +1,12 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  :global {
+    .next-menu-footer {
+      flex: 1;
+      box-sizing: border-box;
+      display: flex;
+    }
+  }
+}
