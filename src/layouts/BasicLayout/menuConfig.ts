@@ -35,6 +35,11 @@ const asideMenuConfig = [
       },
     ],
   },
+  {
+    name: 'My Wallet',
+    path: '/mywallet',
+    icon: 'email',
+  }
 ];
 
 export { headerMenuConfig, asideMenuConfig };

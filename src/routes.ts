@@ -6,6 +6,7 @@ import Solution from '@/pages/Solution';
 import Analysis from '@/pages/Analysis';
 import Monitor from '@/pages/Monitor';
 import Workplace from '@/pages/Workplace';
+import MyWallet from '@/pages/MyWallet';
 
 const routerConfig = [
   {
@@ -45,6 +46,10 @@ const routerConfig = [
       {
         path: '/dashboard/workplace',
         component: Workplace,
+      },
+      {
+        path: '/mywallet',
+        component: MyWallet
       },
       {
         path: '/',
