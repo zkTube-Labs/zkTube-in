@@ -5,6 +5,7 @@ import { Nav } from '@alifd/next';
 import { asideMenuConfig } from '../../menuConfig';
 import Header from '../NavHeader';
 import Footer from '../NavFooter';
+import Icon from '@/components/Icon';
 
 import styles from './index.module.scss';
 
@@ -65,7 +66,7 @@ function getSubMenuOrItem(item: IMenuItem, index?: number | string, auth?: any) 
     return null;
   }
   const navItem = (
-    <NavItem key={item.path} icon={item.icon}>
+    <NavItem key={item.path} icon={<Icon type={item.icon} size="large" style={{ marginRight: 5 }} />}>
       <Link to={item.path}>
         {item.name}
       </Link>
@@ -83,7 +84,7 @@ const Navigation = (props, context) => {
   const { isCollapse } = context;
 
   useEffect(() => {
-    const curSubNav = asideMenuConfig.find((menuConfig) => {
+    const curSubNav = asideMenuConfig.find((menuConfig: IMenuItem) => {
       return menuConfig.children && checkChildPathExists(menuConfig);
     });
 
@@ -107,10 +108,11 @@ const Navigation = (props, context) => {
       selectedKeys={[pathname]}
       defaultSelectedKeys={[pathname]}
       embeddable
-      activeDirection="right"
+      activeDirection={null}
       iconOnly={isCollapse}
       hasArrow={false}
-      mode={isCollapse ? 'popup' : 'inline'}
+      // mode={isCollapse ? 'popup' : 'inline'}
+      mode="inline"
       onOpen={setOpenKeys}
       className={styles.container}
     >

@@ -4,7 +4,7 @@ const asideMenuConfig = [
   {
     name: 'My Wallet(original)',
     path: '/dashboard/monitor',
-    icon: 'chart-pie',
+    icon: 'icon-wallet-fill',
     // children: [
     //   {
     //     name: '分析页面',
@@ -38,7 +38,7 @@ const asideMenuConfig = [
   {
     name: 'My Wallet',
     path: '/mywallet',
-    icon: 'email',
+    icon: 'icon-wallet-fill',
   },
 ];
 
