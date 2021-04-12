@@ -1,0 +1,71 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 500px;
+  height: 680px;
+  background-color: #fff;
+  border-radius: 2px;
+  .upperContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 2;
+    .account {
+      font-size: 18px;
+      margin-top: 30px;
+    }
+    .balance {
+      height: 100px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      .amount {
+        font-size: 28px;
+        font-weight: 600;
+        color: #101010;
+      }
+      .tip {
+        font-size: 14px;
+      }
+    }
+    .addressContainer {
+      width: 410px;
+      height: 54px;
+      border: 1px solid #d3d3d5;
+      background-color: #f5f5f9;
+      border-radius: 4px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .address {
+        font-size: 14px;
+        color: #060606;
+        margin-right: 5px;
+      }
+      i {
+        cursor: pointer;
+      }
+    }
+    .actions {
+      display: flex;
+      flex: 1;
+      width: 100%;
+      justify-content: space-around;
+    }
+  }
+  .title {
+    width: 100%;
+    font-size: 14px;
+    padding: 5px 15px; 
+    color: #101010;
+  }
+  .cryptoList {
+    flex: 1;
+    background-color: #f5f5f9;
+    width: 100%;
+    border: 1px solid #D2D5D9;
+    border-radius: 4px;
+  }
+}

@@ -1,0 +1,21 @@
+.navStyle {
+  :global {
+    .next-tabs-nav-scroll {
+      display: flex;
+      justify-content: center;
+    }
+    .next-tabs-tab {
+      &::before {
+        border-color: #841CDA!important;
+      }
+      &.active {
+        color: #841CDA!important;
+      }
+    }
+  }
+}
+.contentStyle {
+  padding-top: 20px;
+  display: flex;
+  justify-content: center;
+}

@@ -1,0 +1,29 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  .left {
+    display: flex;
+    align-items: center;
+    .currency {
+      font-size: 14px;
+      padding-left: 2px;
+      color: #101010;
+    }
+  }
+  .right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .amount {
+      font-size: 14px;
+      color: #101010;
+    }
+    .dollar {
+      font-size: 12px;
+      color: #7d7979;
+    }
+  }
+}

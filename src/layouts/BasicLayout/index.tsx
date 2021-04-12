@@ -98,9 +98,9 @@ export default function BasicLayout({
         </Shell.Navigation>
 
         <Shell.Content>{children}</Shell.Content>
-        <Shell.Footer>
+        {/* <Shell.Footer>
           <Footer />
-        </Shell.Footer>
+        </Shell.Footer> */}
       </Shell>
     </ConfigProvider>
   );
