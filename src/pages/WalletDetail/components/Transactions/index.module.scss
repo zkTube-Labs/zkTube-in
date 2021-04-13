@@ -6,4 +6,16 @@
   height: 680px;
   background-color: #fff;
   border-radius: 2px;
+  padding: 0 20px;
+  overflow-y: overlay;
+    .title {
+    height: 36px;
+    line-height: 36px;
+    color: #000;
+    font-size: 18px;
+  }
+  .list {
+    flex: 1;
+    width: 100%;
+  }
 }

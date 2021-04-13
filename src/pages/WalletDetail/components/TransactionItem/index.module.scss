@@ -1,0 +1,87 @@
+.container {
+  border-bottom: 1px solid #F7EFEF;
+  .item {
+    user-select: none;
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .left {
+      display: flex;
+      .iconContainer {
+        padding: 5px;
+      }
+      .leftDetail {
+        height: 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding-left: 10px;
+        .to {
+          color: #060606;
+          font-size: 14px;
+        }
+        .path {
+          color: #B9B4B4;
+          font-size: 12px;
+        }
+      }
+    }
+    .right {
+      display: flex;
+      align-items: center;
+      .rightDetail {
+        display: flex;
+        height: 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-end;
+        padding-right: 10px;
+      }
+      .expand {
+        cursor: pointer;
+        transition: transform 200ms ease;
+        transition: rotate(0);
+      }
+    }
+  }
+  .expandContainer {
+    display: flex;
+    flex-direction: column;
+    transition: all 200ms ease;
+    .button {
+      align-self: center;
+      color: #5E45EB;
+      margin-bottom: 16px;
+      &:hover {
+        color: #5E45EB;
+      }
+    }
+    .form {
+      align-self: center;
+      .formItemTip {
+        font-size: 12px;
+        color: #807D7D;
+      }
+      :global {
+        .next-form-preview {
+          word-break: break-all;
+          text-align: right;
+        }
+      }
+    }
+  }
+}
+.failed {
+  font-size: 12px;
+  color: #F70909;
+}
+.success {
+  font-size: 12px;
+  color: #72D05F;
+}
+.pending {
+  font-size: 12px;
+  color: #D28B17;
+}

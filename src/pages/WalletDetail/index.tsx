@@ -1,22 +1,23 @@
 import React from 'react';
 import { Tab } from '@alifd/next';
 
-import Header from '@/components/WalletHeader';
+import WalletHeader from '@/components/WalletHeader';
 import Wallet from './components/Wallet';
 import Transactions from './components/Transactions';
 
 import styles from './index.module.scss';
 
-function WalletDetail() {
+const WalletDetail = () => {
   return (
-    <>
-      <Header />
+    <div>
+      <WalletHeader />
       <Tab
         shape="pure"
         size="small"
         navClassName={styles.navStyle}
         contentClassName={styles.contentStyle}
         unmountInactiveTabs
+        defaultActiveKey="2"
       >
         <Tab.Item title="Wallet" key="1">
           <Wallet />
@@ -25,8 +26,8 @@ function WalletDetail() {
           <Transactions />
         </Tab.Item>
       </Tab>
-    </>
+    </div>
   );
-}
+};
 
 export default WalletDetail;
