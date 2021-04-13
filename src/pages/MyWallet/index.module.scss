@@ -1,0 +1,12 @@
+.mywallet {
+    width: 100%;
+    .walletheader {
+        position: fixed;
+        top:0;
+        z-index: 66;
+        text-align: right;
+    }
+    .walletcontent {
+        margin-top: 50px; 
+    }
+}

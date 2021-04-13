@@ -1,38 +1,40 @@
 .list {
   position: relative;
   background: #D2D0D0;
-  .list-item {
+  border: 1px solid #eee;
+  .listitem {
     position: relative;
-    border: 1px solid #eee;
     .box {
       min-height: 100%;
-      .box-select {
+      .boxselect {
         height: 50px;
         line-height: 50px;
         margin-right: 20px;
-        .status-point {
+        .statuspoint {
           display: inline-block;
           width: 12px;
           height: 12px;
           border-radius: 50%;
           background-color: #3d7520;
-          margin-right: 10PX;
+          margin-right: 5PX;
+          margin-bottom: 3px;
           vertical-align: middle;  
         }
-        .next-input {
-          border-radius: 25px;
-          background: #A2A5A8; 
-        }
       }
-      .box-btn {
-        width: 180px;   
+      .boxbtn {
         height: 50px;
         line-height: 50px;
         margin-right: 20px;
-        .next-btn {
-          background: #938E8E;
-        }
       }
+    }
+  }
+}
+.boxselect{
+  :global {
+    .next-input {
+      border-radius: 25px;
+      background: #333340; 
+      color: #fff; 
     }
   }
 }
