@@ -1,40 +1,39 @@
 .list {
-  position: relative;
-  background: #D2D0D0;
-  border: 1px solid #eee;
-  .listitem {
-    position: relative;
-    .box {
-      min-height: 100%;
-      .boxselect {
-        height: 50px;
-        line-height: 50px;
-        margin-right: 20px;
-        .statuspoint {
-          display: inline-block;
-          width: 12px;
-          height: 12px;
-          border-radius: 50%;
-          background-color: #3d7520;
-          margin-right: 5PX;
-          margin-bottom: 3px;
-          vertical-align: middle;  
-        }
-      }
-      .boxbtn {
-        height: 50px;
-        line-height: 50px;
-        margin-right: 20px;
-      }
+  width: 100%;
+  height: 50px;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  position: fixed;
+  z-index: 66;
+  .boxselect {
+    height: 50px;
+    line-height: 50px;
+    position: absolute;
+    right: 500px;
+    .statuspoint {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: #3d7520;
+      margin-right: 5px;
+      margin-bottom: 3px;
+      vertical-align: middle;
     }
   }
+  .boxbtn {
+    position: absolute;
+    right: 300px;
+    height: 50px;
+    line-height: 50px;
+  }
 }
-.boxselect{
+.boxselect {
   :global {
     .next-input {
       border-radius: 25px;
-      background: #333340; 
-      color: #fff; 
+      background: #333340;
+      color: #fff;
     }
   }
 }
