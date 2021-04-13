@@ -3,7 +3,7 @@ import { Icon } from '@alifd/next';
 import { IconProps } from '@alifd/next/types/icon';
 
 const CustomIcon = Icon.createFromIconfontCN({
-  scriptUrl: '//at.alicdn.com/t/font_2479571_11sp8rtl8kqq.js',
+  scriptUrl: '//at.alicdn.com/t/font_2479571_6thlqpmaz9f.js',
 });
 
 const _Icon: React.FC<IconProps> = (props) => {

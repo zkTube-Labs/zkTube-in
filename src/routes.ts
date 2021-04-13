@@ -8,6 +8,10 @@ import Monitor from '@/pages/Monitor';
 import Workplace from '@/pages/Workplace';
 import MyWallet from '@/pages/MyWallet';
 import WalletDetail from '@/pages/WalletDetail';
+import Transfer from '@/pages/Transfer';
+import TransferSuccess from '@/pages/TransferSuccess';
+
+
 
 const routerConfig = [
   {
@@ -51,6 +55,15 @@ const routerConfig = [
       {
         path: '/wallet/detail',
         component: WalletDetail,
+      },
+      {
+        path: '/wallet/transfer',
+        component: Transfer,
+        exact: true
+      },
+      {
+        path: '/wallet/transfer/success',
+        component: TransferSuccess,
       },
       {
         path: '/wallet',

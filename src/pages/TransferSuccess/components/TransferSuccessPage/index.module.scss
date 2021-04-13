@@ -1,0 +1,120 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    width: 500px;
+    height: 680px;
+    background-color: #fff;
+    border-radius: 2px;
+    .upperContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        flex: 2;
+        .eth {
+          font-size: 28px;
+          font-weight: 600;
+          margin-top: 30px;
+          font-family: "SourceHanSansSC-bold;";
+
+        }
+        .balance {
+          height: 100px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          font-size: 36px;
+
+          font-family: "SourceHanSansSC-regular";
+          .icon {
+            font-weight: 600;
+            padding: 5px;
+          }
+           .tip {
+            font-size: 14px;
+            font-family: "SourceHanSansSC-regular";
+            color: green;
+
+          }
+         
+    }
+    .text {
+        width: 410px;
+        height: 74px;
+        display: flex;
+        justify-content:center;
+        align-items: center;
+        color: grey;
+        font-family: "SourceHanSansSC-regular";
+        font-size: 12px;
+        text-align: center;
+
+    }
+    .address{
+        margin: 22px 0px; 
+        height: 30px;
+        color: rgba(98, 95, 95, 100);
+        font-size: 16px;
+        justify-content:center;
+        align-items: center;
+        text-align: center;
+        color: black;
+        // text-align: left;
+        font-family: "SourceHanSansSC-regular";
+    }
+    
+    
+    }
+    .fee{
+        color: rgba(98, 95, 95, 100);
+        font-size: 16px;
+        margin: 0px 0px 20px 50px;
+        justify-content:left;
+        text-align: left;
+        color: black;
+        // text-align: left;
+        font-family: "SourceHanSansSC-regular";
+
+    }
+    .detail{
+        margin-top: 20px;
+        font-size: 16px;
+        text-align: center;
+        color: black;
+        // text-align: left;
+        font-size: 14px;
+        font-family: "PingFangSC-regular;";
+    }
+    .transfer{
+        font-family: "SourceHanSansSC-bold";
+        font-size: 16px;
+        margin-left: 172px;
+
+    }
+    .okbutton{
+        top: 618px;
+        margin: 40px 0px 10px 20px;
+        color: white;
+        width: 400px;
+        height: 45px;
+        line-height: 20px;
+        border-radius: 4px 4px 4px 4px;
+        background-color: rgba(51, 51, 64, 100);
+    }
+    .icon-left
+    {
+        margin: 2rem;
+        font-size: 30px;
+        font-weight: 500;
+    }
+
+    .grid{
+        margin : 10px;
+    }
+    .textBox{
+        margin-top :35px;;
+        // display: "inline"
+ 
+    }
+}

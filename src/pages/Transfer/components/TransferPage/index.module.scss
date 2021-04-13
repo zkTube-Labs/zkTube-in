@@ -1,0 +1,119 @@
+.container {
+    display: flex;
+    // flex-direction: column;
+    // align-items:center;
+    width: 500px;
+    height: 680px;
+    background-color: #fff;
+    border-radius: 2px;
+    
+    }
+
+    .icon-left
+    {
+        margin: 2rem;
+        font-size: 30px;
+        font-weight: 500;
+    }
+
+    .grid{
+        margin : 10px;
+    }
+    
+    .inputWidth{
+        width: 410px;
+        height: 100px;
+        line-height: 20px;
+        border-radius: 4px 4px 4px 4px;
+        background-color: rgba(245, 245, 249, 100);
+        color: rgba(219, 209, 209, 100);
+        font-size: 16px;
+        text-align: center;
+        font-family: "Roboto";
+        border: 1px solid rgba(211, 211, 213, 100);
+    }
+    .inputWidth2{
+
+        width: 70%;
+        max-width: 500px;
+        border-radius: 4px 4px 4px 4px;
+        // padding:5px;
+        font-size: 16px;
+        border: 1px solid rgba(211, 211, 213, 100);
+        font-family: "Roboto";
+
+        border-radius: 3px;
+        // margin: 20px 3px;
+        box-sizing: border-box;
+
+    }
+
+    .to{
+        // left: 638px;
+        // top: 205px;
+        width: 100px;
+        height: 20px;
+        color: rgba(16, 16, 16, 100);
+        font-size: 26px;
+        text-align: left;
+        font-family: "SourceHanSansSC-regular";
+    }
+
+    .amount{
+        // left: 636px;
+        // top: 315px;
+       margin : "70px 0px 0px 5px ";
+       font-size: 20px;
+        font-family: "SourceHanSansSC-regular";
+
+    }
+    .textBox{
+        margin :35px 0px 25px 0px;
+        // display: "inline" 
+    }
+    
+    .transfer{
+        font-family: "SourceHanSansSC-bold";
+        font-size: 16px;
+        margin-left: 172px;
+    }
+   
+
+    .balance{
+        text-align: right;
+    }
+    .textBox{
+        text-align : "right";
+        // display: "inline"
+ 
+    }
+    .buttonshow{
+        // width: 100%;
+        margin: 40px 30px 20px 40px;
+        // height: 50px;
+
+//         left: 638px;
+// top: 464px;
+width: 410px;
+height: 47px;
+line-height: 20px;
+border-radius: 4px 4px 4px 4px;
+background-color: rgba(245, 245, 249, 100);
+text-align: center;
+border: 1px solid rgba(211, 211, 213, 100);
+
+    }
+
+    .colorSelect{
+        background-color:black !important;
+          color: white;
+          text-Shadow:"0 1px black";
+      }
+
+      .comment{
+        color: rgba(255, 0, 0, 100);
+        margin: 30px 30px 30px 50px;
+        text-align:center;
+      }
+
+    
