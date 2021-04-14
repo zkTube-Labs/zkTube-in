@@ -1,28 +1,13 @@
 import React, { useCallback, useState } from 'react';
-import {Grid, Input, Form, Select, Button} from '@alifd/next';
+import { Button} from '@alifd/next';
 import Icon from '@/components/Icon';
 
 import styles from './index.module.scss';
 
 
-function TransferSuccessPage() {
+function WithdrawFailPage() {
   
-//   const {Row, Col} = Grid;
-
-
-
-  const formItemLayout = {
-    labelCol: {
-      fixedSpan: 10
-    },
-
-    wrapperCol: {
-      span: 14
-    }
-
-  };
-
-  let okTransfer = () =>{
+  let okWithdraw = () =>{
     console.log("transfer ok");
   }
 
@@ -32,53 +17,29 @@ function TransferSuccessPage() {
       {/* <div className={styles.upperContainer}> */}
       
         <div>
-          {/* <Row>
-              <Col span="8"  style = {{ 
-                margin: "2rem", 
-                fontSize: "30px",
-                fontWeight: 700
-                }}>
-                <Icon type="icon-back" size="medium" />
-            </Col>
-            <Col span="8" style = {{ 
-                margin: "46px 47px", 
-                fontSize: "20px"
-      
-                }} >
-                Transfer
-            </Col>
-           
-          </Row> */}
             <div className={styles.textBox}>
                 <div style={{float: "left", margin: "-5px 0px 0px 14px" }}>
                     <Icon type="icon-back" size= {30} color = "black"/>
-
                 </div>
-
-           
               <h3 className={styles.transfer}>
-                  Transfer
+                  Withdraw
               </h3>
             </div> 
           <div className= {styles.upperContainer}>
-            
               <div className ={styles.eth}>
                 0.1 <sub>ETH</sub>
               </div>
               <div className={styles.balance}>
                 <div className={styles.icon}>
-                    <Icon type="icon-success" size= {40} color="green" />
-
+                    <Icon type="icon-error" size= {40} color="red" />
                 </div>
                 <div className={styles.tip}>
-                    success
-
+                    fail
                 </div>
               </div>
               <div className={styles.text}>
                   <h3>
-                  Your Transfer will be processed shortly. Use the transaction link to track the progress.
-                  </h3>
+                  Your Withdrawal will be processed shortly. Use the transaction link to track the progress.                  </h3>
               </div>
 
               <div>
@@ -107,7 +68,7 @@ function TransferSuccessPage() {
             </div>
             <div>
                 <button 
-                onClick={okTransfer}
+                onClick={okWithdraw}
                 className= {styles.okbutton}
                 > OK </button>
             </div>
@@ -116,4 +77,4 @@ function TransferSuccessPage() {
   );
 }
 
-export default TransferSuccessPage;
+export default WithdrawFailPage;

@@ -5,7 +5,7 @@ import Icon from '@/components/Icon';
 import styles from './index.module.scss';
 
 
-function TransferPage() {
+function WithdrawPage() {
   
 
   const FormItem = Form.Item;
@@ -28,8 +28,8 @@ function TransferPage() {
 
   };
 
-  let transferMoney = () => {
-    console.log("transfer");
+  let withdrawMoney = () => {
+    console.log("withraw");
   }
 
   return (
@@ -48,7 +48,7 @@ function TransferPage() {
 
            
               <h3 className={styles.withdraw}>
-                  Transfer
+                  Withdraw
               </h3>
             </div>
           <Form style = {{width: '100%'}} {...formItemLayout}>
@@ -82,7 +82,7 @@ function TransferPage() {
                         </div>
                       </FormItem>
                 </div>
-                <Button size="large" className={styles.buttonshow} onClick={transferMoney}> Transfer </Button>
+                <Button size="large" className={styles.buttonshow} onClick={withdrawMoney}> Withdraw </Button>
 
                 <div className={styles.textBox}>
                   <h3 style={{float:"left", marginLeft: "40px"}}> Fee:</h3>
@@ -109,4 +109,4 @@ function TransferPage() {
   );
 }
 
-export default TransferPage;
+export default WithdrawPage;

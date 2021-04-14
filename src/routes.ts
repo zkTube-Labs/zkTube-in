@@ -10,6 +10,10 @@ import MyWallet from '@/pages/MyWallet';
 import WalletDetail from '@/pages/WalletDetail';
 import Transfer from '@/pages/Transfer';
 import TransferSuccess from '@/pages/TransferSuccess';
+import Withdraw from '@/pages/Withdraw';
+import WithdrawSuccess from '@/pages/WithdrawSuccess';
+import WithdrawFail from '@/pages/WithdrawFail';
+
 
 
 
@@ -64,6 +68,20 @@ const routerConfig = [
       {
         path: '/wallet/transfer/success',
         component: TransferSuccess,
+      },
+     
+      {
+        path: '/wallet/withdraw',
+        component: Withdraw,
+        exact: true
+      },
+      {
+        path: '/wallet/withdraw/success',
+        component: WithdrawSuccess,
+      },
+      {
+        path: '/wallet/withdraw/fail',
+        component: WithdrawFail,
       },
       {
         path: '/wallet',
