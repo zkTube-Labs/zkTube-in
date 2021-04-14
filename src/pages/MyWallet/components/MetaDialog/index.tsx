@@ -1,17 +1,14 @@
 import React from 'react';
 import { Dialog,Button,Icon } from '@alifd/next';
+import store from '../../store';
 
-interface AuthDialogProps {
-    visible:boolean,
-    introduct:string 
-}
-
-const AuthorizeDialog = ({visible,introduct}:AuthDialogProps) => {
+const MetaDialog = () => {
+  const [mtState,mtStateDispatch] = store.useModel('mtdialog');
   function onDismiss() {
-
+    mtStateDispatch.setVisible({visible:false})
   }
   function onClose() {
-
+    mtStateDispatch.setVisible({visible:false})
   }
   function onRefresh() {
       console.log('onrefresh');
@@ -20,24 +17,27 @@ const AuthorizeDialog = ({visible,introduct}:AuthDialogProps) => {
   return (
     <Dialog
       title={<h2>Ahthorize your wallet</h2>}
-      visible={visible}  
+      visible={mtState.visible}  
       onClose={onClose}
       style={{width:650}} 
       height={'350px'}  
-      footer={<Button type="normal" onClick={onDismiss}>Dismiss</Button>}
+      footer={
+        <div>
+          <Button type="normal" onClick={onDismiss}>Dismiss</Button>
+        </div> 
+      }
     >
       <div style={{textAlign:'center',padding:'0 30px'}}> 
-        {/* <p style={{fontSize:'18px'}}>
+        <p style={{fontSize:'18px'}}>
             This dapp requires access to your wallet, please login 
             and authorize access to your MetaMask accounts to continue.
-        </p> */}
-        <p style={{fontSize:'18px'}}>{introduct}</p>
+        </p>
       </div>
       <div style={{textAlign:'center',fontWeight:'bold'}}>
-        <Icon type="refresh" size={'xxxl'} onClick={onRefresh}/>
+        <Icon type="loading" size={'xxxl'} onClick={onRefresh}/>
       </div>
     </Dialog>
   );
 };
 
-export default AuthorizeDialog;
+export default MetaDialog;

@@ -11,11 +11,13 @@ import Web3 from 'web3';
 import { ethers } from 'ethers';
 import * as zktube from 'zktubez';
 import styles from './index.module.scss';
-// import store from '@/store';
+import store from '../../store';
 
 declare const window: any;
 
 const WalletContent = () => {
+
+  const [swdialog,swdialogDispatch] = store.useModel('swdialog')
   // const [{web3}, action] = store.useModel('wallet') ;
 
   const [web3, setWeb3] = useState(undefined);
@@ -84,6 +86,10 @@ const WalletContent = () => {
     }
   };
 
+  const handleConnectClick=()=>{
+    swdialogDispatch.setVisible({visible:true}) 
+  }
+
   useEffect(() => {
     const init = async () => {
       const web3 = await getWeb3();
@@ -116,10 +122,11 @@ const WalletContent = () => {
               <span className={styles.midsmall}>The combination of zero knowledge protocol and layer2</span>
             </div>
             <div className={styles.footbtn}>
-              <Button type="secondary" onClick={getWeb3}>
+              {/* <Button type="secondary" onClick={getWeb3}> */}
+              <Button type="secondary" onClick={handleConnectClick}>
                 Connect to a wallet
               </Button>
-              {visible ? (
+              {/* {visible ? (
                 <Dialog
                   title="Authorize your wallet"
                   visible={visible}
@@ -169,7 +176,7 @@ const WalletContent = () => {
                 </Dialog>
               ) : (
                 ''
-              )}
+              )} */}
             </div>
             <div className={styles.foottitle}>
               <span className={styles.footlarge}>Introduction to zktube</span>
