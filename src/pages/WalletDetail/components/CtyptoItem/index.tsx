@@ -8,11 +8,12 @@ interface IProps {
   currency: string;
   amount: number;
   dollar: number;
+  onClick?: () => void;
 }
 
-const CtyptoItem: React.FC<IProps> = ({ icon, currency, amount, dollar }) => {
+const CtyptoItem: React.FC<IProps> = ({ icon, currency, amount, dollar, onClick }) => {
   return (
-    <div className={styles.container}>
+    <div className={styles.container} onClick={onClick}>
       <div className={styles.left}>
         <Icon type={icon} />
         <span className={styles.currency}>{currency}</span>

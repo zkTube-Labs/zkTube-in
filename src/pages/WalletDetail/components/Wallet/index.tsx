@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { Message } from '@alifd/next';
 import copy from 'copy-text-to-clipboard';
+import { history } from 'ice';
 
 import Icon from '@/components/Icon';
 import ActionButton from '../ActionButton';
@@ -10,7 +11,7 @@ import styles from './index.module.scss';
 
 function Wallet() {
   const onDeposit = useCallback(() => {
-    console.log('deposit');
+    history.push('/wallet/deposit');
   }, []);
 
   const onWithdraw = useCallback(() => {

@@ -8,13 +8,12 @@ import Monitor from '@/pages/Monitor';
 import Workplace from '@/pages/Workplace';
 import MyWallet from '@/pages/MyWallet';
 import WalletDetail from '@/pages/WalletDetail';
+import WalletDeposit from '@/pages/WalletDeposit';
 import Transfer from '@/pages/Transfer';
 import TransferSuccess from '@/pages/TransferSuccess';
 import Withdraw from '@/pages/Withdraw';
 import WithdrawSuccess from '@/pages/WithdrawSuccess';
 import WithdrawFail from '@/pages/WithdrawFail';
-
-
 
 
 const routerConfig = [
@@ -61,9 +60,13 @@ const routerConfig = [
         component: WalletDetail,
       },
       {
+        path: '/wallet/deposit',
+        component: WalletDeposit,
+      },
+      {
         path: '/wallet/transfer',
         component: Transfer,
-        exact: true
+        exact: true,
       },
       {
         path: '/wallet/transfer/success',
@@ -89,9 +92,10 @@ const routerConfig = [
       },
       {
         path: '/',
-        redirect: '/dashboard/analysis',
+        redirect: '/wallet',
       },
     ],
   },
 ];
+
 export default routerConfig;

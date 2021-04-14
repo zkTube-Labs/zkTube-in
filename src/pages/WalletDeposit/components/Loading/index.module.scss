@@ -1,0 +1,36 @@
+.container {
+  width: 500px;
+  height: 200px;
+  border-radius: 4px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px;
+  .title {
+    font-size: 14px;
+    color: #101010;
+    font-weight: bold;
+  }
+  .button {
+    align-self: center;
+    color: #5E45EB;
+    margin-bottom: 16px;
+    &:hover {
+      color: #5E45EB;
+    }
+  }
+  .icon {
+    animation: rotate 2000ms linear infinite;
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
+}
