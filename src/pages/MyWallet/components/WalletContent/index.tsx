@@ -15,6 +15,7 @@ import styles from './index.module.scss';
 
 declare const window: any;
 
+// eslint-disable-next-line @iceworks/best-practices/no-http-url
 const url = 'http://124.156.151.46:3030/jsrpc';
 
 const WalletContent = () => {
@@ -79,6 +80,8 @@ const WalletContent = () => {
       const account = (await web3.eth.getAccounts())[0];
       const { syncWallet, syncHTTPProvider } = await zkTubeInitialize(web3);
 
+      console.log('syncWallet', syncWallet);
+
       setWeb3(web3);
       setAccount(account);
       setSyncWallet(syncWallet);
@@ -87,6 +90,8 @@ const WalletContent = () => {
     };
     init();
   }, []);
+
+  console.log('syncWallet', syncWallet);
 
   return (
     <div className={styles.list}>

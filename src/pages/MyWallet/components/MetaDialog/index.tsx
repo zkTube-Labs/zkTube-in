@@ -8,7 +8,7 @@ const MetaDialog = () => {
     action.setState({ visible: false });
   }
   function onClose() {
-    action.setState({ visible: false });
+    action.setState({ metaDialogVisible: false });
   }
   function onRefresh() {
     console.log('onrefresh');
