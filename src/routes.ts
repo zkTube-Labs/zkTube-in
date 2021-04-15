@@ -6,7 +6,7 @@ import Transfer from '@/pages/Transfer';
 import TransferSuccess from '@/pages/TransferSuccess';
 import Withdraw from '@/pages/Withdraw';
 import WithdrawSuccess from '@/pages/WithdrawSuccess';
-import WithdrawFail from '@/pages/WithdrawFail';
+
 
 const routerConfig = [
   {
@@ -38,10 +38,6 @@ const routerConfig = [
       {
         path: '/wallet/withdraw/success',
         component: WithdrawSuccess,
-      },
-      {
-        path: '/wallet/withdraw/fail',
-        component: WithdrawFail,
       },
       {
         path: '/wallet',
