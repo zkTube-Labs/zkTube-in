@@ -1,7 +1,6 @@
 import { createStore } from 'ice';
-import user from './models/user';
-import account from './models/account';
+import wallet from '@/models/wallet';
 
-const store = createStore({ user, account });
+const store = createStore({ wallet });
 
 export default store;

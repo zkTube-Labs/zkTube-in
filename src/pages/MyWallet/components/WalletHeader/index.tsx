@@ -1,21 +1,21 @@
-import React,{useEffect} from 'react';
+import React from 'react';
 import { Select, Button } from '@alifd/next';
 import styles from './index.module.scss';
-import store from '../../store';
-const Option = Select.Option;
+import store from '@/store';
+
+const { Option } = Select;
 
 const WalletHeader = () => {
-  const [swdialog,swdialogDispatch] = store.useModel('swdialog')
-
+  const [, action] = store.useModel('wallet');
 
   function onChange(value) {
     console.log('value', value);
   }
 
   function onBtnClick() {
-    swdialogDispatch.setState({visible:true}) 
+    action.setState({ selectWalletDialogVisible: true });
   }
- 
+
   return (
     <div className={styles.list}>
       <div className={styles.boxselect}>
@@ -31,7 +31,9 @@ const WalletHeader = () => {
         </Select>
       </div>
       <div className={styles.boxbtn}>
-        <Button type="primary" onClick={onBtnClick}>Connect to a wallet</Button>
+        <Button type="primary" onClick={onBtnClick}>
+          Connect to a wallet
+        </Button>
       </div>
     </div>
   );

@@ -1,12 +1,13 @@
 import React from 'react';
 import { Dialog, Button } from '@alifd/next';
-import store from '../../store';
+import store from '@/store';
+
+const url = 'https://metamask.io/';
 
 const MetaDialog = () => {
-  let url = 'https://metamask.io/';
-  const [unmState, unmStateDispatch] = store.useModel('unmdialog');
+  const [{ unMetaDialogVisible }, action] = store.useModel('wallet');
   function handleClose() {
-    unmStateDispatch.setVisible({ visible: false });
+    action.setState({ unMetaDialogVisible: false });
   }
   function handleInstall() {
     window.open(url);
@@ -14,12 +15,12 @@ const MetaDialog = () => {
   return (
     <Dialog
       title="Authorize your wallet"
-      visible={unmState.visible}
+      visible={unMetaDialogVisible}
       style={{ width: 620 }}
       height={'400px'}
       footer={
         <Button
-          type='secondary' 
+          type="secondary"
           style={{
             cursor: 'pointer',
             backgroundColor: 'purple',
