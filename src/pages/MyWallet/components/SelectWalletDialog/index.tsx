@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Dialog, Button } from '@alifd/next';
-import FOX from '@/assets/fox.png';
+
+import Icon from '@/components/Icon';
 import store from '@/store';
+
+import styles from './index.module.scss';
 
 declare const window: any;
 const SelectWalletDialog = () => {
@@ -9,7 +12,7 @@ const SelectWalletDialog = () => {
   const [{ selectWalletDialogVisible }, action] = store.useModel('wallet');
 
   function onClose() {
-    action.setState({ visible: false });
+    action.setState({ selectWalletDialogVisible: false });
   }
 
   const onBtnClick = () => {
@@ -33,13 +36,17 @@ const SelectWalletDialog = () => {
       visible={selectWalletDialogVisible}
       onClose={onClose}
       footer={false}
-      style={{ width: 620 }}
-      height={'400px'}
+      className={styles.dialog}
+      height="400px"
     >
-      <img src={FOX} style={{ width: '30px', height: '30px', marginRight: 15, marginTop: 20 }} />
-      <Button type="primary" text style={{ fontSize: 15 }} onClick={onBtnClick}>
-        Meta Mask
-      </Button>
+      <div className={styles.content} onClick={onBtnClick}>
+        <div className={styles.item}>
+          <Icon type="icon-metamask" size="xl" />
+          <span className={styles.button}>
+            Meta Mask
+          </span>
+        </div>
+      </div>
     </Dialog>
   );
 };

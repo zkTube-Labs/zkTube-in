@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Box, Button, Icon } from '@alifd/next';
 import LOGO from '@/assets/paytube-black.png';
 import BACK1 from '@/assets/backimg1.png';
@@ -72,24 +72,22 @@ const WalletContent = () => {
 
   const handleConnectClick = () => {
     action.setState({ selectWalletDialogVisible: true });
+    init();
   };
 
-  useEffect(() => {
-    const init = async () => {
-      const web3 = await getWeb3();
-      const account = (await web3.eth.getAccounts())[0];
-      const { syncWallet, syncHTTPProvider } = await zkTubeInitialize(web3);
+  const init = async () => {
+    const web3 = await getWeb3();
+    const account = (await web3.eth.getAccounts())[0];
+    const { syncWallet, syncHTTPProvider } = await zkTubeInitialize(web3);
 
-      console.log('syncWallet', syncWallet);
+    console.log('syncWallet', syncWallet);
 
-      setWeb3(web3);
-      setAccount(account);
-      setSyncWallet(syncWallet);
-      setSyncHTTPProvider(syncHTTPProvider);
-      signKey(syncWallet);
-    };
-    init();
-  }, []);
+    setWeb3(web3);
+    setAccount(account);
+    setSyncWallet(syncWallet);
+    setSyncHTTPProvider(syncHTTPProvider);
+    signKey(syncWallet);
+  };
 
   console.log('syncWallet', syncWallet);
 
