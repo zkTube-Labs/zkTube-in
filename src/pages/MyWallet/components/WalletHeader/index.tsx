@@ -14,6 +14,7 @@ const WalletHeader = () => {
 
   function onBtnClick() {
     action.setState({ selectWalletDialogVisible: true });
+    action.init();
   }
 
   return (
