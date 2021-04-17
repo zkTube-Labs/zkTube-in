@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Dialog, Button } from '@alifd/next';
+import { Dialog } from '@alifd/next';
 
 import Icon from '@/components/Icon';
 import store from '@/store';

@@ -1,5 +1,5 @@
 import { createStore } from 'ice';
-import wallet from '@/models/wallet';
+import wallet from './models/wallet';
 
 const store = createStore({ wallet });
 

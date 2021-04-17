@@ -1,6 +1,7 @@
 build/
 tests/
 demo/
+node_modules/
 .ice/
 coverage/
 **/*-min.js

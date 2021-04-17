@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Box, Button, Icon } from '@alifd/next';
 import LOGO from '@/assets/paytube-black.png';
 import BACK1 from '@/assets/backimg1.png';
@@ -13,60 +13,54 @@ import store from '@/store';
 
 import styles from './index.module.scss';
 
+type Wallet = zktube.Wallet;
+
 declare const window: any;
 
 // eslint-disable-next-line @iceworks/best-practices/no-http-url
 const url = 'http://124.156.151.46:3030/jsrpc';
 
 const WalletContent = () => {
-  const [, action] = store.useModel('wallet');
+  const [{ web3, syncWallet }, action] = store.useModel('wallet');
 
-  const [web3, setWeb3] = useState(undefined);
-  const [account, setAccount] = useState('');
-  const [syncWallet, setSyncWallet] = useState(undefined);
-  const [syncHTTPProvider, setSyncHTTPProvider] = useState(undefined);
-
-  const [visible, setOpen] = useState(false);
-  const [visible2, setOpen1] = useState(false);
-
-  const getWeb3 = () => {
-    return new Promise(async (resolve, reject) => {
+  const getWeb3: () => Promise<Web3> = () => {
+    return new Promise((resolve, reject) => {
       if (window.ethereum) {
-        const web3 = new Web3(window.ethereum);
-        setOpen1(true);
+        const _web3: Web3 = new Web3(window.ethereum);
         try {
-          await window.ethereum.enable();
-          resolve(web3);
+          (async () => {
+            await window.ethereum.enable();
+            resolve(_web3);
+          })();
         } catch (e) {
           reject(e);
         }
       } else if (window.web3) {
         resolve(window.web3);
-      } else {
-        setOpen(true);
       }
     });
   };
 
-  const zkTubeInitialize = async (web3) => {
-    await web3.currentProvider.enable();
-    const ethersProvider = new ethers.providers.Web3Provider(web3.currentProvider);
+  const zkTubeInitialize = async (_web3) => {
+    await _web3.currentProvider.enable();
+    const ethersProvider = new ethers.providers.Web3Provider(_web3.currentProvider);
 
-    const syncHTTPProvider = await zktube.Provider.newHttpProvider(url);
+    const _syncHTTPProvider = await zktube.Provider.newHttpProvider(url);
 
     const singer = ethersProvider.getSigner();
-    const syncWallet = await zktube.Wallet.fromEthSigner(singer, syncHTTPProvider);
-    return { syncWallet, syncHTTPProvider };
+    const _syncWallet: Wallet = await zktube.Wallet.fromEthSigner(singer, _syncHTTPProvider);
+    return { syncWallet: _syncWallet, syncHTTPProvider: _syncHTTPProvider };
   };
 
-  const signKey = async (syncWallet) => {
-    console.log(`User account status: ${await syncWallet.isSigningKeySet()}`);
-    if (!(await syncWallet.isSigningKeySet())) {
-      const changePubkey = await syncWallet.setSigningKey({
+  const signKey = async (_syncWallet: Wallet) => {
+    // console.log(`User account status: ${await _syncWallet.isSigningKeySet()}`);
+    if (!(await _syncWallet?.isSigningKeySet())) {
+      const changePubkey = await _syncWallet.setSigningKey({
+        // eslint-disable-next-line @iceworks/best-practices/no-secret-info
         feeToken: 'ETH',
       });
       const receipt = await changePubkey.awaitReceipt();
-      console.log(receipt);
+      console.log('receipt', receipt);
     }
   };
 
@@ -76,20 +70,17 @@ const WalletContent = () => {
   };
 
   const init = async () => {
-    const web3 = await getWeb3();
-    const account = (await web3.eth.getAccounts())[0];
-    const { syncWallet, syncHTTPProvider } = await zkTubeInitialize(web3);
-
-    console.log('syncWallet', syncWallet);
-
-    setWeb3(web3);
-    setAccount(account);
-    setSyncWallet(syncWallet);
-    setSyncHTTPProvider(syncHTTPProvider);
-    signKey(syncWallet);
+    const _web3: Web3 = await getWeb3();
+    const _account: string = (await _web3.eth.getAccounts())[0];
+    const { syncWallet: _wallet, syncHTTPProvider: _provider } = await zkTubeInitialize(_web3);
+    await signKey(_wallet);
+    action.setState({
+      web3,
+      syncWallet: _wallet,
+      account: _account,
+      syncHTTPProvider: _provider,
+    });
   };
-
-  console.log('syncWallet', syncWallet);
 
   return (
     <div className={styles.list}>
