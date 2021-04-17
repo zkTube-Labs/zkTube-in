@@ -6,80 +6,16 @@ import BACK2 from '@/assets/backimg2.png';
 import SECURITY from '@/assets/security.svg';
 import TRANSACTION from '@/assets/transaction.svg';
 import TPS from '@/assets/tps.svg';
-import Web3 from 'web3';
-import { ethers } from 'ethers';
-import * as zktube from 'zktubez';
 import store from '@/store';
 
 import styles from './index.module.scss';
 
-type Wallet = zktube.Wallet;
-
-declare const window: any;
-
-// eslint-disable-next-line @iceworks/best-practices/no-http-url
-const url = 'http://124.156.151.46:3030/jsrpc';
-
 const WalletContent = () => {
-  const [{ web3, syncWallet }, action] = store.useModel('wallet');
-
-  const getWeb3: () => Promise<Web3> = () => {
-    return new Promise((resolve, reject) => {
-      if (window.ethereum) {
-        const _web3: Web3 = new Web3(window.ethereum);
-        try {
-          (async () => {
-            await window.ethereum.enable();
-            resolve(_web3);
-          })();
-        } catch (e) {
-          reject(e);
-        }
-      } else if (window.web3) {
-        resolve(window.web3);
-      }
-    });
-  };
-
-  const zkTubeInitialize = async (_web3) => {
-    await _web3.currentProvider.enable();
-    const ethersProvider = new ethers.providers.Web3Provider(_web3.currentProvider);
-
-    const _syncHTTPProvider = await zktube.Provider.newHttpProvider(url);
-
-    const singer = ethersProvider.getSigner();
-    const _syncWallet: Wallet = await zktube.Wallet.fromEthSigner(singer, _syncHTTPProvider);
-    return { syncWallet: _syncWallet, syncHTTPProvider: _syncHTTPProvider };
-  };
-
-  const signKey = async (_syncWallet: Wallet) => {
-    // console.log(`User account status: ${await _syncWallet.isSigningKeySet()}`);
-    if (!(await _syncWallet?.isSigningKeySet())) {
-      const changePubkey = await _syncWallet.setSigningKey({
-        // eslint-disable-next-line @iceworks/best-practices/no-secret-info
-        feeToken: 'ETH',
-      });
-      const receipt = await changePubkey.awaitReceipt();
-      console.log('receipt', receipt);
-    }
-  };
+  const [, action] = store.useModel('wallet');
 
   const handleConnectClick = () => {
     action.setState({ selectWalletDialogVisible: true });
-    init();
-  };
-
-  const init = async () => {
-    const _web3: Web3 = await getWeb3();
-    const _account: string = (await _web3.eth.getAccounts())[0];
-    const { syncWallet: _wallet, syncHTTPProvider: _provider } = await zkTubeInitialize(_web3);
-    await signKey(_wallet);
-    action.setState({
-      web3,
-      syncWallet: _wallet,
-      account: _account,
-      syncHTTPProvider: _provider,
-    });
+    action.init();
   };
 
   return (
