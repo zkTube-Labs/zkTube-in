@@ -6,6 +6,7 @@ import Transfer from '@/pages/Transfer';
 import TransferSuccess from '@/pages/TransferSuccess';
 import Withdraw from '@/pages/Withdraw';
 import WithdrawSuccess from '@/pages/WithdrawSuccess';
+import ComingSoon from '@/pages/ComingSoon';
 
 
 const routerConfig = [
@@ -42,6 +43,10 @@ const routerConfig = [
       {
         path: '/wallet',
         component: MyWallet,
+      },
+      {
+        path: '/coming-soon',
+        component: ComingSoon,
       },
       {
         path: '/',
