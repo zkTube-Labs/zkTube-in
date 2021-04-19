@@ -10,8 +10,9 @@ import Status from '../../../WalletStatus/components/StatusPage';
    loadPage(false);
   }
   return (
+   
     <div className={styles.container}>
-      {loading ?
+      {loading && props.load ?
       (
         <Loading
         title="Transfer"
@@ -30,7 +31,7 @@ import Status from '../../../WalletStatus/components/StatusPage';
         icon = "icon-success"
         status = "success"
         description = "Your Transfer will be processed shortly. Use the transaction link to track the progress"
-        onClickButton ={() => console.log('click ok')}
+        onClickButton ={() => window.location.reload(false)}
        />
 
 

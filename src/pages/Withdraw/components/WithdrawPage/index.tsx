@@ -1,4 +1,5 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import {history} from 'ice';
 import {Input, Form, Select, Button} from '@alifd/next';
 import Icon from '@/components/Icon';
 import WithdrawSuccess from '../../../WithdrawSuccess'
@@ -6,13 +7,12 @@ import store from '@/store';
 
 import styles from './index.module.scss';
 
+interface IProps {
+  amount: string,
+  address: string
+}
 
 function WithdrawPage() {
-  
-  interface IProps {
-    amount: string,
-    address: string
-  }
   const FormItem = Form.Item;
   const Option = Select.Option;
   const [, action] = store.useModel('wallet');
@@ -21,6 +21,8 @@ function WithdrawPage() {
   let [amount, setAmount] = useState('')
   let [loading, setLoading] = useState(false);
 
+  let failPage = false;
+  
   let handleChange = (wallet) => {
     setWallet(wallet)
   }
@@ -36,28 +38,37 @@ function WithdrawPage() {
 
   };
 
-  let withdrawMoney = () => {
-     const value = action.withdraw(amount);
-     if(value){
-       setLoading(true);
-     }
-  
-   }
+  let withdrawMoney = useCallback(() => {
 
+    let data =`${amount}`
+    // console.log("data", data);
+     action.withdraw(data) ? setLoading (true) : "";
+  
+   }, [amount,address])
+
+   const goBack = useCallback(() => {
+    history.goBack();
+  }, [])
+
+  //  useEffect( () => {
+  //    action.withdraw();
+  //  }, []);
+
+  
   return (
     <div className={styles.container}>
-      
-      {loading ? <WithdrawSuccess add = {address} amt={amount}/> : 
-      
+      {loading}
+      {loading ? <WithdrawSuccess add = {address} amt={amount} 
+      load={effectState.withdraw.isLoading}
+      fail = {effectState.withdraw.error}/> : 
         <div>
          
            <div className={styles.textBox}>
                 <div style={{float: "left", margin: "-5px 0px 0px 30px" }}>
                    <a href="/#">
-                   <Icon type="icon-back" size= {30} color = "black"/>
+                   <Icon type="icon-back" size= {30} color = "black" onClick = {goBack}/>
                   </a> 
                 </div>
-
            
               <h3 className={styles.withdraw}>
                   Withdraw
@@ -66,8 +77,8 @@ function WithdrawPage() {
           <Form style = {{width: '100%'}} {...formItemLayout}>
                   <div style = {{ margin: "0px 25px" }}>
                     
-                      {/* <FormItem label = "To"  className= {styles.to} validateState="error" help="Incorrect address"> */}
-                      <FormItem label = "To" >
+                      <FormItem label = "To"  className= {styles.to} hasFeedback required requiredTrigger="onBlur" format={undefined}>
+                      {/* <FormItem label = "To" > */}
 
                       <div>
                         <Input type="text" name = "to" className = {styles.inputWidth} 

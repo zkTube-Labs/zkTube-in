@@ -6,14 +6,13 @@ import TransferSuccessPage from './components/TransferSuccessPage';
 import styles from './index.module.scss';
 
 function TransferSuccess(props) {
+
   return (
     <>
-      <Header />
+      <Header />   
       <div className={styles.contentStyle}>
-        <TransferSuccessPage  add ={props.add} amt={props.amt}/>
-
+        <TransferSuccessPage  add ={props.add} amt={props.amt} load={props.load}/>
       </div>
-
     </>
   );
 }

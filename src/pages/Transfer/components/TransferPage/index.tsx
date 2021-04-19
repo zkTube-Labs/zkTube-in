@@ -1,5 +1,6 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {Input, Form, Select, Button} from '@alifd/next';
+import {history} from 'ice';
 import Icon from '@/components/Icon';
 import store from '@/store';
 import TransferSuccess from '../../../TransferSuccess'
@@ -15,14 +16,16 @@ const TransferPage = (props: IProps) => {
  
   const FormItem = Form.Item;
   const Option = Select.Option;
+  
+  let text : string;
   const [, action] = store.useModel('wallet');
-
+  const effectState = store.useModelEffectsState('wallet')
   let [wallet, setWallet] = useState('ETH');
   let [address, setAddress] = useState('');
-  let [amount, setAmount] = useState('')
+  let [amount, setAmount] = useState('0.0')
   let [loading, setLoading] = useState(false);
 
-
+  let loadPage = false;
   let handleChange = (wallet) => {
     console.log(wallet);
     setWallet(wallet)
@@ -38,32 +41,38 @@ const TransferPage = (props: IProps) => {
     }
   };
 
+  const goBack = useCallback(() => {
+    history.goBack();
+  }, [])
 
-  let transferMoney = () => {
+  let transferMoney = useCallback(() => {
    let data = {
      address: address,
-     amount : amount
+     amount : `${amount}`
     }
-    const value = action.transfer(data);
+    // const value = action.transfer(data);
+    action.transfer(data) ? setLoading(true) : "";
 
-    if(value){
-      setLoading(true);
-    }
-  
+  },[amount, address]);
+
+  // useEffect(() => {
+  //   action.transfer();
+  // }, []);
+  if(effectState.transfer.isLoading){
+    loadPage = true;
   }
-
+  
 
   return ( 
-
     <div className={styles.container}>
-      {loading ? <TransferSuccess add = {address} amt={amount}/> : 
+      {loading? <TransferSuccess add = {address} amt={amount} load={effectState.transfer.isLoading }/> : 
 
         <div>
          
            <div className={styles.textBox}>
                 <div style={{float: "left", margin: "-5px 0px 0px 30px" }}>
                    <a href="/#">
-                   <Icon type="icon-back" size= {30} color = "black"/>
+                   <Icon type="icon-back" size= {30} color = "black" onClick={goBack}/>
                   </a> 
                 </div>
            
@@ -74,8 +83,7 @@ const TransferPage = (props: IProps) => {
           <Form style = {{width: '100%'}} {...formItemLayout}>
                   <div style = {{ margin: "0px 25px" }}>
                     
-                      {/* <FormItem label = "To"  className= {styles.to} validateState="error" help="Incorrect address"> */}
-                      <FormItem label = "To" >
+                      <FormItem label = "To"  className= {styles.to} hasFeedback required requiredTrigger="onBlur" format= {undefined}>
 
                       <div>
                         <Input type="text" name = "to" className = {styles.inputWidth} 
@@ -96,8 +104,8 @@ const TransferPage = (props: IProps) => {
                      fontWeight: 800
                     }}>
                       <span style={{display : "inline", overflow: "hidden"}}>
-                        <Input type="text" name="amount" className = {styles.inputWidth2} placeholder="Amount" 
-                        size="medium"
+                        <Input type="decimal" name="amount" className = {styles.inputWidth2} placeholder="Amount" 
+                        size="medium" step={0.1}
                         onChange = {(amount) => {
                           setAmount(amount);
                         }} />

@@ -9,7 +9,7 @@ import Status from '../../../WalletStatus/components/StatusPage';
 
   return (
     <div className={styles.container}>
-      {loading ? (
+      {loading && props.load? (
         <Loading
         title="Withdraw"
         description="Confirm the transaction to transfer"
@@ -20,7 +20,7 @@ import Status from '../../../WalletStatus/components/StatusPage';
     (
       
       <div>
-        { status ? (
+        { !props.fail ? (
            <Status
            add = {props.add}
            amt ={props.amt}
@@ -29,7 +29,7 @@ import Status from '../../../WalletStatus/components/StatusPage';
            icon = "icon-success"
            status = "success"
            description = "Your Withdrawal will be processed shortly. Use the transaction link to track the progress"
-           onClickButton ={() => console.log('click ok')}
+           onClickButton ={() => window.location.reload(false)}
            />
         ) : (
           <Status
@@ -40,7 +40,7 @@ import Status from '../../../WalletStatus/components/StatusPage';
           icon = "icon-error"
           status = "fail"
           description = "Your Withdrawal will be processed shortly. Use the transaction link to track the progress"
-          onClickButton ={() => console.log('click ok')}
+          onClickButton ={() => window.location.reload(false)}
           />
         )}
              
