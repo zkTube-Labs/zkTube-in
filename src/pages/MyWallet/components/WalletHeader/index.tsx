@@ -12,9 +12,8 @@ const WalletHeader = () => {
     console.log('value', value);
   }
 
-  function onBtnClick() {
+  function onClick() {
     action.setState({ selectWalletDialogVisible: true });
-    action.init();
   }
 
   return (
@@ -32,7 +31,7 @@ const WalletHeader = () => {
         </Select>
       </div>
       <div className={styles.boxbtn}>
-        <Button type="primary" onClick={onBtnClick}>
+        <Button type="primary" onClick={onClick}>
           Connect to a wallet
         </Button>
       </div>

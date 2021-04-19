@@ -11,12 +11,17 @@ import store from '@/store';
 import styles from './index.module.scss';
 
 const WalletContent = () => {
-  const [, action] = store.useModel('wallet');
+  const [{ web3, syncWallet }, action] = store.useModel('wallet');
 
   const handleConnectClick = () => {
     action.setState({ selectWalletDialogVisible: true });
-    action.init();
   };
+
+  window.addEventListener('rpcerror', (error) => {
+    console.log('rpcerror------', error);
+  });
+
+  console.log('syncWallet', syncWallet);
 
   return (
     <div className={styles.list}>

@@ -2,7 +2,7 @@ import { IStoreDispatch } from 'ice';
 import { provider } from 'web3-core';
 import Web3 from 'web3';
 import { ethers } from 'ethers';
-import * as zktube from 'zktubez';
+import * as zktube from 'poy1';
 
 declare const window: any;
 
@@ -31,6 +31,7 @@ async function getWeb3(): Promise<Web3> {
           resolve(_web3);
         })();
       } catch (e) {
+        console.log('eeeee', e);
         reject(e);
       }
     } else if (window.web3) {
@@ -40,7 +41,6 @@ async function getWeb3(): Promise<Web3> {
 }
 
 const signKey = async (_syncWallet: Wallet) => {
-  // console.log(`User account status: ${await _syncWallet.isSigningKeySet()}`);
   if (!(await _syncWallet?.isSigningKeySet())) {
     const changePubkey = await _syncWallet.setSigningKey({
       // eslint-disable-next-line @iceworks/best-practices/no-secret-info

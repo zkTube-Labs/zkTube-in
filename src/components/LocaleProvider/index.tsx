@@ -42,9 +42,14 @@ function LocaleProvider(props: Props) {
     ? localeInfo[locale]
     : localeInfo['en-US'];
 
+  const onError = (error: object, errorInfo: object) => {
+    console.log('****error', error);
+    console.log('****errorInfo', errorInfo);
+  };
+
   return (
     <IntlProvider locale={myLocale.appLocale} messages={myLocale.appMessages}>
-      <ConfigProvider locale={myLocale.nextLocale}>
+      <ConfigProvider locale={myLocale.nextLocale} errorBoundary={{ afterCatch: onError }}>
         {React.Children.only(children)}
       </ConfigProvider>
     </IntlProvider>

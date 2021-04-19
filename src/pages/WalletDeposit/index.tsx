@@ -14,7 +14,7 @@ function WalletDeposit() {
   const [authorized] = useState<boolean>(false);
   const [list, setList] = useState([]);
   const [selected, setSelected] = useState<any>();
-  const [loading] = useState<boolean>(true);
+  const [loading] = useState<boolean>(false);
 
   const goBack = useCallback(() => {
     history.goBack();

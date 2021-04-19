@@ -1,18 +1,18 @@
 import React from 'react';
 import { Dialog, Button, Icon } from '@alifd/next';
+
 import store from '@/store';
 
 const MetaDialog = () => {
   const [{ metaDialogVisible }, action] = store.useModel('wallet');
-  function onDismiss() {
-    action.setState({ visible: false });
-  }
-  function onClose() {
+  const onDismiss = () => {
     action.setState({ metaDialogVisible: false });
-  }
-  function onRefresh() {
-    console.log('onrefresh');
-  }
+  };
+
+  const onClose = () => {
+    action.setState({ metaDialogVisible: false });
+  };
+
   return (
     <Dialog
       title={<h2>Ahthorize your wallet</h2>}
@@ -35,7 +35,7 @@ const MetaDialog = () => {
         </p>
       </div>
       <div style={{ textAlign: 'center', fontWeight: 'bold' }}>
-        <Icon type="loading" size={'xxxl'} onClick={onRefresh} />
+        <Icon type="loading" size={'xxxl'} />
       </div>
     </Dialog>
   );
