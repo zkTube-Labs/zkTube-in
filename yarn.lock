@@ -15707,6 +15707,16 @@ zksync-crypto@^0.4.1:
   resolved "https://registry.npm.taobao.org/zksync-crypto/download/zksync-crypto-0.4.5.tgz#2941ea8dbada9178390afdcc3c93430f31b00784"
   integrity sha1-KUHqjbrakXg5Cv3MPJNDDzGwB4Q=
 
+zktube-soft-launch@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.nlark.com/zktube-soft-launch/download/zktube-soft-launch-0.0.1.tgz#4f40066f86bc785f38875c8beaa576cd824b90ca"
+  integrity sha1-T0AGb4a8eF84h1yL6qV2zYJLkMo=
+  dependencies:
+    axios "^0.21.0"
+    encrypto1 "0.0.5"
+    websocket "^1.0.30"
+    websocket-as-promised "^1.1.0"
+
 zktubez@^0.0.3:
   version "0.0.3"
   resolved "https://registry.npm.taobao.org/zktubez/download/zktubez-0.0.3.tgz#3f7ff98a3cc1b33c0cc63da4c1b67acb0fab3d68"

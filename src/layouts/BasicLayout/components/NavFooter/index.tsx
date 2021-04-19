@@ -6,8 +6,7 @@ import Icon from '@/components/Icon';
 import styles from './index.module.scss';
 
 function NavFooter() {
-  console.log(window.location.pathname);
-  const pathname = window.location.pathname;
+  const { pathname } = window.location;
   const handleCopy = (value: string) => {
     copy(value);
     Message.success('已复制！');
@@ -26,31 +25,23 @@ function NavFooter() {
         <Icon type="icon-twitter" size="medium" />
         <Icon type="icon-facebook" size="medium" />
       </div>
-      {pathname !== '/coming-soon'? 
-      <div className={styles.donation}>
-        <div className={styles.text}>
-          Donation address
+      {pathname !== '/coming-soon' ? (
+        <div className={styles.donation}>
+          <div className={styles.text}>Donation address</div>
+          <div className={styles.title}>BTC</div>
+          <div className={styles.text}>
+            <span>0xD6649922bAe39aCA4F36CaA5B957969D</span>
+            <Icon type="icon-copy" size="small" onClick={() => handleCopy('0xD6649922bAe39aCA4F36CaA5B957969D')} />
+          </div>
+          <div className={styles.title}>ETH</div>
+          <div className={styles.text}>
+            <span>0xD6649922bAe39aCA4F36CaA5B957969D</span>
+            <Icon type="icon-copy" size="small" onClick={() => handleCopy('0xD6649922bAe39aCA4F36CaA5B957969D')} />
+          </div>
         </div>
-        <div className={styles.title}>
-          BTC
-        </div>
-        <div className={styles.text}>
-          <span>0xD6649922bAe39aCA4F36CaA5B957969D</span>
-          <Icon type="icon-copy" size="small" onClick={() => handleCopy('0xD6649922bAe39aCA4F36CaA5B957969D')} />
-        </div>
-        <div className={styles.title}>
-          ETH
-        </div>
-        <div className={styles.text}>
-          <span>0xD6649922bAe39aCA4F36CaA5B957969D</span>
-          <Icon type="icon-copy" size="small" onClick={() => handleCopy('0xD6649922bAe39aCA4F36CaA5B957969D')} />
-        </div>
-      </div> :
-      <div className={styles.service}>
-      Service: work@zktube.io
-      </div>
-      }
-      
+      ) : (
+        <div className={styles.service}>Service: work@zktube.io</div>
+      )}
     </div>
   );
 }

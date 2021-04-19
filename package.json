@@ -23,6 +23,7 @@
     "react-sortablejs": "^5.0.0",
     "sortablejs": "^1.12.0",
     "web3": "^1.3.5",
+    "zktube-soft-launch": "^0.0.1",
     "zktubez": "^0.0.3"
   },
   "devDependencies": {

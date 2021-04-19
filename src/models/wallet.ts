@@ -2,11 +2,16 @@ import { IStoreDispatch } from 'ice';
 import { provider } from 'web3-core';
 import Web3 from 'web3';
 import { ethers } from 'ethers';
-import * as zktube from 'poy1';
+import * as zktube from 'zktube-soft-launch';
 
 declare const window: any;
 
 type Wallet = zktube.Wallet;
+
+interface CustomError {
+  code: number;
+  message: string;
+}
 
 interface IState {
   metaDialogVisible: boolean;
@@ -16,6 +21,7 @@ interface IState {
   syncWallet: Wallet;
   account: string;
   syncHTTPProvider: provider;
+  signErrorMsg: string | undefined;
   amount: any;
   transfer: any;
 }
@@ -33,7 +39,6 @@ async function getWeb3(): Promise<Web3> {
           resolve(_web3);
         })();
       } catch (e) {
-        console.log('eeeee', e);
         reject(e);
       }
     } else if (window.web3) {
@@ -44,22 +49,29 @@ async function getWeb3(): Promise<Web3> {
 
 const signKey = async (_syncWallet: Wallet) => {
   if (!(await _syncWallet?.isSigningKeySet())) {
-    const changePubkey = await _syncWallet.setSigningKey({
+    const changePubkey = await _syncWallet?.setSigningKey({
       // eslint-disable-next-line @iceworks/best-practices/no-secret-info
       feeToken: 'ETH',
     });
-    const receipt = await changePubkey.awaitReceipt();
+    const receipt = await changePubkey?.awaitReceipt();
     console.log('receipt', receipt);
   }
 };
 
-const zkTubeInitialize = async (_web3) => {
-  await _web3.currentProvider.enable();
+const zkTubeInitialize = async (_web3: any, callback?: (e: CustomError) => void) => {
+  await _web3.currentProvider?.enable();
   const ethersProvider = new ethers.providers.Web3Provider(_web3.currentProvider);
   const _syncHTTPProvider = await zktube.Provider.newHttpProvider(url);
   const singer = ethersProvider.getSigner();
-  const _syncWallet: Wallet = await zktube.Wallet.fromEthSigner(singer, _syncHTTPProvider);
-  return { syncWallet: _syncWallet, syncHTTPProvider: _syncHTTPProvider };
+  let _syncWallet: Wallet;
+  try {
+    _syncWallet = await zktube.Wallet.fromEthSigner(singer, _syncHTTPProvider);
+    return { syncWallet: _syncWallet, syncHTTPProvider: _syncHTTPProvider };
+  } catch (e) {
+    console.log('e', e);
+    callback && callback(e);
+  }
+  return {};
 };
 
 export default {
@@ -71,15 +83,22 @@ export default {
     syncWallet: undefined,
     account: undefined,
     syncHTTPProvider: undefined,
+    signErrorMsg: undefined,
     amount: undefined,
-    transfer: undefined
+    transfer: undefined,
   },
 
   effects: ({ wallet }: IStoreDispatch) => ({
     async init() {
       const _web3: Web3 = await getWeb3();
       const _account: string = (await _web3.eth.getAccounts())[0];
-      const { syncWallet: _wallet, syncHTTPProvider: _provider } = await zkTubeInitialize(_web3);
+      const { syncWallet: _wallet, syncHTTPProvider: _provider } = await zkTubeInitialize(_web3, (e) => {
+        if (e.code === 4001) {
+          wallet.update({
+            signErrorMsg: 'This dapp needs access to your account information',
+          });
+        }
+      });
       await signKey(_wallet);
       wallet.update({
         web3: _web3,
@@ -89,40 +108,39 @@ export default {
       });
     },
 
-    async transfer(data){
-       const amount = zktube.utils.closestPackableTransactionAmount(ethers.utils.parseEther(data.amount));
-       const _web3: Web3 = await getWeb3();
-       await zkTubeInitialize(_web3);
-       const{syncWallet: syncWallet} = await zkTubeInitialize(_web3);
-       const _transfer = await syncWallet.syncTransfer({
+    async transfer(data) {
+      const amount = zktube.utils.closestPackableTransactionAmount(ethers.utils.parseEther(data.amount));
+      const _web3: Web3 = await getWeb3();
+      await zkTubeInitialize(_web3);
+      const { syncWallet } = await zkTubeInitialize(_web3);
+      const _transfer = await syncWallet.syncTransfer({
         to: data.address,
-        token: "ETH",
-        amount
+        // eslint-disable-next-line @iceworks/best-practices/no-secret-info
+        token: 'ETH',
+        amount,
       });
       await _transfer.awaitReceipt();
       wallet.update({
-        amount : amount,
-        transfer: _transfer
-      })
+        amount,
+        transfer: _transfer,
+      });
     },
 
-    async withdraw(amount){
+    async withdraw(amount) {
       const _web3: Web3 = await getWeb3();
       await zkTubeInitialize(_web3);
-      const{syncWallet: syncWallet} = await zkTubeInitialize(_web3);
+      const { syncWallet } = await zkTubeInitialize(_web3);
       const withdraw = await syncWallet.withdrawFromSyncToEthereum({
         ethAddress: syncWallet.address(),
-        token: "ETH",
+        // eslint-disable-next-line @iceworks/best-practices/no-secret-info
+        token: 'ETH',
         amount: ethers.utils.parseEther(amount),
       });
-      console.log("with", withdraw)
-      const withdrawReceipt = await withdraw.awaitReceipt();
-      console.log(withdrawReceipt);
+      await withdraw.awaitReceipt();
       await withdraw.awaitVerifyReceipt();
-      console.log(await withdraw.awaitVerifyReceipt());
       wallet.update({
-        amount: amount
-      })
+        amount,
+      });
     },
 
     async setState(payload: IState) {
