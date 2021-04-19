@@ -3,22 +3,28 @@ import styles from './index.module.scss';
 import Loading from '../../../WalletDeposit/components/Loading';
 import Status from '../../../WalletStatus/components/StatusPage';
 
-  let TransferSuccessPage = () => {
-  const [loading] = useState<boolean>(true);
+  let TransferSuccessPage = (props) => {
+  const [loading, loadPage] = useState<boolean>(true);
   
+  let goToTransferPage = () => {
+   loadPage(false);
+  }
   return (
     <div className={styles.container}>
-      {!loading ? (
+      {loading ?
+      (
         <Loading
         title="Transfer"
         description="Confirm the transaction to transfer"
         icon="icon-loading"
-        onView={() => console.log('click')}
+        onView={() => goToTransferPage}
       />
     ) :  
     (
       <div>
        <Status
+        add = {props.add}
+        amt ={props.amt}
         title = "Transfer"
         color = "green"
         icon = "icon-success"

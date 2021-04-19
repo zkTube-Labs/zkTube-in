@@ -10,12 +10,13 @@ import styles from './index.module.scss';
     status: string;
     description: string;
     onClickButton?: ()=> void;
+    // amount: string
+    add:string;
+    amt: string;
   }
 
-
-
-  const StatusPage : React.FC<IProps> = ({ title, icon, color,description, onClickButton }) => {
-    
+  const StatusPage : React.FC<IProps> = ({ title, icon, color,description, onClickButton , add, amt}) => {
+   
     const goBack = useCallback(() => {
         history.goBack();
       }, []);
@@ -26,7 +27,6 @@ import styles from './index.module.scss';
 
   return (
     <div className={styles.container}>
-
         <div className={styles.textBox}>
           <div style={{display: "inline", margin: "0px 20px"}}>
               <Icon type="icon-back" size= 'xl' color = "black" onClick={goBack}/>
@@ -57,7 +57,7 @@ import styles from './index.module.scss';
           <div>
             <p className={styles.address}> To address &nbsp;
               <span> 
-              0xD6649922bAe39aC532fA9b5A4F36CaA5B957969D
+                {add}
               </span>
             </p>
           </div>
@@ -65,7 +65,7 @@ import styles from './index.module.scss';
         <div>
         <div className={styles.fee}> Fee &nbsp;
               <span> 
-              ETH 0.0001403 
+              ETH {amt}
               </span>
         </div>
         </div>

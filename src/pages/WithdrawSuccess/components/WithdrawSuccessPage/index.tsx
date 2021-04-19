@@ -3,13 +3,13 @@ import styles from './index.module.scss';
 import Loading from '../../../WalletDeposit/components/Loading';
 import Status from '../../../WalletStatus/components/StatusPage';
 
-  let WithdrawSuccessPage = () => {
+  let WithdrawSuccessPage = (props) => {
   const [loading] = useState<boolean>(true);
   const [status] = useState <boolean> (true);
 
   return (
     <div className={styles.container}>
-      {!loading ? (
+      {loading ? (
         <Loading
         title="Withdraw"
         description="Confirm the transaction to transfer"
@@ -22,6 +22,8 @@ import Status from '../../../WalletStatus/components/StatusPage';
       <div>
         { status ? (
            <Status
+           add = {props.add}
+           amt ={props.amt}
            title = "Withdraw"
            color = "green"
            icon = "icon-success"
@@ -32,6 +34,8 @@ import Status from '../../../WalletStatus/components/StatusPage';
         ) : (
           <Status
           title = "Withdraw"
+          add = {props.add}
+          amt ={props.amt}
           color = "red"
           icon = "icon-error"
           status = "fail"
