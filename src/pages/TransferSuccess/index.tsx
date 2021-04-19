@@ -5,12 +5,12 @@ import TransferSuccessPage from './components/TransferSuccessPage';
 
 import styles from './index.module.scss';
 
-function TransferSuccess() {
+function TransferSuccess(props) {
   return (
     <>
       <Header />
       <div className={styles.contentStyle}>
-        <TransferSuccessPage />
+        <TransferSuccessPage  add ={props.add} amt={props.amt}/>
 
       </div>
 

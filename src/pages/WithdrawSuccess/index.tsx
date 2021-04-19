@@ -5,12 +5,12 @@ import WithdrawSuccessPage from './components/WithdrawSuccessPage';
 
 import styles from './index.module.scss';
 
-function WithdrawSuccess() {
+function WithdrawSuccess(props) {
   return (
     <>
       <Header />
       <div className={styles.contentStyle}>
-        <WithdrawSuccessPage />
+        <WithdrawSuccessPage add ={props.add} amt={props.amt}/>
 
       </div>
 

@@ -14,7 +14,7 @@ const url = "https://www.paytube.io/";
           <div className={styles.borderbox}>
             <div className={styles.text}>
                 <h1 className={styles.heading}>Decentralized wallet based on layer2</h1>
-                <h3 className={styles.heading2}>The combination of zero knowledfe protocol and layer2</h3>
+                <h3 className={styles.heading2}>The combination of zero knowledge protocol and layer2</h3>
             </div>
            
             <div className={styles.footbtn}>

@@ -1,19 +1,30 @@
 import React, { useCallback, useState } from 'react';
 import {Input, Form, Select, Button} from '@alifd/next';
 import Icon from '@/components/Icon';
+import store from '@/store';
+import TransferSuccess from '../../../TransferSuccess'
 
 import styles from './index.module.scss';
 
+interface IProps {
+  amount: string,
+  address: string
+}
 
-function TransferPage() {
-  
-
+const TransferPage = (props: IProps) => {
+ 
   const FormItem = Form.Item;
   const Option = Select.Option;
+  const [, action] = store.useModel('wallet');
 
-  const [wallet, setWallet] = useState('ETH');
+  let [wallet, setWallet] = useState('ETH');
+  let [address, setAddress] = useState('');
+  let [amount, setAmount] = useState('')
+  let [loading, setLoading] = useState(false);
+
 
   let handleChange = (wallet) => {
+    console.log(wallet);
     setWallet(wallet)
   }
 
@@ -25,18 +36,28 @@ function TransferPage() {
     wrapperCol: {
       span: 14
     }
-
   };
 
+
   let transferMoney = () => {
-    console.log("transfer");
+   let data = {
+     address: address,
+     amount : amount
+    }
+    const value = action.transfer(data);
+
+    if(value){
+      setLoading(true);
+    }
+  
   }
 
-  return (
+
+  return ( 
+
     <div className={styles.container}>
-      
-      {/* <div className={styles.upperContainer}> */}
-      
+      {loading ? <TransferSuccess add = {address} amt={amount}/> : 
+
         <div>
          
            <div className={styles.textBox}>
@@ -45,7 +66,6 @@ function TransferPage() {
                    <Icon type="icon-back" size= {30} color = "black"/>
                   </a> 
                 </div>
-
            
               <h3 className={styles.withdraw}>
                   Transfer
@@ -54,9 +74,18 @@ function TransferPage() {
           <Form style = {{width: '100%'}} {...formItemLayout}>
                   <div style = {{ margin: "0px 25px" }}>
                     
-                      <FormItem label = "To"  className= {styles.to} validateState="error" help="Incorrect address">
+                      {/* <FormItem label = "To"  className= {styles.to} validateState="error" help="Incorrect address"> */}
+                      <FormItem label = "To" >
+
                       <div>
-                        <Input type="text" name = "to" className = {styles.inputWidth} placeholder="address" size="medium" />
+                        <Input type="text" name = "to" className = {styles.inputWidth} 
+                        placeholder="address" size="medium" 
+                        // value ={address}
+                        onChange = {(address) => {
+                          setAddress(address);
+                        }}
+                         
+                        />
                       </div>
                       </FormItem>
                 </div>
@@ -67,7 +96,11 @@ function TransferPage() {
                      fontWeight: 800
                     }}>
                       <span style={{display : "inline", overflow: "hidden"}}>
-                        <Input type="text" name="amount" className = {styles.inputWidth2} placeholder="Amount" size="medium" />
+                        <Input type="text" name="amount" className = {styles.inputWidth2} placeholder="Amount" 
+                        size="medium"
+                        onChange = {(amount) => {
+                          setAmount(amount);
+                        }} />
                       </span>
                         <div style={{textAlign: "right", display: "inline"}}>
                         <Select value={wallet} onChange={handleChange} style = {{backgroundColor: "black", padding: "6px"}}> 
@@ -104,7 +137,7 @@ function TransferPage() {
          
             
         </div>
-      
+      }
     </div>
   );
 }

@@ -9,7 +9,7 @@ const asideMenuConfig = [
   {
     name: 'zkTube Scan',
     path: '/coming-soon',
-    icon: 'icon-wallet',
+    icon: 'icon-compass',
   },
 ];
 

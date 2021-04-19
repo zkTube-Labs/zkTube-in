@@ -4,11 +4,8 @@ import { Link, withRouter } from 'ice';
 import { Nav } from '@alifd/next';
 import { asideMenuConfig } from '../../menuConfig';
 import Header from '../NavHeader';
-import HeaderComingSoon from '../NavHeaderComingSoon';
 import Footer from '../NavFooter';
-import FooterComingSoon from '../NavFooterComingSoon';
 import Icon from '@/components/Icon';
-
 import styles from './index.module.scss';
 
 const { SubNav } = Nav;
@@ -110,8 +107,8 @@ const Navigation = (props, context) => {
   return (
     
     <Nav
-      header={pathname ==='/coming-soon' ? <HeaderComingSoon/> : <Header />}
-      footer={pathname === '/coming-soon'? <FooterComingSoon /> : <Footer/>}
+      header={<Header />}
+      footer={ <Footer/>}
       type="primary"
       openKeys={openKeys}
       selectedKeys={[pathname]}

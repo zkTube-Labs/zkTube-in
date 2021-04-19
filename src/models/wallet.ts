@@ -16,10 +16,12 @@ interface IState {
   syncWallet: Wallet;
   account: string;
   syncHTTPProvider: provider;
+  amount: any;
+  transfer: any;
 }
 
 // eslint-disable-next-line @iceworks/best-practices/no-http-url
-const url = 'http://124.156.151.46:3030/jsrpc';
+const url = 'http://119.28.75.86:3030/jsrpc';
 
 async function getWeb3(): Promise<Web3> {
   return new Promise((resolve, reject) => {
@@ -54,9 +56,7 @@ const signKey = async (_syncWallet: Wallet) => {
 const zkTubeInitialize = async (_web3) => {
   await _web3.currentProvider.enable();
   const ethersProvider = new ethers.providers.Web3Provider(_web3.currentProvider);
-
   const _syncHTTPProvider = await zktube.Provider.newHttpProvider(url);
-
   const singer = ethersProvider.getSigner();
   const _syncWallet: Wallet = await zktube.Wallet.fromEthSigner(singer, _syncHTTPProvider);
   return { syncWallet: _syncWallet, syncHTTPProvider: _syncHTTPProvider };
@@ -71,6 +71,8 @@ export default {
     syncWallet: undefined,
     account: undefined,
     syncHTTPProvider: undefined,
+    amount: undefined,
+    transfer: undefined
   },
 
   effects: ({ wallet }: IStoreDispatch) => ({
@@ -86,6 +88,43 @@ export default {
         syncHTTPProvider: _provider,
       });
     },
+
+    async transfer(data){
+       const amount = zktube.utils.closestPackableTransactionAmount(ethers.utils.parseEther(data.amount));
+       const _web3: Web3 = await getWeb3();
+       await zkTubeInitialize(_web3);
+       const{syncWallet: syncWallet} = await zkTubeInitialize(_web3);
+       const _transfer = await syncWallet.syncTransfer({
+        to: data.address,
+        token: "ETH",
+        amount
+      });
+      await _transfer.awaitReceipt();
+      wallet.update({
+        amount : amount,
+        transfer: _transfer
+      })
+    },
+
+    async withdraw(amount){
+      const _web3: Web3 = await getWeb3();
+      await zkTubeInitialize(_web3);
+      const{syncWallet: syncWallet} = await zkTubeInitialize(_web3);
+      const withdraw = await syncWallet.withdrawFromSyncToEthereum({
+        ethAddress: syncWallet.address(),
+        token: "ETH",
+        amount: ethers.utils.parseEther(amount),
+      });
+      console.log("with", withdraw)
+      const withdrawReceipt = await withdraw.awaitReceipt();
+      console.log(withdrawReceipt);
+      await withdraw.awaitVerifyReceipt();
+      console.log(await withdraw.awaitVerifyReceipt());
+      wallet.update({
+        amount: amount
+      })
+    },
+
     async setState(payload: IState) {
       wallet.update(payload);
     },
