@@ -1,4 +1,4 @@
-import { IStoreDispatch } from 'ice';
+import { IStoreDispatch, history } from 'ice';
 import { provider } from 'web3-core';
 import Web3 from 'web3';
 import { ethers } from 'ethers';
@@ -70,8 +70,8 @@ const zkTubeInitialize = async (_web3: any, callback?: (e: CustomError) => void)
   } catch (e) {
     console.log('e', e);
     callback && callback(e);
+    throw Error('please sign');
   }
-  return {};
 };
 
 export default {
@@ -99,13 +99,18 @@ export default {
           });
         }
       });
-      await signKey(_wallet);
       wallet.update({
         web3: _web3,
         syncWallet: _wallet,
         account: _account,
         syncHTTPProvider: _provider,
       });
+      history.push('/wallet/deposit');
+      try {
+        await signKey(_wallet);
+      } catch (e) {
+        console.log('e========e', e);
+      }
     },
 
     async transfer(data) {
