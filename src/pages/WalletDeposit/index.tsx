@@ -8,6 +8,8 @@ import Loading from './components/Loading';
 
 import styles from './index.module.scss';
 
+import store from '@/store';
+
 function WalletDeposit() {
   const [empty] = useState(false);
   const [visible, setVisible] = useState<boolean>(false);
@@ -15,6 +17,8 @@ function WalletDeposit() {
   const [list, setList] = useState([]);
   const [selected, setSelected] = useState<any>();
   const [loading] = useState<boolean>(false);
+
+  const [, action] = store.useModel('wallet');
 
   const goBack = useCallback(() => {
     history.goBack();
@@ -26,6 +30,13 @@ function WalletDeposit() {
 
   const handleSelectToken = useCallback(() => {
     setVisible(true);
+  }, []);
+
+  const handleTestDeposit = useCallback(() => {
+    // let amount =`${amount}`
+    const amount = '1.0';
+    action.deposit(amount);
+    console.log('test deposit 1 ETH');
   }, []);
 
   const onSelect = useCallback((crypto: string) => {
@@ -84,6 +95,9 @@ function WalletDeposit() {
                     MAX
                   </Button>
                 </div>
+                <Button size="medium" onClick={handleTestDeposit}>
+                  test deposit 1 ETH
+                </Button>
                 <p className={styles.note}>
                   You should firstly unlock selected token in order to authorize deposits for USDT
                 </p>

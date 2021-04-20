@@ -113,6 +113,38 @@ export default {
       }
     },
 
+    async deposit(amount) {
+      // Depositing assets from Ethereum into zkTube
+
+      const _web3: Web3 = await getWeb3();
+      await zkTubeInitialize(_web3);
+      const { syncWallet } = await zkTubeInitialize(_web3);
+
+      console.log(`目标地址：${syncWallet.address()}`)
+      try {
+        const deposit = await syncWallet.depositToSyncFromEthereum({
+          // param 1 address
+          depositTo: syncWallet.address(),
+          // param 2 token
+          token: "ETH",
+          // param 3 amount
+          amount: ethers.utils.parseEther(amount),
+        });
+
+        // Await confirmation from the zkTube operator
+        // Completes when a promise is issued to process the tx
+        let depositReceipt = await deposit.awaitReceipt();
+        console.log(depositReceipt);
+
+        // // Await verification
+        // // Completes when the tx reaches finality on Ethereum
+        depositReceipt = await deposit.awaitVerifyReceipt();
+        console.log(depositReceipt);
+      } catch (error) {
+          console.log(error)
+      }
+    },
+
     async transfer(data) {
       const amount = zktube.utils.closestPackableTransactionAmount(ethers.utils.parseEther(data.amount));
       const _web3: Web3 = await getWeb3();
