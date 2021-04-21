@@ -38,7 +38,7 @@ import styles from './index.module.scss';
         </div> 
         <div className= {styles.upperContainer}>
           <div className ={styles.eth}>
-            0.1 <sub>ETH</sub>
+            {amt} <sub>ETH</sub>
           </div>
           <div className={styles.balance}>
             <div className={styles.icon}>

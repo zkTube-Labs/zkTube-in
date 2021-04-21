@@ -8,7 +8,7 @@ import Status from '../../../WalletStatus/components/StatusPage';
   const [status] = useState <boolean> (true);
 
   return (
-    <div className={styles.container}>
+    <div>
       {loading && props.load? (
         <Loading
         title="Withdraw"
@@ -19,7 +19,7 @@ import Status from '../../../WalletStatus/components/StatusPage';
     ) : 
     (
       
-      <div>
+      <div className={styles.container}>
         { !props.fail ? (
            <Status
            add = {props.add}
