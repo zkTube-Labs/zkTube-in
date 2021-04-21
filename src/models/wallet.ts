@@ -27,7 +27,13 @@ interface IState {
   transfer: any;
   committedBalances: double | undefined;
   committedBalances: float | undefined;
-  exception: string | null;
+  exceptionMsg: string | null;
+  // could be one of following messages:
+  // WalletSignFailed
+  // NetworkError
+  // AccountNotExist
+  // AccountNotActive
+  // InsufficientBalance
 }
 
 // eslint-disable-next-line @iceworks/best-practices/no-http-url
@@ -93,7 +99,7 @@ export default {
     transfer: undefined,
     committedBalances: 0.0,
     verifiedBalances: 0.0,
-    exception: null,
+    exceptionMsg: null,
   },
 
   effects: ({ wallet }: IStoreDispatch) => ({
@@ -104,6 +110,7 @@ export default {
         if (e.code === 4001) {
           wallet.update({
             signErrorMsg: 'This dapp needs access to your account information',
+            exceptionMsg: 'WalletSignFailed',
           });
         }
       });
