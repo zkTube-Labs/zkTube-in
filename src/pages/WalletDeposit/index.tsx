@@ -16,10 +16,9 @@ function WalletDeposit() {
   const [list, setList] = useState([]);
   const [selected, setSelected] = useState<any>();
   const [loading] = useState<boolean>(false);
-  const [, action] = store.useModel('wallet');
+  const [wallet, action] = store.useModel('wallet');
   const [amount, setAmount] = useState('0.0');
-  const [committedBalances, setCommittedBalances] = useState('0.0');
-  const [verifiedBalances, setVerifiedBalances] = useState('0.0');
+
 
   const goBack = useCallback(() => {
     history.goBack();
@@ -91,7 +90,7 @@ function WalletDeposit() {
             {selected && (
               <>
                 <div className={styles.balance}>
-                  <span className={styles.text}>Balance:{verifiedBalances}</span>
+                  <span className={styles.text} >Balance:{wallet.verifiedBalances}</span>
                   <Button size="small" text className={styles.button}>
                     MAX
                   </Button>
