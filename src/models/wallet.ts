@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import { IStoreDispatch, history } from 'ice';
 import { provider } from 'web3-core';
 import Web3 from 'web3';
@@ -24,6 +25,9 @@ interface IState {
   signErrorMsg: string | undefined;
   amount: any;
   transfer: any;
+  committedBalances: double | undefined;
+  committedBalances: float | undefined;
+  exception: string | null;
 }
 
 // eslint-disable-next-line @iceworks/best-practices/no-http-url
@@ -49,6 +53,7 @@ async function getWeb3(): Promise<Web3> {
 
 const signKey = async (_syncWallet: Wallet) => {
   if (!(await _syncWallet?.isSigningKeySet())) {
+    // alert('_syncWallet?.isSigningKeySet()');
     const changePubkey = await _syncWallet?.setSigningKey({
       // eslint-disable-next-line @iceworks/best-practices/no-secret-info
       feeToken: 'ETH',
@@ -86,6 +91,9 @@ export default {
     signErrorMsg: undefined,
     amount: undefined,
     transfer: undefined,
+    committedBalances: 0.0,
+    verifiedBalances: 0.0,
+    exception: null,
   },
 
   effects: ({ wallet }: IStoreDispatch) => ({
@@ -99,12 +107,14 @@ export default {
           });
         }
       });
+      // console.log('state 1', state);
       wallet.update({
         web3: _web3,
         syncWallet: _wallet,
         account: _account,
         syncHTTPProvider: _provider,
       });
+      // console.log('state 2', state);
       history.push('/wallet/deposit');
       try {
         await signKey(_wallet);
@@ -113,21 +123,40 @@ export default {
       }
     },
 
+    async checkStatus() {
+      const _web3: Web3 = await getWeb3();
+      // await zkTubeInitialize(_web3);
+      console.log('wallet deposit', wallet);
+      const { syncWallet } = await zkTubeInitialize(_web3);
+
+      const state = await syncWallet.getAccountState();
+      console.log('account state:', state);
+      wallet.update({
+        committedBalances: state.committed.balances.ETH,
+        verifiedBalances: state.verified.balances.ETH,
+      });
+      // setCommittedEthBalance(state.committed.balances.ETH);
+      // setVerifiedEthBalance(state.verified.balances.ETH);
+    },
+
     async deposit(amount) {
       // Depositing assets from Ethereum into zkTube
 
       const _web3: Web3 = await getWeb3();
-      await zkTubeInitialize(_web3);
+      // await zkTubeInitialize(_web3);
+      console.log('wallet deposit', wallet);
       const { syncWallet } = await zkTubeInitialize(_web3);
+      // const [syncWallet, setWallet] = useState(null);
 
-      console.log(`目标地址：${syncWallet.address()}`)
+      console.log(`目标地址：${syncWallet.address()}`);
       try {
+        // const { tk } = 'ETH';
         const deposit = await syncWallet.depositToSyncFromEthereum({
           // param 1 address
           depositTo: syncWallet.address(),
           // param 2 token
-          token: "ETH",
-          // param 3 amount
+          // eslint-disable-next-line @iceworks/best-practices/no-secret-info
+          token: 'ETH',
           amount: ethers.utils.parseEther(amount),
         });
 
@@ -141,7 +170,8 @@ export default {
         depositReceipt = await deposit.awaitVerifyReceipt();
         console.log(depositReceipt);
       } catch (error) {
-          console.log(error)
+        // console.log(error);
+        console.log('deposit exception');
       }
     },
 

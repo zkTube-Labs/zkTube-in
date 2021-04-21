@@ -13,12 +13,13 @@ import store from '@/store';
 function WalletDeposit() {
   const [empty] = useState(false);
   const [visible, setVisible] = useState<boolean>(false);
-  const [authorized] = useState<boolean>(false);
   const [list, setList] = useState([]);
   const [selected, setSelected] = useState<any>();
   const [loading] = useState<boolean>(false);
-
   const [, action] = store.useModel('wallet');
+  const [amount, setAmount] = useState('0.0');
+  const [committedBalances, setCommittedBalances] = useState('0.0');
+  const [verifiedBalances, setVerifiedBalances] = useState('0.0');
 
   const goBack = useCallback(() => {
     history.goBack();
@@ -32,17 +33,17 @@ function WalletDeposit() {
     setVisible(true);
   }, []);
 
-  const handleTestDeposit = useCallback(() => {
-    // let amount =`${amount}`
-    const amount = '1.0';
-    action.deposit(amount);
-    console.log('test deposit 1 ETH');
+  const handleDoDeposit = useCallback(() => {
+    const data = `${amount}`;
+    action.deposit('0.1');
+    console.log('do deposit', data, 'ETH');
   }, []);
 
   const onSelect = useCallback((crypto: string) => {
     console.log('onSelect', crypto);
     setVisible(false);
     setSelected(crypto);
+    action.checkStatus();
   }, []);
 
   const onSearch = (value: string) => {
@@ -90,22 +91,33 @@ function WalletDeposit() {
             {selected && (
               <>
                 <div className={styles.balance}>
-                  <span className={styles.text}>Balance:0.4</span>
+                  <span className={styles.text}>Balance:{verifiedBalances}</span>
                   <Button size="small" text className={styles.button}>
                     MAX
                   </Button>
                 </div>
-                <Button size="medium" onClick={handleTestDeposit}>
-                  test deposit 1 ETH
+                <Input
+                  type="decimal"
+                  name="amount"
+                  className={styles.inputWidth2}
+                  placeholder="Deposit Amount"
+                  size="medium"
+                  step={0.1}
+                  onChange={(changedAmount) => {
+                    setAmount(changedAmount);
+                  }}
+                />
+                <Button size="medium" onClick={handleDoDeposit}>
+                  Deposit
                 </Button>
-                <p className={styles.note}>
+                {/* <p className={styles.note}>
                   You should firstly unlock selected token in order to authorize deposits for USDT
                 </p>
                 <Button className={styles.unlock} onClick={handleUnlock}>
                   <Icon type="icon-unlock" />
                   Unlock
                 </Button>
-                <div className={styles.warning}>MetaMask Tx Signature: User denied transaction signature.</div>
+                <div className={styles.warning}>MetaMask Tx Signature: User denied transaction signature.</div> */}
               </>
             )}
           </div>
