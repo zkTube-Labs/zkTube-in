@@ -17,7 +17,6 @@ const TransferPage = (props: IProps) => {
   const FormItem = Form.Item;
   const Option = Select.Option;
   
-  let text : string;
   const [, action] = store.useModel('wallet');
   const effectState = store.useModelEffectsState('wallet')
   let [wallet, setWallet] = useState('ETH');
@@ -51,7 +50,13 @@ const TransferPage = (props: IProps) => {
      amount : `${amount}`
     }
     // const value = action.transfer(data);
-    action.transfer(data) ? setLoading(true) : "";
+    try{
+      action.transfer(data) ? setLoading(true) : "";
+    }
+    catch (e){
+      console.log("err", e);
+
+    }
 
   },[amount, address]);
 
