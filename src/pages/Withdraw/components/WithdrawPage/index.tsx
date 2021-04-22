@@ -59,7 +59,7 @@ function WithdrawPage() {
 
     try {
       setLoading(true) 
-      action.withdraw(data).then(res => {
+      action.withdraw(wallet1.syncWallet, data).then(res => {
         console.log("res", res)
         if(res == undefined){
           window.location.reload();

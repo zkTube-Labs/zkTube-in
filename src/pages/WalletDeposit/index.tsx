@@ -17,8 +17,7 @@ function WalletDeposit() {
   const [selected, setSelected] = useState<any>();
   const [loading] = useState<boolean>(false);
   const [wallet, action] = store.useModel('wallet');
-  const [amount, setAmount] = useState('0.0');
-
+  let [amount, setAmount] = useState('');
 
   const goBack = useCallback(() => {
     history.goBack();
@@ -37,8 +36,8 @@ function WalletDeposit() {
   };
 
   const handleDoDeposit = useCallback(() => {
-    const data = `${amount}`;
-    action.deposit(wallet.syncWallet, '0.1');
+    const data =`${amount}`;
+    action.deposit(wallet.syncWallet, '0.01');
     console.log('do deposit', data, 'ETH');
   }, []);
 
@@ -46,7 +45,11 @@ function WalletDeposit() {
     console.log('onSelect', crypto);
     setVisible(false);
     setSelected(crypto);
-    action.checkStatus(wallet.syncWallet);
+    try {
+      action.checkStatus(wallet.syncWallet);
+    } catch (e) {
+      console.log('action.checkStatus', e);
+    }
   }, []);
 
   const onSearch = (value: string) => {
@@ -99,15 +102,7 @@ function WalletDeposit() {
                   </Button>
                 </div>
                 <div className={styles.label}>Amount</div>
-                <Input
-                  type="decimal"
-                  name="amount"
-                  className={styles.inputWidth2}
-                  placeholder="Deposit Amount"
-                  size="medium"
-                  step={0.1}
-                  onChange={onAmountChage}
-                />
+                <Input type="text" name="amount" onChange = {(amount) => {setAmount(amount);}} className = {styles.inputWidth2} placeholder="Amount" size="medium" />
                 <Button size="medium" onClick={handleDoDeposit}>
                   Deposit
                 </Button>
