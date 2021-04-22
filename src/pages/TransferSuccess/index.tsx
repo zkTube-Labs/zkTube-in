@@ -11,7 +11,7 @@ function TransferSuccess(props) {
     <>
       <Header />   
       <div className={styles.contentStyle}>
-        <TransferSuccessPage  add ={props.add} amt={props.amt} load={props.load}/>
+        <TransferSuccessPage  add ={props.add} amt={props.amt} load={props.load} resolve={props.resolve}/>
       </div>
     </>
   );

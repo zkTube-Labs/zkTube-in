@@ -7,9 +7,10 @@ import Status from '../../../WalletStatus/components/StatusPage';
   const [loading] = useState<boolean>(true);
   const [status] = useState <boolean> (true);
 
+  console.log("res", props.resolve)
   return (
-    <div>
-      {loading && props.load? (
+    <div className={styles.container}>
+      {props.load || !props.resolve? (
         <Loading
         title="Withdraw"
         description="Confirm the transaction to transfer"
@@ -19,8 +20,8 @@ import Status from '../../../WalletStatus/components/StatusPage';
     ) : 
     (
       
-      <div className={styles.container}>
-        { !props.fail ? (
+      <div >
+        { !props.fail || props.resolve? (
            <Status
            add = {props.add}
            amt ={props.amt}

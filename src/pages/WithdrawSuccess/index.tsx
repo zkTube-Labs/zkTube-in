@@ -10,7 +10,7 @@ function WithdrawSuccess(props) {
     <>
       <Header />
       <div className={styles.contentStyle}>
-        <WithdrawSuccessPage add ={props.add} amt={props.amt} load={props.load}/>
+        <WithdrawSuccessPage add ={props.add} amt={props.amt} resolve = {props.resolve} load={props.load}/>
       </div>
 
     </>

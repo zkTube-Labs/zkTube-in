@@ -1,24 +1,21 @@
 import React, { useCallback, useState } from 'react';
 import styles from './index.module.scss';
-import Loading from '../../../WalletDeposit/components/Loading';
+import Loading from '../../../loadTransfer/components/loading'
 import Status from '../../../WalletStatus/components/StatusPage';
 
   let TransferSuccessPage = (props) => {
-  const [loading, loadPage] = useState<boolean>(true);
-  
-  let goToTransferPage = () => {
-   loadPage(false);
-  }
+  // const [loading, loadPage] = useState<boolean>(true);
+  console.log(props.resolve);
+
   return (
    
     <div className={styles.container}>
-      {loading && props.load ?
+      {props.load || !props.resolve ?
       (
         <Loading
         title="Transfer"
         description="Confirm the transaction to transfer"
         icon="icon-loading"
-        onView={() => goToTransferPage}
       />
     ) :  
     (
