@@ -35,7 +35,7 @@
         margin-right: 20px;
     }
     .inputWidth2{
-        width: 70%;
+        width: 75%;
         max-width: 500px;
         border-radius: 4px 4px 4px 4px;
         padding:5px;
@@ -45,9 +45,20 @@
         border-radius: 3px;
         // margin: 20px 3px;
         box-sizing: border-box;
+        background-color: #D3D3D5;
+
         // margin-left: 3px;
         // margin-right: 5px;
     }
+    .button {
+        margin: 0 10px;
+        user-select: none;
+        align-self: center;
+        color: #5E45EB;
+        &:hover {
+          color: #5E45EB;
+        }
+      }
 
     .to{
         // left: 638px;
@@ -75,6 +86,16 @@
         margin :35px 0px 25px 0px;
         // display: "inline" 
     }
+    .buttonSelected {
+        background-color: #333340;
+        color: #fff;
+        font-size: 14px;
+        height: 36px;
+        margin-left: 10px;
+        i {
+          margin-left: 5px;
+        }
+      }
     
     .withdraw{
         font-family: "SourceHanSansSC-bold";
@@ -83,13 +104,18 @@
         font-weight: 600
     }
 
-    .balance{
-        margin-right:20px;
-        text-align: right;
-        font-size: 20px;
-        font-weight: 600;
-        margin-top: 46px;
-    }
+    .balance {
+        width: 340px;
+        display: flex;
+        justify-content: flex-end;
+        height: 32px;
+        line-height: 32px;
+        .text {
+          color: #5e5a5a;
+          font-size: 18px;
+          font-weight: bold;
+        }
+      }
     .textBox{
         text-align : "right";
         // display: "inline"
@@ -119,5 +145,34 @@
         margin: 30px 30px 30px 50px;
         text-align:center;
       }
+      .dialog {
+        width: 520px;
+        :global {
+          .next-dialog-body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+          }
+        }
+        .empty {
+          flex: 1;
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          span {
+            font-size: 14px;
+            color: #101010;
+          }
+        }
+        .search {
+          width: 100%;
+        }
+        .list {
+          width: 100%;
+        }
+      }
+      
 
     

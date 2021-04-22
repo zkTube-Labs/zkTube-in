@@ -28,6 +28,7 @@ interface IState {
   committedBalances: double | undefined;
   committedBalances: float | undefined;
   exceptionMsg: string | null;
+  resolveTransfer: boolean;
   // could be one of following messages:
   // WalletSignFailed
   // NetworkError
@@ -79,7 +80,9 @@ const zkTubeInitialize = async (_web3: any, callback?: (e: CustomError) => void)
     _syncWallet = await zktube.Wallet.fromEthSigner(singer, _syncHTTPProvider);
     return { syncWallet: _syncWallet, syncHTTPProvider: _syncHTTPProvider };
   } catch (e) {
-    console.log('e', e);
+    // window.location.reload();
+
+    console.log('No Signature', e);
     callback && callback(e);
     throw Error('please sign');
   }
@@ -100,6 +103,7 @@ export default {
     committedBalances: 0.0,
     verifiedBalances: 0.0,
     exceptionMsg: null,
+    resolveTransfer:false
   },
 
   effects: ({ wallet }: IStoreDispatch) => ({
@@ -132,7 +136,7 @@ export default {
 
     async checkStatus() {
       const _web3: Web3 = await getWeb3();
-      // await zkTubeInitialize(_web3);
+      await zkTubeInitialize(_web3);
       console.log('wallet deposit', wallet);
       const { syncWallet } = await zkTubeInitialize(_web3);
 
@@ -187,17 +191,25 @@ export default {
       const _web3: Web3 = await getWeb3();
       await zkTubeInitialize(_web3);
       const { syncWallet } = await zkTubeInitialize(_web3);
-      const _transfer = await syncWallet.syncTransfer({
-        to: data.address,
-        // eslint-disable-next-line @iceworks/best-practices/no-secret-info
-        token: 'ETH',
-        amount,
-      });
-      await _transfer.awaitReceipt();
-      wallet.update({
-        amount,
-        transfer: _transfer,
-      });
+      try{
+        const _transfer = await syncWallet.syncTransfer({
+          to: data.address,
+          // eslint-disable-next-line @iceworks/best-practices/no-secret-info
+          token: 'ETH',
+          amount,
+        });
+        wallet.update({
+          amount,
+          transfer: _transfer,
+          resolveTransfer: true
+        });
+        return await _transfer.awaitReceipt();
+       
+      }
+      catch(error){
+        console.log("Transfer Error", error);
+      }
+     
     },
 
     async withdraw(amount) {
@@ -211,10 +223,12 @@ export default {
         amount: ethers.utils.parseEther(amount),
       });
       await withdraw.awaitReceipt();
-      await withdraw.awaitVerifyReceipt();
+      // await withdraw.awaitVerifyReceipt();
       wallet.update({
         amount,
       });
+      return await withdraw.awaitVerifyReceipt();
+
     },
 
     async setState(payload: IState) {
