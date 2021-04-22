@@ -100,7 +100,9 @@ export default {
     signErrorMsg: undefined,
     amount: undefined,
     transfer: undefined,
+    // wei, 1 ETH = 10^18 wei
     committedBalances: 0.0,
+    // wei, 1 ETH = 10^18 wei
     verifiedBalances: 0.0,
     exceptionMsg: null,
     resolveTransfer:false
@@ -126,19 +128,25 @@ export default {
         syncHTTPProvider: _provider,
       });
       // console.log('state 2', state);
-      history.push('/wallet/deposit');
+      history.push('/wallet/detail');
       try {
         await signKey(_wallet);
       } catch (e) {
         console.log('e========e', e);
+        this.parseException(e);
       }
     },
 
-    async checkStatus() {
-      const _web3: Web3 = await getWeb3();
-      await zkTubeInitialize(_web3);
-      console.log('wallet deposit', wallet);
-      const { syncWallet } = await zkTubeInitialize(_web3);
+
+    parseException(e) {
+
+    },
+
+    async checkStatus(syncWallet) {
+      // const _web3: Web3 = await getWeb3();
+      // // await zkTubeInitialize(_web3);
+      // console.log('wallet deposit', wallet);
+      // const { syncWallet } = await zkTubeInitialize(_web3);
 
       const state = await syncWallet.getAccountState();
       console.log('account state:', state);
@@ -150,16 +158,15 @@ export default {
       // setVerifiedEthBalance(state.verified.balances.ETH);
     },
 
-    async deposit(amount) {
+    async deposit(syncWallet, amount :string) {
       // Depositing assets from Ethereum into zkTube
+      if (!syncWallet){
+        const _web3: Web3 = await getWeb3();
+        await zkTubeInitialize(_web3);
+        syncWallet = await zkTubeInitialize(_web3);
+      }
 
-      const _web3: Web3 = await getWeb3();
-      // await zkTubeInitialize(_web3);
-      console.log('wallet deposit', wallet);
-      const { syncWallet } = await zkTubeInitialize(_web3);
-      // const [syncWallet, setWallet] = useState(null);
-
-      console.log(`目标地址：${syncWallet.address()}`);
+      console.log(`目标地址：${syncWallet.address()}, amount`, amount);
       try {
         // const { tk } = 'ETH';
         const deposit = await syncWallet.depositToSyncFromEthereum({
@@ -168,7 +175,7 @@ export default {
           // param 2 token
           // eslint-disable-next-line @iceworks/best-practices/no-secret-info
           token: 'ETH',
-          amount: ethers.utils.parseEther(amount),
+          amount: ethers.utils.parseEther('0.1'),
         });
 
         // Await confirmation from the zkTube operator
@@ -182,7 +189,7 @@ export default {
         console.log(depositReceipt);
       } catch (error) {
         // console.log(error);
-        console.log('deposit exception');
+        console.log('deposit exception', error);
       }
     },
 
@@ -209,7 +216,6 @@ export default {
       catch(error){
         console.log("Transfer Error", error);
       }
-     
     },
 
     async withdraw(amount) {

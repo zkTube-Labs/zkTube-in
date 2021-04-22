@@ -17,7 +17,7 @@ const WalletDetail = () => {
         navClassName={styles.navStyle}
         contentClassName={styles.contentStyle}
         unmountInactiveTabs
-        defaultActiveKey="2"
+        defaultActiveKey="1"
       >
         <Tab.Item title="Wallet" key="1">
           <Wallet />

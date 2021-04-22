@@ -15,11 +15,13 @@ function Wallet() {
   }, []);
 
   const onWithdraw = useCallback(() => {
-    console.log('withdraw');
+    history.push('/wallet/withdraw');
+    // console.log('withdraw');
   }, []);
 
   const onTransfer = useCallback(() => {
-    console.log('transfer');
+    history.push('/wallet/transfer');
+    // console.log('transfer');
   }, []);
 
   const onCopy = useCallback(() => {

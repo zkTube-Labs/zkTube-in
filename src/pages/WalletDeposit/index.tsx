@@ -32,9 +32,13 @@ function WalletDeposit() {
     setVisible(true);
   }, []);
 
+  const onAmountChage = (v: string) => {
+    setAmount(v);
+  };
+
   const handleDoDeposit = useCallback(() => {
     const data = `${amount}`;
-    action.deposit('0.1');
+    action.deposit(wallet.syncWallet, '0.1');
     console.log('do deposit', data, 'ETH');
   }, []);
 
@@ -42,7 +46,7 @@ function WalletDeposit() {
     console.log('onSelect', crypto);
     setVisible(false);
     setSelected(crypto);
-    action.checkStatus();
+    action.checkStatus(wallet.syncWallet);
   }, []);
 
   const onSearch = (value: string) => {
@@ -73,7 +77,6 @@ function WalletDeposit() {
             <div className={styles.extra} />
           </div>
           <div className={styles.formContainer}>
-            <div className={styles.label}>Amount</div>
             <div className={styles.fieldContainer}>
               <Input className={styles.input} readOnly value={selected} />
               {selected ? (
@@ -95,6 +98,7 @@ function WalletDeposit() {
                     MAX
                   </Button>
                 </div>
+                <div className={styles.label}>Amount</div>
                 <Input
                   type="decimal"
                   name="amount"
@@ -102,9 +106,7 @@ function WalletDeposit() {
                   placeholder="Deposit Amount"
                   size="medium"
                   step={0.1}
-                  onChange={(changedAmount) => {
-                    setAmount(changedAmount);
-                  }}
+                  onChange={onAmountChage}
                 />
                 <Button size="medium" onClick={handleDoDeposit}>
                   Deposit
