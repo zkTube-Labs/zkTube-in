@@ -175,6 +175,11 @@ export default {
         syncWallet: _wallet,
         syncHTTPProvider: _provider,
       });
+      try {
+        await signKey(_wallet);
+      } catch (e) {
+        this.parseException(e);
+      }
       return _wallet;
     },
 
