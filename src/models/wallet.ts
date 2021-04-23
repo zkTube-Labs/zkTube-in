@@ -23,7 +23,7 @@ interface IState {
   account: string;
   syncHTTPProvider: provider;
   signErrorMsg: string | undefined;
-  amount: any;
+  amount: string;
   transfer: any;
   committedBalances: string | undefined;
   verifiedBalances: string | undefined;
@@ -103,9 +103,9 @@ export default {
     amount: undefined,
     transfer: undefined,
     // wei, 1 ETH = 10^18 wei
-    committedBalances: 0.0,
+    committedBalances: 0,
     // wei, 1 ETH = 10^18 wei
-    verifiedBalances: 0.0,
+    verifiedBalances: 0,
     exceptionMsg: null,
     resolveTransfer: false,
   },
@@ -148,8 +148,19 @@ export default {
       // if (e == "Error: Failed to Set Signing Key: Account does not exist in the zkTube network")
     },
 
-    async checkStatus(syncWallet) {
-      if (!syncWallet) {
+    // issue: param 2 always be the 'this' pointer to the wallet model.
+    // async deposit(amount, thisModel, address)
+    // the first param is correct
+    // the second param may always be the 'this' pointer to the wallet model
+    // the third param also be correct
+    async checkStatus(_, thisModel) {
+      // if (!syncWallet) {
+      //   syncWallet = await this.refreshWallet();
+      // }
+      let syncWallet = null;
+      if (thisModel && thisModel.wallet && thisModel.wallet.syncWallet) {
+        syncWallet = thisModel.wallet.syncWallet;
+      } else {
         syncWallet = await this.refreshWallet();
       }
 
@@ -183,13 +194,21 @@ export default {
       return _wallet;
     },
 
-    async deposit(syncWallet, amount: string) {
+    // issue: param 2 always be the 'this' pointer to the wallet model.
+    // async deposit(amount, thisModel, address)
+    // the first param is correct
+    // the second param may always be the 'this' pointer to the wallet model
+    // the third param also be correct
+    async deposit(amount, thisModel) {
       // Depositing assets from Ethereum into zkTube
-      if (!syncWallet) {
+      let syncWallet = null;
+      if (thisModel && thisModel.wallet && thisModel.wallet.syncWallet) {
+        syncWallet = thisModel.wallet.syncWallet;
+      } else {
         syncWallet = await this.refreshWallet();
       }
 
-      console.log('deposit wallet', syncWallet);
+      console.log('deposit wallet', thisModel);
       console.log(`目标地址：${syncWallet.address()}, amount`, amount);
       try {
         // const { tk } = 'ETH';
@@ -199,7 +218,7 @@ export default {
           // param 2 token
           // eslint-disable-next-line @iceworks/best-practices/no-secret-info
           token: 'ETH',
-          amount: ethers.utils.parseEther('0.01'),
+          amount: ethers.utils.parseEther(amount),
         });
 
         // Await confirmation from the zkTube operator

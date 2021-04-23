@@ -16,8 +16,8 @@ function WalletDeposit() {
   const [list, setList] = useState([]);
   const [selected, setSelected] = useState<any>();
   const [loading] = useState<boolean>(false);
-  const [wallet, action] = store.useModel('wallet');
-  let [amount, setAmount] = useState('');
+  const [wallet1, action] = store.useModel('wallet');
+  const [amount, setAmount] = useState('');
 
   const goBack = useCallback(() => {
     history.goBack();
@@ -36,21 +36,23 @@ function WalletDeposit() {
   };
 
   const handleDoDeposit = useCallback(() => {
-    const data =`${amount}`;
-    action.deposit(wallet.syncWallet, '0.01');
+    const data = `${amount}`;
+    // let data = `${amount}`;
+    // action.deposit(wallet1.syncWallet, '0.009');
+    action.deposit(data);
     console.log('do deposit', data, 'ETH');
-  }, []);
+  }, [amount, wallet1]);
 
   const onSelect = useCallback((crypto: string) => {
     console.log('onSelect', crypto);
     setVisible(false);
     setSelected(crypto);
     try {
-      action.checkStatus(wallet.syncWallet);
+      action.checkStatus();
     } catch (e) {
       console.log('action.checkStatus', e);
     }
-  }, []);
+  }, [wallet1]);
 
   const onSearch = (value: string) => {
     const _list = list.filter((item: any) => {
@@ -96,13 +98,20 @@ function WalletDeposit() {
             {selected && (
               <>
                 <div className={styles.balance}>
-                  <span className={styles.text} >Balance:{wallet.verifiedBalances}</span>
+                  <span className={styles.text} >Balance:{wallet1.verifiedBalances}</span>
                   <Button size="small" text className={styles.button}>
                     MAX
                   </Button>
                 </div>
                 <div className={styles.label}>Amount</div>
-                <Input type="text" name="amount" onChange = {(amount) => {setAmount(amount);}} className = {styles.inputWidth2} placeholder="Amount" size="medium" />
+                <Input
+                  type="text"
+                  name="amount"
+                  onChange={(_amount) => { setAmount(_amount); }}
+                  className={styles.inputWidth2}
+                  placeholder="Amount"
+                  size="medium"
+                />
                 <Button size="medium" onClick={handleDoDeposit}>
                   Deposit
                 </Button>
