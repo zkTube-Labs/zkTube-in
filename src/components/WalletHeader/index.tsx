@@ -1,12 +1,19 @@
 import React from 'react';
 import { Select, Button } from '@alifd/next';
 import styles from './index.module.scss';
+import store from '@/store';
 
 const Option = Select.Option;
 
 const WalletHeader = () => {
+  const [, action] = store.useModel('wallet');
+
   function onChange(value) {
     console.log('value', value);
+  }
+
+  function onClick() {
+    action.setState({ selectWalletDialogVisible: true });
   }
 
   return (
@@ -24,7 +31,9 @@ const WalletHeader = () => {
         </Select>
       </div>
       <div className={styles.boxbtn}>
-        <Button type="primary">Connect to a wallet</Button>
+        <Button type="primary" onClick={onClick}>
+          Connect to a wallet
+        </Button>
       </div>
     </div>
   );

@@ -27,8 +27,10 @@ interface IState {
   transfer: any;
   committedBalances: string | undefined;
   verifiedBalances: string | undefined;
-  exceptionMsg: string | null;
   resolveTransfer: boolean;
+  assets: any;
+
+  exceptionMsg: string | null;
   // could be one of following messages:
   // WalletSignFailed
   // NetworkError
@@ -108,6 +110,7 @@ export default {
     verifiedBalances: 0,
     exceptionMsg: null,
     resolveTransfer: false,
+    assets: null,
   },
 
   effects: ({ wallet }: IStoreDispatch) => ({
@@ -148,7 +151,7 @@ export default {
       // if (e == "Error: Failed to Set Signing Key: Account does not exist in the zkTube network")
     },
 
-    // issue: param 2 always be the 'this' pointer to the wallet model.
+    // issue: param 2 always be the 'this' pointer to the wallet model, neither you pass some thing or not
     // async deposit(amount, thisModel, address)
     // the first param is correct
     // the second param may always be the 'this' pointer to the wallet model
@@ -168,14 +171,14 @@ export default {
         throw ('AccountNotInit');
       }
 
-      const state = await syncWallet.getAccountState();
-      console.log('account state:', state);
+      const assets = await syncWallet.getAccountState();
+      console.log('account assets:', assets);
       wallet.update({
-        committedBalances: state.committed.balances.ETH,
-        verifiedBalances: state.verified.balances.ETH,
+        committedBalances: assets.committed.balances.ETH,
+        verifiedBalances: assets.verified.balances.ETH,
+        assets,
       });
-      // setCommittedEthBalance(state.committed.balances.ETH);
-      // setVerifiedEthBalance(state.verified.balances.ETH);
+      return assets;
     },
 
     async refreshWallet() {
@@ -194,7 +197,7 @@ export default {
       return _wallet;
     },
 
-    // issue: param 2 always be the 'this' pointer to the wallet model.
+    // issue: param 2 always be the 'this' pointer to the wallet model, neither you pass some thing or not
     // async deposit(amount, thisModel, address)
     // the first param is correct
     // the second param may always be the 'this' pointer to the wallet model
