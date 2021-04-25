@@ -19,7 +19,7 @@ const WalletDetail = () => {
         unmountInactiveTabs
         defaultActiveKey="1"
       >
-        <Tab.Item title="Wallet" key="1">
+        <Tab.Item title="Wallet" key="1" style = {{marginTop:"10px"}}>
           <Wallet />
         </Tab.Item>
         <Tab.Item title="Transactions" key="2">

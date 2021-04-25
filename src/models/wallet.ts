@@ -288,10 +288,17 @@ export default {
     },
 
     async transfer(data) {
+
+      
+      let  syncWallet = await this.refreshWallet();
+      if(!syncWallet){
+        const _web3: Web3 = await getWeb3();
+        await zkTubeInitialize(_web3);
+         syncWallet = await zkTubeInitialize(_web3);
+      }
+      
       const amount = zktube.utils.closestPackableTransactionAmount(ethers.utils.parseEther(data.amount));
-      const _web3: Web3 = await getWeb3();
-      await zkTubeInitialize(_web3);
-      const { syncWallet } = await zkTubeInitialize(_web3);
+    
       try {
         const _transfer = await syncWallet.syncTransfer({
           to: data.address,
@@ -310,24 +317,31 @@ export default {
       }
     },
 
-    async withdraw(syncWallet, amount) {
-      if (!syncWallet) {
+    async withdraw(amount) {
+
+      let  syncWallet = await this.refreshWallet();
+      if(!syncWallet){
         const _web3: Web3 = await getWeb3();
         await zkTubeInitialize(_web3);
-        syncWallet = await zkTubeInitialize(_web3);
+         syncWallet = await zkTubeInitialize(_web3);
       }
+  
       const withdraw = await syncWallet.withdrawFromSyncToEthereum({
         ethAddress: syncWallet.address(),
         // eslint-disable-next-line @iceworks/best-practices/no-secret-info
         token: 'ETH',
         amount: ethers.utils.parseEther(amount),
       });
-      await withdraw.awaitReceipt();
+     
+      // await withdraw.awaitReceipt();
       // await withdraw.awaitVerifyReceipt();
       wallet.update({
         amount,
       });
-      return await withdraw.awaitVerifyReceipt();
+        withdraw.awaitVerifyReceipt();
+
+       return await withdraw.awaitReceipt();
+
 
     },
 

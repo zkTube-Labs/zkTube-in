@@ -1,11 +1,16 @@
 .list {
   position: relative;
-  margin-top: -21px; 
+  margin-top: -21px;
+  background-image: url(../../../../assets/fullImage.png);
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   .listitem {
     position: relative;
     border: 1px solid #eee;
     .borderbox {
-      background: #fff;
+      // background: #fff;
       height: auto;
       .headtitle {
         width: 100%;
@@ -13,15 +18,17 @@
         line-height: 200px;
         text-align: center;
         .headimg {
-          width: 420px;
-          height: 130px;
-          margin-top: 100px; 
+          width: 150px;
+          height: 100px;
+          margin-top: 150px; 
         }
       }
       .midtitle {
         width: 100%;
         text-align: center;
         margin-top: 80px;
+        color: white;
+
         .midimg {
           width: 350px;
           height: 193px;
@@ -43,21 +50,41 @@
       .footbtn {
         text-align: center;
         margin-top: 100px;
+        position: relative;
+        color: white;
+        margin-bottom : 50px;
+      }
+      .center {
+        position: absolute;
+        color: white;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        margin: auto;
+        padding: 15px 0px;
+        vertical-align: middle;
+        font-size: 22px;
+
       }
       .foottitle {
         width: 100%;
         text-align: center;
-        margin-top: 35px;
+        // margin-top: 70px;
         .footlarge {
           display: block;
           font-size: 28px;
           font-weight: bold;
+          color: white;
+          margin-top: 100px;
         }
         .footsmall {
           display: block;
           font-size: 14px;
-          font-weight: bold;
-          margin-top: 5px;
+          // font-weight: bold;
+          margin-top: 15px;
+          color:aliceblue;
+          text-align: center;
         }
       }
       .introlist {
@@ -71,8 +98,11 @@
           justify-content: space-evenly;     
         .introitem {
           width: 220px;
-          height: 400px;
-          border: 1px solid #eee;
+          height: 450px;
+          border: 1px solid;
+          box-shadow: 5px 5px rgba(10, 2, 44, 0.719);
+          overflow: hidden;
+
           .itemimg {
             height: 120px;   
           }
@@ -80,13 +110,150 @@
             text-align: center;
             font-size: 15px;
             font-weight: bold;
+            color: white;
+
           }
           .itemsec {
             text-align: center;
             padding: 10px;
-          }
-        }
+            color:rgba(243, 229, 229, 0.719);
+            word-spacing: 3px;
+            
+          }        
+              }
       }
+      }
+
+      .imgphil{
+        width: 66%;
+        height: 60%;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        position: relative;
+        color: white;
+        text-align: center;
+        overflow: hidden;
+
+      }
+      .ourphil{
+        position: absolute;
+        color: white;
+        top: 30%;
+        left: 0;
+        margin: auto;
+        // padding: 15px 0px;
+        vertical-align: middle;
+        text-align: left;
+        margin-left: 25px;
+
+        .our{
+          font-size: "22PX"; 
+          font-weight:"bold";
+          width: 66%;
+        
+      }
+      }
+      .announce{
+        font-size: 24px;
+        font-weight: bold;
+        margin-top: 10px;
+        width: 70%;
+        margin-left: 17%;
+        color: white;
+
+      }
+
+      .button{
+        background-color: rgba(-23, 42, 68, 113.2);
+        color: white;
+        margin-left: 5px;
+        width: 70px;
+        border-radius: 25px;
+        cursor: pointer;
+      }
+      .testnet{
+        width: 66%;
+        height: 100%;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        position: relative;
+        color: white;
+        text-align: center;
+        overflow: hidden;
+      }
+
+      .arrow{
+        position: absolute;
+        color: white;
+        top: 55%;
+        right: 2%;
+        margin: auto;
+        // padding: 15px 0px;
+        vertical-align: middle;
+        text-align: right;
+        margin-right: 25px;
+      }
+      .faq {
+        text-align: center;
+        margin-top: 50px;
+        position: relative;
+        color: white;
+        margin-bottom : 50px;
+      }
+  
+      .eth{
+        position: absolute;
+        color: white;
+        top: 20%;
+        left: 1%;
+        margin: auto;
+        margin-left: 20px;
+      }
+
+      .tech{
+        position: absolute;
+        color: white;
+        top: 55%;
+        margin: auto;
+        margin-left: 22px;
+      }
+
+      .zktube{
+        position: absolute;
+        color: white;
+        top: 20%;
+        left: 10%;
+        margin: auto;
+        vertical-align: middle;
+        text-align: left;
+        // margin-left: 25px;
+      }
+
+      .team{
+        position: absolute;
+        color: white;
+        top: 55%;
+        left: 10%;
+        margin: auto;
+        vertical-align: middle;
+        text-align: left;
+      }
+
+      .footer{
+        width: 66%;
+        height: 100%;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        color: white;
+        margin-top: 50px;
+        margin-bottom: 20px;
+      }
+
+      .alignRight{
+        float: right;
       }
       .bigfoot {
         text-align: center;

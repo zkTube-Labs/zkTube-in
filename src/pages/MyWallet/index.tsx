@@ -5,6 +5,7 @@ import WalletHeader from './components/WalletHeader';
 import SelectWalletDialog from './components/SelectWalletDialog';
 import MetaDialog from './components/MetaDialog';
 import UnMetaDialog from './components/UnMetaDialog';
+import backImage from '../../assets/fullImage.png';
 
 const { Cell } = ResponsiveGrid;
 
@@ -14,7 +15,7 @@ const MyWallet = () => {
       <Cell>
         <WalletHeader />
       </Cell>
-      <Cell colSpan={12}>
+      <Cell colSpan={12} style={{backgroundImage: "url(" + backImage + ")" }}>
         <WalletContent />
       </Cell>
       <SelectWalletDialog />

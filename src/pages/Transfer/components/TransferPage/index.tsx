@@ -5,7 +5,6 @@ import Icon from '@/components/Icon';
 import store from '@/store';
 import TransferSuccess from '../../../TransferSuccess';
 import CryptoItem from '../../../WalletDetail/components/CtyptoItem/index';
-
 import styles from './index.module.scss';
 
 
@@ -27,13 +26,11 @@ const TransferPage = () => {
   const [resolve, resolveTransfer] = useState(false);
 
 
-
   const handleClose = useCallback(() => {
     setVisible(false);
   }, []);
 
   const onSelect = useCallback((crypto: string) => {
-    console.log('onSelect', crypto);
     setVisible(false);
     setSelected(crypto);
     action.checkStatus(wallet1.syncWallet);
@@ -64,7 +61,6 @@ const TransferPage = () => {
     }
     // const value = action.transfer(data);
     try{
-   
       setLoading(true) 
       action.transfer(data).then(res =>{
         if(res == undefined){
@@ -94,7 +90,8 @@ const TransferPage = () => {
   };
   return ( 
     <div className={styles.container}>
-      {loading? (<TransferSuccess add = {address} amt={amount} load={effectState.transfer.isLoading } resolve={resolve}/> ): 
+      {loading? (<TransferSuccess add = {address} amt={amount}
+      load={effectState.transfer.isLoading } resolve={resolve}/> ): 
 
       (
         <div>

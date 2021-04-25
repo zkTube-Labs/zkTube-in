@@ -1,11 +1,27 @@
 import React from 'react';
-import { Box, Button, Icon } from '@alifd/next';
-import LOGO from '@/assets/paytube-black.png';
+import { Box, Button, Icon, Input } from '@alifd/next';
+import LOGO from '@/assets/newlogo.png';
+import BUTTON from '@/assets/button.png';
+import TESTNET from '@/assets/testnet.png';
+import ETH from '@/assets/eth.png';
 import BACK1 from '@/assets/backimg1.png';
 import BACK2 from '@/assets/backimg2.png';
-import SECURITY from '@/assets/security.svg';
-import TRANSACTION from '@/assets/transaction.svg';
-import TPS from '@/assets/tps.svg';
+import backImage from '../../../../../src/assets/fullImage.png';
+import SECURITY from '@/assets/security1.png';
+import TRANSACTION from '@/assets/transaction.png';
+import TPS from '@/assets/tps.png';
+import PHILO from '@/assets/philosophy.png';
+import ZKTUBE from '@/assets/zktube.png';
+import TECHNICAL from '@/assets/technical.png';
+import DISCORD from '@/assets/discord.png';
+import TELEGRAM from '@/assets/telegram.png';
+import TWITTER from '@/assets/twwiter.png';
+import FACEBOOK from '@/assets/facebook.png';
+import MEDIUM from '@/assets/medium.png';
+
+
+
+
 import store from '@/store';
 
 import styles from './index.module.scss';
@@ -17,8 +33,12 @@ const WalletContent = () => {
     action.setState({ selectWalletDialogVisible: true });
   };
 
+  const checkFAQ =() => {
+    console.log("faq")
+  };
+
   return (
-    <div className={styles.list}>
+    <div className={styles.list} style={{backgroundImage: "url(" + backImage + ")" }}>
       <div className={styles.listitem}>
         <Box>
           <div className={styles.borderbox}>
@@ -26,29 +46,31 @@ const WalletContent = () => {
               <img className={styles.headimg} src={LOGO} />
             </div>
             <div className={styles.midtitle}>
-              <img className={styles.midimg} src={BACK1} />
+              {/* <img className={styles.midimg} src={BACK1} /> */}
               <span className={styles.midlarge}>Decentralized wallet based on layer2</span>
               <span className={styles.midsmall}>The combination of zero knowledge protocol and layer2</span>
             </div>
             <div className={styles.footbtn}>
-              <Button type="secondary" onClick={handleConnectClick}>
-                Connect to a wallet
-              </Button>
+              <input type="image" src={BUTTON} onClick={handleConnectClick}/>
+              {/* <img className={styles.headimg} src={BUTTON} /> */}
+                <div className={styles.center}>Connect to a wallet</div>
+              {/* </Input> */}
             </div>
             <div className={styles.foottitle}>
-              <span className={styles.footlarge}>Introduction to zktube</span>
+              <span className={styles.footlarge}>
+                <span style={{color:"blueviolet"}}>Introduction to </span>zktube</span>
               <span className={styles.footsmall}>
-                zktube is a layer 2 protocol which uses zero knowledge proof and rollup of ZK rollup
+                zktube is a layer 2 protocol which uses zero knowledge proof and rollup of ZK rollup to realize low transaction fee and high
               </span>
               <span className={styles.footsmall}>
-                to realize low transaction fee and high throughput transaction between ETH and erc20.
+                 throughput transaction between ETH and erc20.
               </span>
             </div>
             <div className={styles.introlist}>
               <div className={styles.introcont}>
                 <div className={styles.introitem}>
                   <div className={styles.itemimg}>
-                    <img src={SECURITY} style={{ width: '70%', height: '80%', paddingTop: '10%' }} />
+                    <img src={SECURITY} style={{ width: '40%', height: '80%', paddingTop: '10%' }} />
                   </div>
                   <div className={styles.itemfirst}>Security</div>
                   <div className={styles.itemsec}>
@@ -60,7 +82,7 @@ const WalletContent = () => {
                 </div>
                 <div className={styles.introitem}>
                   <div className={styles.itemimg}>
-                    <img src={TRANSACTION} style={{ width: '100%', height: '100%' }} />
+                    <img src={TRANSACTION} style={{ width: '40%', height: '80%' , paddingTop: '10%'}} />
                   </div>
                   <div className={styles.itemfirst}>Transaction fee</div>
                   <div className={styles.itemsec}>
@@ -75,7 +97,7 @@ const WalletContent = () => {
                 </div>
                 <div className={styles.introitem}>
                   <div className={styles.itemimg}>
-                    <img src={TPS} style={{ width: '100%', height: '100%' }} />
+                    <img src={TPS} style={{ width: '40%', height: '80%', paddingTop: '10%' }} />
                   </div>
                   <div className={styles.itemfirst}>TPS2000+</div>
                   <div className={styles.itemsec}>
@@ -85,21 +107,115 @@ const WalletContent = () => {
                 </div>
               </div>
             </div>
-            <div className={styles.bigfoot}>Our philosophy</div>
-            <div className={styles.litfoot}>
-              We want to use zkcube technology to provide decentralized payment
-              <br /> services for more global entity services,so that people all over the <br /> world can enjoy
-              convenient,safe and fast services.
+            <div className={styles.imgphil}>
+                <img src={PHILO} style={{ width: '100%', height: '70%', paddingTop: '10%' }}/>
+                <div className={styles.ourphil}>
+                  <div style={{fontSize: "22PX", fontWeight:"bold", marginBottom:"20px"}}>
+                    <span style={{color:"blueviolet"}}>Our </span>philosophy
+                  </div>
+
+                  <div style={{color: "rgba(243, 229, 229, 0.719)"}}>
+                    We want to use zkcube technology to provide decentralized <br/> payment
+                    services for more <span style={{color:"blueviolet"}}>global entity services,</span> so that <br/>
+                    people all over the world can enjoy
+                    convenient, safe and fast services.
+                  </div>
+                  <div style={{fontSize: "22PX", fontWeight:"bold", marginTop:"60px", marginBottom:"5px"}}>
+                    Join the technology community
+                  </div>
+                  <div style={{color: "rgba(243, 229, 229, 0.719)"}}>
+                    <Icon type="email" />
+                    &nbsp; work@zktube.io
+                  </div>
+              
+                </div>
             </div>
-            <div className={styles.footimg}>
-              <img className={styles.img} src={BACK2} />
+            <div className={styles.announce}>
+              Announcement <Button className={styles.button}> More &gt;</Button>
             </div>
-            <div className={styles.pagefoot}>
-              <span className={styles.pagefsm}>Join the technology community</span>
-              <span className={styles.pagefla}>
-                <Icon type="email" />
-                Zktube technology@Pytube.io
-              </span>
+            <div className={styles.testnet}>
+              <img src={TESTNET} style={{ width: '100%', height: '100%', paddingTop: '5%' }}/>
+              <div className={styles.ourphil}>
+                
+                <div style={{fontSize: "22PX", fontWeight:"bold", marginBottom:"5px", marginTop: "15px"}}>
+                  zktube testnet has been online notifications...
+                </div>
+                <div style={{color: "rgba(243, 229, 229, 0.719)"}}>
+                  The combination of zero knowledge protocol and layer2</div>
+              </div>
+              <div className={styles.arrow}>
+                <div style={{fontSize: "20px", fontWeight:"bold"}}>&gt;</div>
+              </div>
+              
+            </div>
+
+            <div className={styles.faq}>
+              <input type="image" src={BUTTON} onClick={checkFAQ} style={{width: "110px", height: "55px", borderRadius: "25px"}}/>
+              {/* <img className={styles.headimg} src={BUTTON} /> */}
+                <div className={styles.center}>FAQ</div>
+              {/* </Input> */}
+            </div>
+
+            <div className={styles.testnet}>
+              <img src={ZKTUBE} style={{width : '100%', height: "50%"}}/>
+              <div className={styles.eth}>
+                <img src={ETH} style={{width:"50%", height: "100%"}}/>
+              </div>
+
+              <div className={styles.zktube}>
+                <div style={{fontSize: "14px", fontWeight:"bold"}}>
+                  zkTube is recommended by the Ethereum Foundation for public donation
+                </div>
+                <div style={{fontSize: "12px", marginTop:"5px", color: "rgba(243, 229, 229, 0.719)"}}>
+                  https://opengrants.com/grant/0X9eda313cf60f1d004e493fcc123d64c21ef7e6a7
+                </div>
+              </div>
+              <div className={styles.tech}>
+                <img src={TECHNICAL} style={{width : '50%', height: "55%"}}/>
+              </div>
+
+              <div className={styles.team}>
+                <div style={{fontSize: "14px", fontWeight:"bold"}}>
+                  zkTube technical team received Uniswap V3 Hackathon Granted
+                </div>
+                <div style={{fontSize: "12px", marginTop:"5px", color: "rgba(243, 229, 229, 0.719)"}}>
+                  https://gitcoin.co/issue/unigrants/ugp-hacks/1/unigrants.org
+                </div>
+              </div>
+            </div>
+            <hr style={{borderColor:"#585858", width: "65%", marginLeft: "auto", marginRight: "auto"}}/>
+            <div className={styles.footer}>
+              <table style={{width: "100%"}}>
+                <tbody>
+                <tr>
+                  <td style={{color: "rgba(243, 229, 229, 0.719)", fontSize: "10px"}}>
+                    <span> Terms of use &nbsp;|</span>
+                    <span> &nbsp;Cookie policy &nbsp;|</span>
+                    <span>&nbsp; Privacy policy </span>
+
+                  </td>
+                  <td style={{color: "rgba(243, 229, 229, 0.719)",  fontSize: "10px", float:"right"}}>
+                    <a href="#/" >
+                      <img src={DISCORD} style={{height: "5%"}}/>
+                    </a>
+                    <a href="#/" >
+                      <img src={TELEGRAM} style={{height: "5%", marginLeft: "15px"}}/>
+                    </a> 
+                    <a href="#/" >
+                      <img src={TWITTER} style={{height: "5%", marginLeft: "15px"}}/>
+                    </a>
+                    <a href="#/" >
+                      <img src={FACEBOOK} style={{height: "5%", marginLeft: "15px"}}/>
+                    </a>
+                    <a href="#/">
+                      <img src={MEDIUM} style={{height: "5%", marginLeft: "15px"}}/>
+                    </a>
+                  </td>
+
+                </tr>
+                </tbody>
+               
+              </table>
             </div>
           </div>
         </Box>
