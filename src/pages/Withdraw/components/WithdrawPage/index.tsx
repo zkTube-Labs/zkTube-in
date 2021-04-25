@@ -4,9 +4,7 @@ import {Input, Form, Select, Button, Dialog} from '@alifd/next';
 import Icon from '@/components/Icon';
 import WithdrawSuccess from '../../../WithdrawSuccess'
 import CryptoItem from '../../../WalletDetail/components/CtyptoItem/index';
-
 import store from '@/store';
-
 import styles from './index.module.scss';
 
 
@@ -47,7 +45,6 @@ function WithdrawPage() {
   }, []);
 
   const onSelect = useCallback((crypto: string) => {
-    console.log('onSelect', crypto);
     setVisible(false);
     setSelected(crypto);
     action.checkStatus(wallet1.syncWallet);
@@ -56,13 +53,12 @@ function WithdrawPage() {
 
   let withdrawMoney = useCallback(() => {
     let data =`${amount}`;
-
     try {
       setLoading(true) 
-      action.withdraw(wallet1.syncWallet, data).then(res => {
-        console.log("res", res)
+      action.withdraw(data).then(res => {
         if(res == undefined){
           window.location.reload();
+          console.log(res)
         }
         else if(res.success == true){
           resolveTransfer(true);

@@ -7,7 +7,6 @@ import Status from '../../../WalletStatus/components/StatusPage';
   const [loading] = useState<boolean>(true);
   const [status] = useState <boolean> (true);
 
-  console.log("res", props.resolve)
   return (
     <div className={styles.container}>
       {props.load || !props.resolve? (
@@ -19,7 +18,6 @@ import Status from '../../../WalletStatus/components/StatusPage';
       />
     ) : 
     (
-      
       <div >
         { !props.fail || props.resolve? (
            <Status
@@ -44,12 +42,9 @@ import Status from '../../../WalletStatus/components/StatusPage';
           onClickButton ={() => window.location.reload(false)}
           />
         )}
-             
         </div>
     )
     }
-    
-        
     </div>
   );
 }
