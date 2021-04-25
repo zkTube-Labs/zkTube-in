@@ -93,9 +93,9 @@ export default function BasicLayout({
           <SolutionLink />
           <HeaderAvatar />
         </Shell.Action> */}
-        <Shell.Navigation trigger={null} style={{ padding: 0, width: 280 }}>
-          <PageNav />
-        </Shell.Navigation>
+        {/* <Shell.Navigation trigger={null} style={{ padding: 0, width: 280 }}> */}
+          {/* <PageNav /> */}
+        {/* </Shell.Navigation> */}
 
         <Shell.Content>{children}</Shell.Content>
         {/* <Shell.Footer>
