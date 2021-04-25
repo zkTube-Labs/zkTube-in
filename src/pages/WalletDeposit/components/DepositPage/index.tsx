@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { history } from 'ice';
-import { Input, Button, Dialog, Paragraph } from '@alifd/next';
+import { Input, Button, Dialog, Paragraph, List } from '@alifd/next';
 import { ethers } from 'ethers';
 
 import Icon from '@/components/Icon';
@@ -10,19 +10,30 @@ import Loading from '../Loading';
 import styles from './index.module.scss';
 
 import store from '@/store';
+import { mount } from '.ice/render';
 
 function WalletDeposit() {
   const [empty] = useState(false);
   const [visible, setVisible] = useState<boolean>(false);
   const [list, setList] = useState([]);
   const [selected, setSelected] = useState<any>();
-  const [loading] = useState<boolean>(false);
+  const [loadingDeposit, setLoadingDeposit] = useState<boolean>(false);
   const [wallet1, action] = store.useModel('wallet');
   const [amount, setAmount] = useState('0.0');
 
   const [depositRadOnly, setReadOnly] = useState<boolean>(true);
   const [lockVisible, setLockVisible] = useState<boolean>(false);
   const [balance, setBalance] = useState('0.0');
+
+  const [assetsList, setAssets] = useState([]);
+
+  const [ethL1Balance, setEthL1Balance] = useState<any>();
+  const [ethPrice, setEthPrice] = useState(0);
+  const [ethUSD, setEthUSD] = useState(0);
+  const [loadingBalance, setLoadingBalance] = useState<boolean>(false);
+
+  let eBalance = null;
+  let ePrice = 0;
 
   const goBack = useCallback(() => {
     history.goBack();
@@ -34,51 +45,130 @@ function WalletDeposit() {
 
   const handleSelectToken = useCallback(() => {
     setVisible(true);
+    updateAssets();
+
   }, []);
 
   const handleDoDeposit = useCallback(() => {
     const data = `${amount}`;
-    action.deposit(data);
+    setLoadingDeposit(true);
+    const deposit = action.deposit(data);
+
+    deposit.then((_deposit) => {
+      setLoadingDeposit(false);
+      // const { receipt, verify } = { receipt: null, verify: null };
+      // console.log('handleDoDeposit', _deposit, receipt, verify);
+      // receipt.then((val) => {
+      //   console.log('handleDoDeposit, receipt', val);
+      // });
+      // verify.then((val) => {
+      //   console.log('handleDoDeposit, verify', val);
+      // });
+    });
+
     console.log('do deposit', data, 'ETH');
   }, [amount, wallet1]);
 
-  const onSelect = useCallback((crypto: string) => {
+  const onSelect = useCallback((crypto: any) => {
     console.log('onSelect', crypto);
     setVisible(false);
-    setSelected(crypto);
-    try {
-      const assets = action.checkStatus();
-      assets.then((val) => {
-        console.log('onSelect', val);
-        updateAssets(val);
-        setReadOnly(false);
+    setReadOnly(false);
+    setSelected(crypto.currency);
 
-        const wei = ethers.BigNumber.from(val?.verified?.balances?.ETH);
-        setBalance(ethers.utils.formatEther(wei));
+    setBalance(crypto.amount);
+  }, [wallet1]);
+
+  function formatBalance(currency, curBalance) {
+    if (currency == 'ETH') {
+      const wei = ethers.BigNumber.from(curBalance);
+      return ethers.utils.formatEther(wei);
+    } else {
+      return curBalance;
+    }
+  }
+
+  const refreshEthBalance = useCallback((wallet) => {
+    const promRefresh = action.refreshEthBalance();
+    // let eBalance = ethL1Balance;
+    // let ePrice = ethPrice;
+    promRefresh.then(({ ethL1Balance: _ethL1Balance, ethPrice: _ethPrice }) => {
+      _ethL1Balance.then((val) => {
+        setLoadingBalance(false);
+        setEthL1Balance(val);
+        eBalance = val;
+        UIrefreshEthBalance(eBalance, ePrice);
+        console.log('updateAssets, refreshWallet, ethL1Balance', val, wallet);
+      });
+      _ethPrice.then((val) => {
+        setEthPrice(val);
+        ePrice = val;
+        UIrefreshEthBalance(eBalance, ePrice);
+        console.log('updateAssets, refreshWallet, ethL1Balance', val);
+      });
+    }, [eBalance, ePrice]);
+  }, [wallet1, ethL1Balance, ethPrice]);
+
+  // function UIrefreshEthBalance() {
+  const UIrefreshEthBalance = useCallback(() => {
+    if (eBalance != null) {
+      const dataSource = [];
+      const currency = 'ETH';
+      console.log('UIrefreshEthBalance', wallet1, eBalance, ePrice);
+      const formatedBalance = formatBalance(currency, `${eBalance}`);
+      dataSource.push({
+        icon: 'icon-' + currency.toLowerCase(),
+        currency,
+        amount: formatedBalance,
+        dollar: ePrice > 0 ? formatedBalance * ePrice : 0,
+      });
+      setAssets(dataSource);
+      console.log('dataSource', dataSource);
+    }
+  }, [wallet1, eBalance, ePrice]);
+  // }
+
+  const updateAssets = useCallback(() => {
+    try {
+      const walletSigned = action.walletSigned();
+      walletSigned.then((signed) => {
+        if (signed) {
+          refreshEthBalance(wallet1);
+        } else {
+          setLoadingBalance(true);
+          const provider = action.refreshWallet();
+          provider.then((val) => {
+            console.log('updateAssets, refreshWallet', val.syncWallet, val.syncHTTPProvider);
+            refreshEthBalance(wallet1);
+          });
+        }
       });
     } catch (e) {
       console.log('action.checkStatus', e);
     }
+
   }, [wallet1]);
 
-  const updateAssets = useCallback((assets) => {
-
-  }, []);
-
   const onSearch = (value: string) => {
-    const _list = list.filter((item: any) => {
-      return item.name.indexOf(value) > -1;
+    const _list = assetsList.filter((item: any) => {
+      return item.currency.indexOf(value) > -1;
     });
-    setList(_list);
+    setAssets(_list);
   };
 
   const handleUnlock = useCallback(() => {
     console.log('unlock');
   }, []);
 
+  const setAmountByWei = useCallback((wei) => {
+    const _wei = ethers.BigNumber.from(wei);
+    const eth = ethers.utils.formatEther(_wei);
+    setAmount(eth);
+
+  }, []);
+
   return (
     <div className={styles.container}>
-      {loading ? (
+      {loadingDeposit ? (
         <Loading
           title="Deposit"
           description="Confirm the transaction in order to unlock the token"
@@ -110,8 +200,15 @@ function WalletDeposit() {
             {selected && (
               <>
                 <div className={styles.balance}>
-                  <span className={styles.text} >L2 Balance:{balance}</span>
-                  <Button size="small" text className={styles.button}>
+                  <span className={styles.text} >L1 Balance:{balance}</span>
+                  <Button
+                    size="small"
+                    text
+                    className={styles.button}
+                    onClick={() => {
+                      setAmountByWei(ethL1Balance);
+                    }}
+                  >
                     MAX
                   </Button>
                 </div>
@@ -147,23 +244,29 @@ function WalletDeposit() {
         className={styles.dialog}
         closeMode={['close', 'esc', 'mask']}
       >
-        <Input placeholder="Filter bannce in L1" className={styles.search} hasClear onChange={onSearch} />
-        {empty ? (
-          <div className={styles.empty}>
-            <span>No tokens with balance were found!</span>
-          </div>
-        ) : (
-          <div className={styles.list}>
-            <CryptoItem icon="icon-eth" currency="ETH" amount={3.4232} dollar={35.0} onClick={() => onSelect('ETH')} />
-            <CryptoItem
-              icon="icon-usdt"
-              currency="USDT"
-              amount={3.4232}
-              dollar={35.0}
-              onClick={() => onSelect('USDT')}
-            />
-          </div>
-        )}
+        {/* <Input placeholder="Filter bannce in L1" className={styles.search} hasClear onChange={onSearch} /> */}
+        <div className={styles.list}>
+          <List
+            size="medium"
+            loading={loadingBalance}
+            emptyContent="No tokens with balance were found!"
+            dataSource={assetsList}
+            renderItem={(item, i) => (
+              <List.Item
+                key={i}
+                extra={item.money}
+                title={item.title}
+                media={<CryptoItem
+                  icon={item.icon}
+                  currency={item.currency}
+                  amount={item.amount}
+                  dollar={item.dollar}
+                  onClick={() => onSelect(item)}
+                />}
+              />
+            )}
+          />
+        </div>
       </Dialog>
     </div>
   );

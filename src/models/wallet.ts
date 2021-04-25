@@ -25,8 +25,8 @@ interface IState {
   signErrorMsg: string | undefined;
   amount: string;
   transfer: any;
-  committedBalances: string | undefined;
-  verifiedBalances: string | undefined;
+  ethL1Balance: ethers.utils.BigNumber | null;
+  ethPrice: ethers.utils.BigDecimal | null;
   resolveTransfer: boolean;
   assets: any;
 
@@ -38,6 +38,10 @@ interface IState {
   // AccountNotInit
   // AccountNotActive
   // InsufficientBalance
+
+  // Deprecated, you can get balances in assets segment
+  committedBalances: string | undefined;
+  verifiedBalances: string | undefined;
 }
 
 // eslint-disable-next-line @iceworks/best-practices/no-http-url
@@ -108,6 +112,9 @@ export default {
     committedBalances: 0,
     // wei, 1 ETH = 10^18 wei
     verifiedBalances: 0,
+    // eth on l1 chain balance, wei 1 ETH = 10^18 wei
+    ethL1Balance: null,
+    ethPrice: null,
     exceptionMsg: null,
     resolveTransfer: false,
     assets: null,
@@ -151,34 +158,70 @@ export default {
       // if (e == "Error: Failed to Set Signing Key: Account does not exist in the zkTube network")
     },
 
+    async refreshEthBalance(_, thisModel) {
+      const ethL1Balance = thisModel.wallet.syncWallet.getEthereumBalance('ETH');
+      ethL1Balance.then((val) => {
+        wallet.update({
+          ethL1Balance: val,
+        });
+        console.log('ethL1Balance', val, ethers.utils.formatEther(val));
+      });
+
+      const syncHTTPProvider = thisModel.wallet.syncHTTPProvider;
+      const ethPrice = syncHTTPProvider.getTokenPrice('ETH');
+      ethPrice.then((val) => {
+        wallet.update({
+          ethPrice: val,
+        });
+        console.log('ethPrice', val);
+      });
+      return { ethL1Balance, ethPrice };
+    },
+    async refreshL2Assets(_, thisModel) {
+      const assets = thisModel.wallet.syncWallet.getAccountState();
+      assets.then((val) => {
+        console.log('account assets:', val);
+        wallet.update({
+          committedBalances: val.committed.balances.ETH,
+          verifiedBalances: val.verified.balances.ETH,
+          val,
+        });
+      });
+
+      return assets;
+    },
+
+    async walletSigned(_, thisModel) {
+      if (thisModel && thisModel.wallet && thisModel.wallet.syncWallet && thisModel.wallet.syncHTTPProvider) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+
     // issue: param 2 always be the 'this' pointer to the wallet model, neither you pass some thing or not
     // async deposit(amount, thisModel, address)
     // the first param is correct
     // the second param may always be the 'this' pointer to the wallet model
     // the third param also be correct
     async checkStatus(_, thisModel) {
-      // if (!syncWallet) {
-      //   syncWallet = await this.refreshWallet();
-      // }
       let syncWallet = null;
-      if (thisModel && thisModel.wallet && thisModel.wallet.syncWallet) {
+      let syncHTTPProvider = null;
+      if (thisModel && thisModel.wallet && thisModel.wallet.syncWallet && thisModel.wallet.syncHTTPProvider) {
         syncWallet = thisModel.wallet.syncWallet;
+        syncHTTPProvider = thisModel.wallet.syncHTTPProvider;
       } else {
-        syncWallet = await this.refreshWallet();
+        const { syncWallet: _wallet, syncHTTPProvider: _provider } = await this.refreshWallet();
+        syncWallet = _wallet;
+        syncHTTPProvider = _provider;
       }
 
-      if (!syncWallet || !syncWallet.getAccountState) {
+      if (!syncWallet || !syncWallet.getAccountState || !syncHTTPProvider) {
         throw ('AccountNotInit');
       }
 
-      const assets = await syncWallet.getAccountState();
-      console.log('account assets:', assets);
-      wallet.update({
-        committedBalances: assets.committed.balances.ETH,
-        verifiedBalances: assets.verified.balances.ETH,
-        assets,
-      });
-      return assets;
+      this.refreshEthBalance(syncWallet, syncHTTPProvider);
+
     },
 
     async refreshWallet() {
@@ -194,7 +237,7 @@ export default {
       } catch (e) {
         this.parseException(e);
       }
-      return _wallet;
+      return { syncWallet: _wallet, syncHTTPProvider: _provider };
     },
 
     // issue: param 2 always be the 'this' pointer to the wallet model, neither you pass some thing or not
@@ -205,10 +248,13 @@ export default {
     async deposit(amount, thisModel) {
       // Depositing assets from Ethereum into zkTube
       let syncWallet = null;
+      let syncHTTPProvider = null;
       if (thisModel && thisModel.wallet && thisModel.wallet.syncWallet) {
         syncWallet = thisModel.wallet.syncWallet;
       } else {
-        syncWallet = await this.refreshWallet();
+        const { syncWallet: _wallet, syncHTTPProvider: _provider } = await this.refreshWallet();
+        syncWallet = _wallet;
+        syncHTTPProvider = _provider;
       }
 
       console.log('deposit wallet', thisModel);
@@ -226,13 +272,15 @@ export default {
 
         // Await confirmation from the zkTube operator
         // Completes when a promise is issued to process the tx
-        let depositReceipt = await deposit.awaitReceipt();
-        console.log(depositReceipt);
+        const receipt = await deposit.awaitReceipt();
+        console.log('deposit, receipt', receipt);
 
         // // Await verification
         // // Completes when the tx reaches finality on Ethereum
-        depositReceipt = await deposit.awaitVerifyReceipt();
-        console.log(depositReceipt);
+        const verify = await deposit.awaitVerifyReceipt();
+        console.log('deposit, verify', verify);
+        // return { receipt, verify };
+
       } catch (error) {
         // console.log(error);
         console.log('deposit exception', error);
