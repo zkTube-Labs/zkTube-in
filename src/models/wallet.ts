@@ -220,8 +220,14 @@ export default {
         throw ('AccountNotInit');
       }
 
-      this.refreshEthBalance(syncWallet, syncHTTPProvider);
-
+      const assets = await syncWallet.getAccountState();
+      console.log('account assets:', assets);
+      wallet.update({
+        committedBalances: assets.committed.balances.ETH,
+        verifiedBalances: assets.verified.balances.ETH,
+        assets,
+      });
+      return assets;
     },
 
     async refreshWallet() {
@@ -332,16 +338,12 @@ export default {
         token: 'ETH',
         amount: ethers.utils.parseEther(amount),
       });
-     
-      // await withdraw.awaitReceipt();
+      await withdraw.awaitReceipt();
       // await withdraw.awaitVerifyReceipt();
       wallet.update({
         amount,
       });
-        withdraw.awaitVerifyReceipt();
-
-       return await withdraw.awaitReceipt();
-
+      return await withdraw.awaitVerifyReceipt();
 
     },
 

@@ -143,7 +143,7 @@ function WalletDeposit() {
         }
       });
     } catch (e) {
-      console.log('action.checkStatus', e);
+      console.log('action.updateAssets', e);
     }
 
   }, [wallet1]);
