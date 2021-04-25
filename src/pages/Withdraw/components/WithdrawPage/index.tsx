@@ -58,6 +58,7 @@ function WithdrawPage() {
       action.withdraw(data).then(res => {
         if(res == undefined){
           window.location.reload();
+          console.log(res)
         }
         else if(res.success == true){
           resolveTransfer(true);
