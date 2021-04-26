@@ -29,7 +29,7 @@ const WalletHeader = () => {
   return (
     <header className={styles.header}>
        <a href="#/"> 
-        <img src={logo} alt="logo" width="10%" className={styles.logo} style={{padding: "12px"}}/>
+        <img src={logo} alt="logo" width="10%" className={styles.logo} style={{padding: "10px"}}/>
        </a> 
       <a href="#/" className={styles.wallet}  style={{color: "white"}}>
         My Wallet
