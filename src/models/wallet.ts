@@ -185,7 +185,7 @@ export default {
         wallet.update({
           committedBalances: val.committed.balances.ETH,
           verifiedBalances: val.verified.balances.ETH,
-          val,
+          assets: val,
         });
       });
 

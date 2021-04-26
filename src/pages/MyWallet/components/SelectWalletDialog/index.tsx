@@ -22,6 +22,7 @@ const SelectWalletDialog = () => {
       const initResult = action.init();
       initResult.then(() => {
         action.refreshEthBalance();
+        action.refreshL2Assets();
       });
     } else {
       action.setState({ unMetaDialogVisible: true });

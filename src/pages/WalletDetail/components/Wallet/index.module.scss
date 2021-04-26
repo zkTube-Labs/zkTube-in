@@ -43,6 +43,12 @@
         font-size: 14px;
         color: #060606;
         margin-right: 5px;
+        .connect{
+          background: transparent;
+          border: 0;
+          cursor: pointer;
+          color: #060606;
+        }
       }
       i {
         cursor: pointer;
