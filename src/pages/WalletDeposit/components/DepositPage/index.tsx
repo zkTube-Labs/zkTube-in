@@ -225,7 +225,7 @@ function WalletDeposit() {
             {selected && (
               <>
                 <div className={styles.balance}>
-                  <span className={styles.text} >L1 Balance:{balance}</span>
+                  <span className={styles.text} >L2 Balance:{balance}</span>
                   <Button
                     size="small"
                     text
@@ -234,10 +234,10 @@ function WalletDeposit() {
                       setAmountByWei(ethL1Balance);
                     }}
                   >
-                    MAX
+                   <span style={{marginTop : "30px", marginBottom : "30px", fontSize : "16px", fontWeight : "bold"}}>MAX</span> 
                   </Button>
                 </div>
-                <Button size="medium" disabled={Number(amount) <= 0.0} onClick={handleDoDeposit}>
+                <Button size="medium" style={{marginTop: "50px", marginBottom : "20px"}} disabled={Number(amount) <= 0.0} onClick={handleDoDeposit}>
                   Deposit
                 </Button>
 
@@ -270,7 +270,7 @@ function WalletDeposit() {
         closeMode={['close', 'esc', 'mask']}
       >
         {/* <Input placeholder="Filter bannce in L1" className={styles.search} hasClear onChange={onSearch} /> */}
-        <div className={styles.list}>
+        <div className={styles.list} style={{cursor: "pointer"}}>
           <List
             size="medium"
             loading={loadingBalance}
@@ -281,12 +281,15 @@ function WalletDeposit() {
                 key={i}
                 extra={item.money}
                 title={item.title}
-                media={<CryptoItem
+                
+                media={
+                  <CryptoItem 
                   icon={item.icon}
                   currency={item.currency}
                   amount={item.amount}
                   dollar={item.dollar}
                   onClick={() => onSelect(item)}
+                  
                 />}
               />
             )}

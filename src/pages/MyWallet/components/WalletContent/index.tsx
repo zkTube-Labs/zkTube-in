@@ -46,7 +46,7 @@ const WalletContent = () => {
 
   return (
     // <div className={styles.list} style={{backgroundImage: "url(" + backImage + ")" }}>
-    <div className={styles.list} style={{backgroundColor: "#020230"}}>
+    <div className={styles.list} style={{backgroundColor: "#14132D"}}>
 
       <div className={styles.listitem}>
         <Box>
@@ -54,7 +54,7 @@ const WalletContent = () => {
             <div className={styles.firstImage}>
             <img src={BACK} style={{ width: '100%', height: '70%' }}/>
               <div className={styles.headimg1}>
-              < img  src={LOGO} style={{ width: '60%', height: '50%' }}/>
+              <img  src={LOGO} style={{ width: '60%', height: '50%' }}/>
 
               </div>
               <div className={styles.midtitle1}>
@@ -93,7 +93,7 @@ const WalletContent = () => {
               <div className={styles.introcont}>
                 <div className={styles.introitem}>
                   <div className={styles.itemimg}>
-                    <img src={SECURITY} style={{ width: '40%', height: '80%', paddingTop: '10%' }} />
+                    <img src={SECURITY} style={{ width: '30%', height: '80%', paddingTop: '10%' }} />
                   </div>
                   <div className={styles.itemfirst}>Security</div>
                   <div className={styles.itemsec}>
@@ -105,7 +105,7 @@ const WalletContent = () => {
                 </div>
                 <div className={styles.introitem}>
                   <div className={styles.itemimg}>
-                    <img src={TRANSACTION} style={{ width: '40%', height: '80%' , paddingTop: '10%'}} />
+                    <img src={TRANSACTION} style={{ width: '30%', height: '80%' , paddingTop: '10%'}} />
                   </div>
                   <div className={styles.itemfirst}>Transaction fee</div>
                   <div className={styles.itemsec}>
@@ -120,7 +120,7 @@ const WalletContent = () => {
                 </div>
                 <div className={styles.introitem}>
                   <div className={styles.itemimg}>
-                    <img src={TPS} style={{ width: '40%', height: '80%', paddingTop: '10%' }} />
+                    <img src={TPS} style={{ width: '30', height: '80%', paddingTop: '10%' }} />
                   </div>
                   <div className={styles.itemfirst}>TPS2000+</div>
                   <div className={styles.itemsec}>
