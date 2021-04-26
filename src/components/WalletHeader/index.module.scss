@@ -1,15 +1,18 @@
 .list {
   width: 100%;
   height: 50px;
-  background: #fff;
-  border-bottom: 1px solid #eee;
+  background: rgba(255, 255, 255, 0.158);
+  
+  // border-bottom: 1px solid #eee;
   position: fixed;
   z-index: 66;
   .boxselect {
     height: 50px;
     line-height: 50px;
+    width: 200px;
     position: absolute;
-    right: 500px;
+    padding: 20px;
+    right: 100px;
     .statuspoint {
       display: inline-block;
       width: 12px;
@@ -21,30 +24,88 @@
       vertical-align: middle;
     }
   }
+  .shift{
+    padding: 10px 20px;
+    width: 40%;
+    margin: 20px;
+  }
   .boxbtn {
     position: absolute;
     right: 300px;
     height: 50px;
     line-height: 50px;
   }
+  .round{
+    border-radius: 30px;
+    height: 40px;
+  }
 }
 .boxselect {
   :global {
     .next-input {
       border-radius: 25px;
-      background: #333340;
+      background-color: #333340;
+      height: 35px;
       color: #fff;
     }
   }
 }
+a:link {
+  background-color: transparent;
+  text-decoration: none;
+  color: whitesmoke;
+}
+
+/* header */
+.img {
+  cursor: pointer;
+}
+.header {
+  // background-color: #33365B;
+  // box-shadow: 1px 1px 4px 0 rgba(0,0,0,.1);
+  position: fixed;
+  width: 100%;
+  z-index: 3;
+}
+
+.header ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow: hidden;
+  // background-color: rgba(255, 255, 255, 0.116);
+}
+
+.header li a {
+  display: block;
+  padding: 20px 20px;
+  border-right: 1px solid #f4f4f425;
+  text-decoration: none;
+}
+
+.header li a:hover,
+.header .menubtn:hover {
+  background-color: #f4f4f40c;
+}
+
+.header .logo {
+  display: block;
+  float: left;
+  font-size: 2em;
+  padding: 10px 20px;
+  text-decoration: none;
+  
+}
+.wallet{
+    font-size: 1em;
+    float: left;
+  padding: 20px 20px;
+  text-decoration: none;
+  color: whitesmoke;
+}
 
 /* account */
 .account {
-  position: absolute;
-  right: 240px;
-  height: 50px;
-  line-height: 35px;
-
   margin-top: 8px;
   width: 220px;
   .ethAssets {
@@ -58,5 +119,99 @@
     color: white;
     width: 145px;
     padding: 5px;
+  }
+}
+
+/* menu */
+
+.header .menu {
+  clear: both;
+  max-height: 0;
+  transition: max-height .2s ease-out;
+}
+
+/* menu icon */
+
+.header .menuicon {
+  cursor: pointer;
+  display: inline-block;
+  float: right;
+  padding: 28px 20px;
+  position: relative;
+  user-select: none;
+}
+
+.header .menuicon .navicon {
+  background: white;
+  display: block;
+  height: 2px;
+  position: relative;
+  transition: background .2s ease-out;
+  width: 18px;
+}
+
+.header .menuicon .navicon:before,
+.header .menuicon .navicon:after {
+  background: white;
+  content: '';
+  display: block;
+  height: 100%;
+  position: absolute;
+  transition: all .2s ease-out;
+  width: 100%;
+}
+
+.header .menuicon .navicon:before {
+  top: 5px;
+}
+
+.header .menuicon .navicon:after {
+  top: -5px;
+}
+
+/* menu btn */
+
+.header .menubtn {
+  display: none;
+}
+
+.header .menubtn:checked ~ .menu {
+  max-height: 240px;
+}
+
+.header .menubtn:checked ~ .menuicon .navicon {
+  background: transparent;
+}
+
+.header .menubtn:checked ~ .menuicon .navicon:before {
+  transform: rotate(-45deg);
+}
+
+.header .menubtn:checked ~ .menuicon .navicon:after {
+  transform: rotate(45deg);
+}
+
+.header .menubtn:checked ~ .menuicon:not(.steps) .navicon:before,
+.header .menubtn:checked ~ .menuicon:not(.steps) .navicon:after {
+  top: 0;
+}
+
+/* 48em = 768px */
+
+@media (min-width: 48em) {
+  .header li {
+    float: left;
+  }
+  .header li a {
+    padding: 20px 30px;
+  }
+  .header .menu {
+    clear: none;
+    float: right;
+    max-height: none;
+    padding: "20px";
+  }
+  .header .menuicon {
+    display: none;
   }
 }

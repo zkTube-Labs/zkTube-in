@@ -11,8 +11,10 @@ import styles from './index.module.scss';
 const WalletDetail = () => {
   return (
     <div>
-      <WalletHeader />
-      <Tab
+     
+      <WalletHeader/>
+      <hr/>
+      <Tab style = {{marginTop:"60px"}}
         shape="pure"
         size="small"
         navClassName={styles.navStyle}
@@ -20,7 +22,8 @@ const WalletDetail = () => {
         unmountInactiveTabs
         defaultActiveKey="1"
       >
-        <Tab.Item title="Wallet" key="1" style = {{marginTop:"10px"}}>
+        
+        <Tab.Item title="Wallet" key="1" style = {{marginRight:"20px"}}>
           <Wallet />
         </Tab.Item>
         <Tab.Item title="Transactions" key="2">
