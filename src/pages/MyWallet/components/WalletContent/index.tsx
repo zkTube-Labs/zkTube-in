@@ -19,15 +19,20 @@ import TWITTER from '@/assets/twwiter.png';
 import FACEBOOK from '@/assets/facebook.png';
 import MEDIUM from '@/assets/medium.png';
 
-
-
-
 import store from '@/store';
 
 import styles from './index.module.scss';
 
 const WalletContent = () => {
   const [, action] = store.useModel('wallet');
+  const announce = "https://zktube.zendesk.com/hc/en-us/sections/360013215451-Announcements";
+  const faq = "https://zktube.zendesk.com/hc/en-us/sections/360013215471-FAQ";
+  const telegram = "https://t.me/zkTubeGlobal";
+  const discord = "https://discord.gg/ZhcSuxhX4S";
+  const twitter = "https://twitter.com/zktubeofficial";
+  const medium = "zktube.medium.com";
+  const facebook = "https://www.facebook.com/zkTube.official/";
+
 
   const handleConnectClick = () => {
     action.setState({ selectWalletDialogVisible: true });
@@ -131,7 +136,10 @@ const WalletContent = () => {
                 </div>
             </div>
             <div className={styles.announce}>
-              Announcement <Button className={styles.button}> More &gt;</Button>
+              Announcement
+              <a href={announce} target="_blank">
+              <Button className={styles.button}> More &gt;</Button>
+              </a>
             </div>
             <div className={styles.testnet}>
               <img src={TESTNET} style={{ width: '100%', height: '100%', paddingTop: '5%' }}/>
@@ -150,10 +158,12 @@ const WalletContent = () => {
             </div>
 
             <div className={styles.faq}>
+              <a href={faq} target="_blank">
               <input type="image" src={BUTTON} onClick={checkFAQ} style={{width: "110px", height: "55px", borderRadius: "25px"}}/>
-              {/* <img className={styles.headimg} src={BUTTON} /> */}
                 <div className={styles.center}>FAQ</div>
-              {/* </Input> */}
+              </a>
+              
+            
             </div>
 
             <div className={styles.testnet}>
@@ -167,7 +177,9 @@ const WalletContent = () => {
                   zkTube is recommended by the Ethereum Foundation for public donation
                 </div>
                 <div style={{fontSize: "12px", marginTop:"5px", color: "rgba(243, 229, 229, 0.719)"}}>
+                  <a href="https://opengrants.com/grant/0X9eda313cf60f1d004e493fcc123d64c21ef7e6a7" target="_blank"  style ={{color: "rgba(243, 229, 229, 0.719)"}}>
                   https://opengrants.com/grant/0X9eda313cf60f1d004e493fcc123d64c21ef7e6a7
+                  </a>
                 </div>
               </div>
               <div className={styles.tech}>
@@ -179,7 +191,10 @@ const WalletContent = () => {
                   zkTube technical team received Uniswap V3 Hackathon Granted
                 </div>
                 <div style={{fontSize: "12px", marginTop:"5px", color: "rgba(243, 229, 229, 0.719)"}}>
-                  https://gitcoin.co/issue/unigrants/ugp-hacks/1/unigrants.org
+                  <a href="https://gitcoin.co/issue/unigrants/ugp-hacks/1/unigrants.org" target="_blank" style ={{color: "rgba(243, 229, 229, 0.719)"}} >
+                    https://gitcoin.co/issue/unigrants/ugp-hacks/1/unigrants.org
+
+                  </a>
                 </div>
               </div>
             </div>
@@ -195,19 +210,19 @@ const WalletContent = () => {
 
                   </td>
                   <td style={{color: "rgba(243, 229, 229, 0.719)",  fontSize: "10px", float:"right"}}>
-                    <a href="#/" >
+                    <a href={discord} target="_blank">
                       <img src={DISCORD} style={{height: "5%"}}/>
                     </a>
-                    <a href="#/" >
+                    <a href={telegram} target="_blank">
                       <img src={TELEGRAM} style={{height: "5%", marginLeft: "15px"}}/>
                     </a> 
-                    <a href="#/" >
+                    <a href={twitter} target="_blank">
                       <img src={TWITTER} style={{height: "5%", marginLeft: "15px"}}/>
                     </a>
-                    <a href="#/" >
+                    <a href= {facebook} target="_blank">
                       <img src={FACEBOOK} style={{height: "5%", marginLeft: "15px"}}/>
                     </a>
-                    <a href="#/">
+                    <a href= {medium} target="_blank">
                       <img src={MEDIUM} style={{height: "5%", marginLeft: "15px"}}/>
                     </a>
                   </td>

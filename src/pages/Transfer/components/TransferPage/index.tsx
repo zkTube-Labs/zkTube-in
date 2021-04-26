@@ -63,8 +63,9 @@ const TransferPage = () => {
     try{
       setLoading(true) 
       action.transfer(data).then(res =>{
+        console.log("res", res);
         if(res == undefined){
-          window.location.reload();
+          // window.location.reload();
         }
         else if(res.success == true){
           resolveTransfer(true);
