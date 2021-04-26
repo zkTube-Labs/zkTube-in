@@ -19,14 +19,19 @@ const WalletHeader = () => {
   return (
     <div className={styles.list}>
       <div className={styles.boxselect}>
-        <Select onChange={onChange} defaultValue="ETHMain network">
-          <Option value="ETHMain network">
+        <Select onChange={onChange} defaultValue="Rinkeby testnet">
+          {/* <Option value="ETHMain network">
             <div className={styles.statuspoint} />
             ETHMain network
           </Option>
           <Option value="Ropsten test network">
             <div className={styles.statuspoint} />
             Ropsten test network
+          </Option> */}
+          <Option value="Rinkeby testnet">
+            <div className={styles.statuspoint} style = {{ display: "inline-block",width: "12px",height: "12px", borderRadius: "25px",
+              backgroundColor: "green",marginRight: "7px",marginBottom: "3px",verticalAlign: "middle"}} />
+            Rinkeby testnet
           </Option>
         </Select>
       </div>
