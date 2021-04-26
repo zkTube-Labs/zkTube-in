@@ -4,6 +4,7 @@ import { Tab } from '@alifd/next';
 import WalletHeader from '@/components/WalletHeader';
 import Wallet from './components/Wallet';
 import Transactions from './components/Transactions';
+import SelectWalletDialog from '../MyWallet/components/SelectWalletDialog';
 
 import styles from './index.module.scss';
 
@@ -26,6 +27,7 @@ const WalletDetail = () => {
           <Transactions />
         </Tab.Item>
       </Tab>
+      <SelectWalletDialog />      
     </div>
   );
 };
