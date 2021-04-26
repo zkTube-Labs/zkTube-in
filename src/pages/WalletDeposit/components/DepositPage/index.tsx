@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { history } from 'ice';
-import { Input, Button, Dialog, Paragraph, List } from '@alifd/next';
+import { Input, Button, Dialog, NumberPicker, List } from '@alifd/next';
 import { ethers } from 'ethers';
 
 import Icon from '@/components/Icon';
@@ -166,6 +166,19 @@ function WalletDeposit() {
 
   }, []);
 
+  const onAmountChange = useCallback((_amount) => {
+    if (_amount <= 0.0) {
+      setAmount(_amount);
+    } else {
+      const ethAmount = ethers.utils.parseEther(_amount.toString());
+      if (ethAmount.gte(ethL1Balance)) {
+        setAmount(ethers.utils.formatEther(ethL1Balance));
+      } else {
+        setAmount(_amount);
+      }
+    }
+  }, [ethL1Balance]);
+
   return (
     <div className={styles.container}>
       {loadingDeposit ? (
@@ -185,7 +198,17 @@ function WalletDeposit() {
           <div className={styles.formContainer}>
             <div className={styles.label}>Amount</div>
             <div className={styles.fieldContainer}>
-              <Input className={styles.input} readOnly={depositRadOnly} value={amount} onChange={(_amount) => { setAmount(_amount); }} />
+              <NumberPicker
+                size="large"
+                className={styles.input}
+                disabled={depositRadOnly}
+                defaultValue={0}
+                value={Number(amount)}
+                min={0.0}
+                step={0.001}
+                precision={18}
+                onChange={(_amount) => { onAmountChange(_amount); }}
+              />
               {selected ? (
                 <Button type="primary" className={styles.buttonSelected} onClick={handleSelectToken}>
                   {selected}
@@ -212,7 +235,7 @@ function WalletDeposit() {
                     MAX
                   </Button>
                 </div>
-                <Button size="medium" onClick={handleDoDeposit}>
+                <Button size="medium" disabled={Number(amount) <= 0.0} onClick={handleDoDeposit}>
                   Deposit
                 </Button>
 
