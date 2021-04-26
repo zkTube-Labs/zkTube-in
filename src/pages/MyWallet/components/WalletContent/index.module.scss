@@ -1,7 +1,8 @@
 .list {
   position: relative;
   margin-top: -21px;
-  background-image: url(../../../../assets/fullImage.png);
+  // background-image: url(../../../../assets/fullImage.png);
+  background-color: #020230;
   height: 100%;
   background-position: center;
   background-repeat: no-repeat;
@@ -23,6 +24,21 @@
           margin-top: 150px; 
         }
       }
+
+      .firstImage{
+        width: 100%;
+        height: 80%;
+        display: block;
+        // margin-top: 10%;
+        margin-left: auto;
+        margin-right: auto;
+        position: relative;
+        color: white;
+        text-align: center;
+        overflow: hidden;
+
+      }
+     
       .midtitle {
         width: 100%;
         text-align: center;
@@ -47,10 +63,21 @@
           font-family: SourceHanSansSC-regular;
         }
       }
+      .footbtn1 {
+        text-align: center;
+        // margin-top: 100px;
+        position: absolute;
+        top: 69%;
+        left: 40%;
+        color: white;
+        margin-bottom : 50px;
+      }
       .footbtn {
         text-align: center;
         margin-top: 100px;
-        position: relative;
+        position: absolute;
+        top: 50%;
+        left: 50%;
         color: white;
         margin-bottom : 50px;
       }
@@ -76,31 +103,31 @@
           font-size: 28px;
           font-weight: bold;
           color: white;
-          margin-top: 100px;
+          margin-top: 20px;
         }
         .footsmall {
           display: block;
-          font-size: 14px;
+          font-size: 15px;
           // font-weight: bold;
           margin-top: 15px;
-          color:aliceblue;
+          color:rgba(243, 229, 229, 0.719);
           text-align: center;
         }
       }
       .introlist {
         width: 100%;
         text-align: center; 
-        margin-top: 100px;
+        margin-top: 50px;
         .introcont { 
           width: 68%;
           margin: 0 auto; 
           display: flex;
           justify-content: space-evenly;     
         .introitem {
-          width: 220px;
+          width: 240px;
           height: 450px;
           border: 1px solid;
-          box-shadow: 5px 5px rgba(10, 2, 44, 0.719);
+          box-shadow: 5px 5px rgba(10, 9, 10, 0.719);
           overflow: hidden;
 
           .itemimg {
@@ -117,7 +144,7 @@
             text-align: center;
             padding: 10px;
             color:rgba(243, 229, 229, 0.719);
-            word-spacing: 3px;
+            line-height: 1.5;
             
           }        
               }
@@ -126,7 +153,7 @@
 
       .imgphil{
         width: 66%;
-        height: 60%;
+        height: 50%;
         display: block;
         margin-left: auto;
         margin-right: auto;
@@ -134,6 +161,56 @@
         color: white;
         text-align: center;
         overflow: hidden;
+
+      }
+
+      .headimg1{
+        position: absolute;
+        color: white;
+        top: 30%;
+        left: 47%;
+        margin: auto;
+        // padding: 15px 0px;
+        vertical-align: middle;
+        text-align: left;
+      }
+      .midtitle1 {
+        width: 100%;
+        top: 45%;
+        font-size: 48px;
+        font-weight: bold;
+        font-family: SourceHanSansSC-bold; 
+        margin-top: 10px; 
+        text-align: center;
+        margin:auto;
+        // margin-top: 80px;
+        color: white;
+        position: absolute;
+      }
+
+      .midtitle2 {
+        width: 100%;
+        top: 54%;
+        font-size: 22px;
+        font-family: SourceHanSansSC-bold; 
+        margin-top: 10px; 
+        text-align: center;
+        margin:auto;
+        color: rgba(255, 255, 255, 0.63);
+        position: absolute;
+        
+      }
+
+
+      .decenter{
+        position: absolute;
+        color: white;
+        top: 30%;
+        left: 47%;
+        margin: auto;
+        // padding: 15px 0px;
+        vertical-align: middle;
+        text-align: left;
 
       }
       .ourphil{
@@ -157,7 +234,7 @@
       .announce{
         font-size: 24px;
         font-weight: bold;
-        margin-top: 10px;
+        margin-top: 30px;
         width: 70%;
         margin-left: 17%;
         color: white;
@@ -175,6 +252,17 @@
       .testnet{
         width: 66%;
         height: 100%;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        position: relative;
+        color: white;
+        text-align: center;
+        overflow: hidden;
+      }
+      .another{
+        width: 100%;
+        height: 150%;
         display: block;
         margin-left: auto;
         margin-right: auto;
@@ -202,54 +290,57 @@
         color: white;
         margin-bottom : 50px;
       }
-  
+      
+
       .eth{
         position: absolute;
         color: white;
-        top: 20%;
-        left: 1%;
+        top: 15%;
+        left: 15%;
         margin: auto;
         margin-left: 20px;
-      }
-
-      .tech{
-        position: absolute;
-        color: white;
-        top: 55%;
-        margin: auto;
-        margin-left: 22px;
       }
 
       .zktube{
         position: absolute;
         color: white;
-        top: 20%;
-        left: 10%;
+        top: 15%;
+        left: 21%;
         margin: auto;
         vertical-align: middle;
         text-align: left;
         // margin-left: 25px;
       }
+      .tech{
+        position: absolute;
+        color: white;
+        top: 45%;
+        margin: auto;
+        left: 16%      
+      }
 
+      
       .team{
         position: absolute;
         color: white;
-        top: 55%;
-        left: 10%;
+        top: 45%;
+        left: 21%;
         margin: auto;
         vertical-align: middle;
         text-align: left;
       }
 
       .footer{
+        position: absolute;
         width: 66%;
         height: 100%;
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
+        top: 60%;
+        left: 15%;
+        // display: block;
+        margin: auto;
         color: white;
-        margin-top: 50px;
-        margin-bottom: 20px;
+         margin-top: 50px;
+        // margin-bottom: 20px;
       }
 
       .alignRight{
