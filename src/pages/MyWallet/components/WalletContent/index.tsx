@@ -30,7 +30,7 @@ const WalletContent = () => {
   const telegram = "https://t.me/zkTubeGlobal";
   const discord = "https://discord.gg/ZhcSuxhX4S";
   const twitter = "https://twitter.com/zktubeofficial";
-  const medium = "zktube.medium.com";
+  const medium = "https://zktube.medium.com";
   const facebook = "https://www.facebook.com/zkTube.official/";
 
 
@@ -55,12 +55,15 @@ const WalletContent = () => {
               <span className={styles.midlarge}>Decentralized wallet based on layer2</span>
               <span className={styles.midsmall}>The combination of zero knowledge protocol and layer2</span>
             </div>
-            <div className={styles.footbtn}>
-              <input type="image" src={BUTTON} onClick={handleConnectClick}/>
-              {/* <img className={styles.headimg} src={BUTTON} /> */}
+            <div className={styles.footbtn} style={{cursor: "pointer"}}>
+              {/* <input type="image" src={BUTTON} onClick={handleConnectClick}/> */}
+              <button onClick={handleConnectClick} style={{borderRadius : "25px", backgroundColor: "#298dff"}}>
+                <img src={BUTTON} />
                 <div className={styles.center}>Connect to a wallet</div>
+              </button>
+
               {/* </Input> */}
-            </div>
+              </div>
             <div className={styles.foottitle}>
               <span className={styles.footlarge}>
                 <span style={{color:"blueviolet"}}>Introduction to </span>zktube</span>
@@ -191,8 +194,8 @@ const WalletContent = () => {
                   zkTube technical team received Uniswap V3 Hackathon Granted
                 </div>
                 <div style={{fontSize: "12px", marginTop:"5px", color: "rgba(243, 229, 229, 0.719)"}}>
-                  <a href="https://gitcoin.co/issue/unigrants/ugp-hacks/1/unigrants.org" target="_blank" style ={{color: "rgba(243, 229, 229, 0.719)"}} >
-                    https://gitcoin.co/issue/unigrants/ugp-hacks/1/unigrants.org
+                  <a href=" https://gitcoin.co/hackathon/projects/gr9/zktube/" target="_blank" style ={{color: "rgba(243, 229, 229, 0.719)"}} >
+                      https://gitcoin.co/hackathon/projects/gr9/zktube/
 
                   </a>
                 </div>

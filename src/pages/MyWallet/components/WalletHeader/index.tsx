@@ -34,7 +34,7 @@ const WalletHeader = () => {
         <li className={styles.shift}>
           <div className={styles.boxselect} style={{marginRight: "20px", width: "170px", height: "40px"}}>
             <Select onChange={onChange} defaultValue="Rinkeby testnet">
-              <Option value="ETHMain network">
+              {/* <Option value="ETHMain network">
                 <div className={styles.statuspoint} style = {{ display: "inline-block",width: "12px",height: "12px", borderRadius: "25px",
                   backgroundColor: "green",marginRight: "7px",marginBottom: "3px",verticalAlign: "middle"}} />
                 ETHMain network
@@ -43,7 +43,7 @@ const WalletHeader = () => {
                 <div className={styles.statuspoint} style = {{ display: "inline-block",width: "12px",height: "12px", borderRadius: "25px",
                   backgroundColor: "green",marginRight: "7px",marginBottom: "3px",verticalAlign: "middle"}}/>
                 Ropsten test network
-              </Option>
+              </Option> */}
               <Option value="Rinkeby testnet">
                 <div className={styles.statuspoint} style = {{ display: "inline-block",width: "12px",height: "12px", borderRadius: "25px",
                   backgroundColor: "green",marginRight: "7px",marginBottom: "3px",verticalAlign: "middle"}} />
