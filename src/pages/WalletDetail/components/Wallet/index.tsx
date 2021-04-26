@@ -89,7 +89,7 @@ function Wallet() {
         <CryptoItem
           icon="icon-eth"
           currency="ETH"
-          amount={wallet?.ethL1Balance ? (Number(ethers.utils.formatEther(wallet.ethL1Balance))) : 0}
+          amount={wallet?.assets?.verified?.balances?.ETH ? (Number(ethers.utils.formatEther(wallet?.assets?.verified?.balances?.ETH))) : 0}
           dollar={caclEthValue()}
         />
         {/* <CryptoItem icon="icon-usdt" currency="USDT" amount={3.4232} dollar={35.00} />
