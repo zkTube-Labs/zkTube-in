@@ -123,7 +123,8 @@ export default {
   effects: ({ wallet }: IStoreDispatch) => ({
     async init() {
       const _web3: Web3 = await getWeb3();
-      const _account: string = (await _web3.eth.getAccounts())[0];
+      const allAcounts = await _web3.eth.getAccounts();
+      const _account: string = allAcounts[0];
       const { syncWallet: _wallet, syncHTTPProvider: _provider } = await zkTubeInitialize(_web3, (e) => {
         if (e.code === 4001) {
           wallet.update({
@@ -233,8 +234,11 @@ export default {
     async refreshWallet() {
       const _web3: Web3 = await getWeb3();
       const { syncWallet: _wallet, syncHTTPProvider: _provider } = await zkTubeInitialize(_web3);
+      const allAcounts = await _web3.eth.getAccounts();
+      const _account: string = allAcounts[0];
       wallet.update({
         web3: _web3,
+        account: _account,
         syncWallet: _wallet,
         syncHTTPProvider: _provider,
       });

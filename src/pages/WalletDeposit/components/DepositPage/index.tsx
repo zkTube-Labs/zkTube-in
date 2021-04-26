@@ -169,13 +169,15 @@ function WalletDeposit() {
   const onAmountChange = useCallback((_amount) => {
     if (_amount <= 0.0) {
       setAmount(_amount);
-    } else {
+    } else if (typeof _amount == 'number') {
       const ethAmount = ethers.utils.parseEther(_amount.toString());
       if (ethAmount.gte(ethL1Balance)) {
         setAmount(ethers.utils.formatEther(ethL1Balance));
       } else {
-        setAmount(_amount);
+        setAmount(_amount.toString());
       }
+    } else {
+      console.log('error input', _amount);
     }
   }, [ethL1Balance]);
 

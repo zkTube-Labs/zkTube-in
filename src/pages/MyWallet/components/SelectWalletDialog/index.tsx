@@ -19,7 +19,10 @@ const SelectWalletDialog = () => {
     action.setState({ selectWalletDialogVisible: false });
     if (hasMask) {
       action.setState({ metaDialogVisible: true });
-      action.init();
+      const initResult = action.init();
+      initResult.then(() => {
+        action.refreshEthBalance();
+      });
     } else {
       action.setState({ unMetaDialogVisible: true });
     }

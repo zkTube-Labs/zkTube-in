@@ -102,11 +102,25 @@ a:link {
   padding: 20px 20px;
   text-decoration: none;
   color: whitesmoke;
-  }
-  // .scan{
-  //   font-size: 1em;
+}
 
-  // }
+/* account */
+.account {
+  margin-top: 8px;
+  width: 220px;
+  .ethAssets {
+    background-color: #7a00ce;
+    color: white;
+    width: 75px;
+    padding: 5px;
+  }
+  .ethAddress {
+    background-color: #2d2d37;
+    color: white;
+    width: 145px;
+    padding: 5px;
+  }
+}
 
 /* menu */
 
