@@ -15,10 +15,12 @@ function Wallet() {
   const [wallet, action] = store.useModel('wallet');
 
   const onDeposit = useCallback(() => {
+    action.setState({ selectWalletDialogVisible: false, metaDialogVisible: false });
     history.push('/wallet/deposit');
   }, []);
 
   const onWithdraw = useCallback(() => {
+    action.setState({ selectWalletDialogVisible: false, metaDialogVisible: false });
     history.push('/wallet/withdraw');
     // console.log('withdraw');
   }, []);

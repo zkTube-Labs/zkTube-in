@@ -20,7 +20,7 @@ function Withdraw() {
 
       <SelectWalletDialog />
       <MetaDialog />
-      <UnMetaDialog />
+      {/* <UnMetaDialog /> */}
 
     </>
   );

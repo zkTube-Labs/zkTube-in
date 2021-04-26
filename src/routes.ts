@@ -2,6 +2,7 @@ import BasicLayout from '@/layouts/BasicLayout';
 import MyWallet from '@/pages/MyWallet';
 import WalletDetail from '@/pages/WalletDetail';
 import WalletDeposit from '@/pages/WalletDeposit';
+import DepositSuccess from '@/pages/DepositSuccess';
 import Transfer from '@/pages/Transfer';
 import TransferSuccess from '@/pages/TransferSuccess';
 import Withdraw from '@/pages/Withdraw';
@@ -17,6 +18,14 @@ const routerConfig = [
       {
         path: '/wallet/detail',
         component: WalletDetail,
+      },
+      {
+        path: '/wallet/deposit/success',
+        component: DepositSuccess,
+      },
+      {
+        path: '/wallet/deposit/fail',
+        component: DepositSuccess,
       },
       {
         path: '/wallet/deposit',

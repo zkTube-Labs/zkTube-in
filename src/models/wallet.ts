@@ -4,6 +4,7 @@ import { provider } from 'web3-core';
 import Web3 from 'web3';
 import { ethers } from 'ethers';
 import * as zktube from 'zktube-soft-launch';
+import { updateLocale } from 'moment';
 
 declare const window: any;
 
@@ -28,7 +29,9 @@ interface IState {
   ethL1Balance: ethers.utils.BigNumber | null;
   ethPrice: ethers.utils.BigDecimal | null;
   resolveTransfer: boolean;
-  assets: any;
+  assets: any | null;
+
+  depositContract: any;
 
   exceptionMsg: string | null;
   // could be one of following messages:
@@ -37,6 +40,7 @@ interface IState {
   // AccountNotExist
   // AccountNotInit
   // AccountNotActive
+  // UserDeniedTransaction
   // InsufficientBalance
 
   // Deprecated, you can get balances in assets segment
@@ -118,6 +122,8 @@ export default {
     exceptionMsg: null,
     resolveTransfer: false,
     assets: null,
+
+    depositContract: null,
   },
 
   effects: ({ wallet }: IStoreDispatch) => ({
@@ -128,7 +134,7 @@ export default {
       const { syncWallet: _wallet, syncHTTPProvider: _provider } = await zkTubeInitialize(_web3, (e) => {
         if (e.code === 4001) {
           wallet.update({
-            signErrorMsg: 'This dapp needs access to your account information',
+            signErrorMsg: 'This app needs access to your account information',
             exceptionMsg: 'WalletSignFailed',
           });
         }
@@ -269,32 +275,18 @@ export default {
 
       console.log('deposit wallet', thisModel);
       console.log(`目标地址：${syncWallet.address()}, amount`, amount);
-      try {
-        // const { tk } = 'ETH';
-        const deposit = await syncWallet.depositToSyncFromEthereum({
-          // param 1 address
-          depositTo: syncWallet.address(),
-          // param 2 token
-          // eslint-disable-next-line @iceworks/best-practices/no-secret-info
-          token: 'ETH',
-          amount: ethers.utils.parseEther(amount),
-        });
 
-        // Await confirmation from the zkTube operator
-        // Completes when a promise is issued to process the tx
-        const receipt = await deposit.awaitReceipt();
-        console.log('deposit, receipt', receipt);
+      // const { tk } = 'ETH';
+      const deposit = await syncWallet.depositToSyncFromEthereum({
+        // param 1 address
+        depositTo: syncWallet.address(),
+        // param 2 token
+        // eslint-disable-next-line @iceworks/best-practices/no-secret-info
+        token: 'ETH',
+        amount: ethers.utils.parseEther(amount),
+      });
 
-        // // Await verification
-        // // Completes when the tx reaches finality on Ethereum
-        const verify = await deposit.awaitVerifyReceipt();
-        console.log('deposit, verify', verify);
-        // return { receipt, verify };
-
-      } catch (error) {
-        // console.log(error);
-        console.log('deposit exception', error);
-      }
+      return deposit;
     },
 
     async transfer(data) {

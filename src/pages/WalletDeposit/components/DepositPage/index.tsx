@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { history } from 'ice';
-import { Input, Button, Dialog, NumberPicker, List } from '@alifd/next';
+import { Button, Dialog, NumberPicker, List } from '@alifd/next';
 import { ethers } from 'ethers';
 
 import Icon from '@/components/Icon';
@@ -52,22 +52,51 @@ function WalletDeposit() {
   const handleDoDeposit = useCallback(() => {
     const data = `${amount}`;
     setLoadingDeposit(true);
-    const deposit = action.deposit(data);
 
-    deposit.then((_deposit) => {
-      setLoadingDeposit(false);
-      // const { receipt, verify } = { receipt: null, verify: null };
-      // console.log('handleDoDeposit', _deposit, receipt, verify);
-      // receipt.then((val) => {
-      //   console.log('handleDoDeposit, receipt', val);
-      // });
-      // verify.then((val) => {
-      //   console.log('handleDoDeposit, verify', val);
-      // });
-    });
+    try {
+      const deposit = action.deposit(data);
+
+      deposit.then((_deposit) => {
+        setLoadingDeposit(false);
+        if (_deposit?.awaitReceipt) {
+          action.update({ depositContract: _deposit });
+          // Await confirmation from the zkTube operator
+          // Completes when a promise is issued to process the tx
+          const receipt = _deposit.awaitReceipt();
+          receipt.then((_receipt) => {
+            console.log('deposit, receipt', _receipt);
+            history.push('/wallet/deposit/success');
+          });
+
+          // // Await verification
+          // // Completes when the tx reaches finality on Ethereum
+          const verify = _deposit.awaitVerifyReceipt();
+          verify.then((_verify) => {
+            console.log('deposit, verify', _verify);
+          });
+        }
+
+        // const { receipt, verify } = { receipt: null, verify: null };
+        // console.log('handleDoDeposit', _deposit, receipt, verify);
+        // receipt.then((val) => {
+        //   console.log('handleDoDeposit, receipt', val);
+        // });
+        // verify.then((val) => {
+        //   console.log('handleDoDeposit, verify', val);
+        // });
+      });
+    } catch (error) {
+      // console.log(error);
+      const exceptionMsg = 'UserDeniedTransaction';
+      wallet1.update({
+        exceptionMsg,
+      });
+      // throw(exceptionMsg);
+      console.log('deposit exception', error);
+    }
 
     console.log('do deposit', data, 'ETH');
-  }, [amount, wallet1]);
+  }, [amount, wallet1, action]);
 
   const onSelect = useCallback((crypto: any) => {
     console.log('onSelect', crypto);
@@ -181,14 +210,18 @@ function WalletDeposit() {
     }
   }, [ethL1Balance]);
 
+  const onException = useCallback((message) => {
+    console.log('onException', message);
+  }, [wallet1]);
+
   return (
     <div className={styles.container}>
       {loadingDeposit ? (
         <Loading
           title="Deposit"
-          description="Confirm the transaction in order to unlock the token"
+          description="Confirm the transaction in wallet"
           icon="icon-loading"
-          onView={() => console.log('click')}
+          onView={null}
         />
       ) : (
         <div className={styles.card}>
@@ -293,6 +326,9 @@ function WalletDeposit() {
           />
         </div>
       </Dialog>
+      <div>
+        { wallet1.exceptionMsg && onException(wallet1.exceptionMsg) }
+      </div>
     </div>
   );
 }
