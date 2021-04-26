@@ -20,7 +20,7 @@ const WalletHeader = () => {
   return (
     <header className={styles.header}>
        <a href="#/"> 
-        <img src={logo} alt="logo" width="10%" className={styles.logo} style={{padding: "15px"}}/>
+        <img src={logo} alt="logo" width="10%" className={styles.logo} style={{padding: "12px"}}/>
        </a> 
       <a href="#/" className={styles.wallet}  style={{color: "white"}}>
         My Wallet
@@ -33,15 +33,21 @@ const WalletHeader = () => {
       <ul className={styles.menu} style={{padding: "20px", marginRight: "100px"}}>
         <li className={styles.shift}>
           <div className={styles.boxselect} style={{marginRight: "20px", width: "170px", height: "40px"}}>
-            <Select onChange={onChange} defaultValue="ETHMain network">
+            <Select onChange={onChange} defaultValue="Rinkeby testnet">
               <Option value="ETHMain network">
                 <div className={styles.statuspoint} style = {{ display: "inline-block",width: "12px",height: "12px", borderRadius: "25px",
                   backgroundColor: "green",marginRight: "7px",marginBottom: "3px",verticalAlign: "middle"}} />
                 ETHMain network
               </Option>
               <Option value="Ropsten test network">
-                <div className={styles.statuspoint} />
+                <div className={styles.statuspoint} style = {{ display: "inline-block",width: "12px",height: "12px", borderRadius: "25px",
+                  backgroundColor: "green",marginRight: "7px",marginBottom: "3px",verticalAlign: "middle"}}/>
                 Ropsten test network
+              </Option>
+              <Option value="Rinkeby testnet">
+                <div className={styles.statuspoint} style = {{ display: "inline-block",width: "12px",height: "12px", borderRadius: "25px",
+                  backgroundColor: "green",marginRight: "7px",marginBottom: "3px",verticalAlign: "middle"}} />
+                Rinkeby testnet
               </Option>
             </Select>
           </div>

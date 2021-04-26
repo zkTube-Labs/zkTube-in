@@ -1,5 +1,7 @@
 import React from 'react';
 import { Dialog, Button } from '@alifd/next';
+import Icon from '@/components/Icon';
+
 import store from '@/store';
 
 const url = 'https://metamask.io/';
@@ -16,20 +18,25 @@ const MetaDialog = () => {
     <Dialog
       title="Authorize your wallet"
       visible={unMetaDialogVisible}
-      style={{ width: 620 }}
-      height={'400px'}
+      style={{ width: 500}}
+      height={'200px'}
       footer={
-        <Button
-          type="secondary"
-          style={{
-            cursor: 'pointer',
-            backgroundColor: 'purple',
-            color: 'white',
-          }}
-          onClick={handleInstall}
-        >
-          Install Metamask
-        </Button>
+        <div>
+          <span style={{marginRight: "10px"}}>
+            <Icon type="icon-metamask" size="xl" />
+          </span>
+          <Button
+            type="secondary"
+            style={{
+              cursor: 'pointer',
+              backgroundColor: 'purple',
+              color: 'white',
+            }}
+            onClick={handleInstall}
+          >
+            Install Metamask
+          </Button>
+        </div>
       }
       onClose={handleClose}
     >
