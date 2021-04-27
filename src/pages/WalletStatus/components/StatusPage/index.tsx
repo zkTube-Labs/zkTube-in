@@ -10,19 +10,20 @@ import styles from './index.module.scss';
     status: string;
     description: string;
     onClickButton?: ()=> void;
+    detailUrl: string;
     // amount: string
     add:string;
     amt: string;
   }
 
-  const StatusPage : React.FC<IProps> = ({ title, icon, color,description, onClickButton , add, amt}) => {
+  const StatusPage : React.FC<IProps> = ({ title, icon, color,description, onClickButton, detailUrl, add, amt}) => {
    
     const goBack = useCallback(() => {
         history.goBack();
       }, []);
 
       const viewDetail = useCallback(() => {
-          console.log('view details')
+        window.open(detailUrl,'target', '');
       },[])
 
   return (
@@ -71,16 +72,16 @@ import styles from './index.module.scss';
         </div>
         <div className={styles.detail}>
           <h3 style={{margin: "40px"}}>
-          <a href="/#" > View Transaction details
+          <a href={detailUrl} target="_blank" > View Transaction details
           <span style={{cursor: "pointer"}}>
-              <Icon type="icon-up-right" size= {20}  color="#5E45EB" onClick={viewDetail}/>
+              <Icon type="icon-up-right" size= {20}  color="#5E45EB" onClick={onClickButton}/>
           </span>
           </a>                
           </h3>
         </div>
         <div>
           <button 
-          onClick={onClickButton}
+          onClick={() => {history.push('/wallet/detail')}}
           className= {styles.okbutton}
           > OK </button>
         </div>

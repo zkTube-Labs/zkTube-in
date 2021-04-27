@@ -57,8 +57,69 @@ function WalletDeposit() {
       const deposit = action.deposit(data);
 
       deposit.then((_deposit) => {
-        setLoadingDeposit(false);
-        if (_deposit?.awaitReceipt) {
+        // l2 server is unstable, judge l1 state to determin the trade was finished
+        const finishWhileL1Success = true;
+        if (finishWhileL1Success) {
+          //   <Loading
+          //   title="Deposit"
+          //   description="Confirm the transaction to Deposit"
+          //   icon="icon-loading"
+          //   onView={onQueryDeposit}
+          // />
+
+          let gasPrice = ethers.BigNumber.from(0);
+
+          let retry = 40;
+          function retriveFun () {
+            if (wallet1?.web3 && _deposit?.ethTx?.hash) {
+              // 0x237e87d6834186f9908f20c61337f1f72773b457e2c298ceeee73f8dcf9dae6e
+              const receipt = wallet1.web3.eth.getTransactionReceipt(_deposit.ethTx.hash);
+              receipt.then((contract) => {
+                console.log('getTransactionReceipt', _deposit, contract);
+                if (contract?.status) {
+                  const bgu = ethers.BigNumber.from(contract.gasUsed);
+                  const fee = gasPrice.mul(bgu);
+                  const depositResult = {
+                    status: true,
+                    // 0x237e87d6834186f9908f20c61337f1f72773b457e2c298ceeee73f8dcf9dae6e
+                    txHash: _deposit.ethTx.hash,
+                    // 0x264b100c3d4b5379eaafdc489208873d31462879
+                    from: contract.from,
+                    // 0xae4ef048f6329d3114c9c1e1520629ec736d3798
+                    to: contract.to,
+                    // 0x237e87d6834186f9908f20c61337f1f72773b457e2c298ceeee73f8dcf9dae6e
+                    transactionHash: contract.transactionHash,
+                    // 418563
+                    cumulativeGasUsed: contract.cumulativeGasUsed,
+                    // 154349
+                    gasUsed: contract.gasUsed,
+                    gasPrice: gasPrice.toString(),
+                    fee: ethers.utils.formatEther(fee),
+                    blockNumber: contract.blockNumber,
+                  };
+                  console.log('getTransactionReceipt', depositResult);
+                  action.update({ depositContract: depositResult });
+                  setLoadingDeposit(false);
+                  history.push('/wallet/deposit/success');
+                  retry = 0;
+                }
+              });
+            }
+
+            if (retry >0) {
+              retry --;
+              setTimeout(retriveFun, 500);
+            }
+          };
+          if (wallet1?.web3?.eth) {
+            const promGasPrice = wallet1.web3.eth.getGasPrice();
+            promGasPrice.then((val) => {
+              console.log('wallet1.web3.eth.getGasPrice', val);
+              gasPrice = ethers.BigNumber.from(val);
+              setTimeout(retriveFun, 200);
+            });
+          }
+        } else if (_deposit?.awaitReceipt) {
           action.update({ depositContract: _deposit });
           // Await confirmation from the zkTube operator
           // Completes when a promise is issued to process the tx
@@ -120,20 +181,24 @@ function WalletDeposit() {
     const promRefresh = action.refreshEthBalance();
     // let eBalance = ethL1Balance;
     // let ePrice = ethPrice;
-    promRefresh.then(({ ethL1Balance: _ethL1Balance, ethPrice: _ethPrice }) => {
-      _ethL1Balance.then((val) => {
-        setLoadingBalance(false);
-        setEthL1Balance(val);
-        eBalance = val;
-        UIrefreshEthBalance(eBalance, ePrice);
-        console.log('updateAssets, refreshWallet, ethL1Balance', val, wallet);
-      });
-      _ethPrice.then((val) => {
-        setEthPrice(val);
-        ePrice = val;
-        UIrefreshEthBalance(eBalance, ePrice);
-        console.log('updateAssets, refreshWallet, ethL1Balance', val);
-      });
+    promRefresh.then((val) => {
+      if (val) {
+        const _ethL1Balance = val.ethL1Balance;
+        const _ethPrice = val.ethPrice;
+        _ethL1Balance.then((val) => {
+          setLoadingBalance(false);
+          setEthL1Balance(val);
+          eBalance = val;
+          UIrefreshEthBalance(eBalance, ePrice);
+          console.log('updateAssets, refreshWallet, ethL1Balance', val, wallet);
+        });
+        _ethPrice.then((val) => {
+          setEthPrice(val);
+          ePrice = val;
+          UIrefreshEthBalance(eBalance, ePrice);
+          console.log('updateAssets, refreshWallet, ethL1Balance', val);
+        });
+      }
     }, [eBalance, ePrice]);
   }, [wallet1, ethL1Balance, ethPrice]);
 
@@ -166,7 +231,7 @@ function WalletDeposit() {
           setLoadingBalance(true);
           const provider = action.refreshWallet();
           provider.then((val) => {
-            console.log('updateAssets, refreshWallet', val.syncWallet, val.syncHTTPProvider);
+            console.log('updateAssets, refreshWallet', val);
             refreshEthBalance(wallet1);
           });
         }
