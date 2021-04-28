@@ -1,0 +1,48 @@
+.list {
+  position: relative;
+  margin-top: -21px;
+  // background-image: url(../../../../assets/fullImage.png);
+  background-color: #020230;
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  .listitem {
+    position: relative;
+    border: 1px solid #eee;
+    .borderbox {
+      // background: #fff;
+      height: auto;
+     
+      .another{
+        width: 100%;
+        height: 150%;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        position: relative;
+        color: white;
+        text-align: center;
+        overflow: hidden;
+      }     
+     
+      .footer{
+        position: absolute;
+        width: 66%;
+        height: 100%;
+        top: 60%;
+        left: 15%;
+        // display: block;
+        margin: auto;
+        color: white;
+         margin-top: 50px;
+        // margin-bottom: 20px;
+      }
+
+      .alignRight{
+        float: right;
+      }
+     
+    }
+  }
+}

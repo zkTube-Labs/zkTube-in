@@ -62,7 +62,7 @@ function Wallet() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.upperContainer}>
+      <div className={styles.upperContainer} >
         <div className={styles.account}>ETHL2Account</div>
         <div className={styles.balance}>
           <div className={styles.amount}>${caclEthValue(2) || '0.00'}</div>
@@ -85,6 +85,10 @@ function Wallet() {
           <ActionButton icon="icon-up" title="Withdraw" onClick={onWithdraw} />
           <ActionButton icon="icon-transfer" title="Transfer" onClick={onTransfer} />
         </div>
+      </div>
+      <br/><br/>
+      <div>
+        
       </div>
       <div className={styles.title}>Assets</div>
       <div className={styles.cryptoList}>

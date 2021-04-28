@@ -1,6 +1,6 @@
 import React from 'react';
 import { Select, Button } from '@alifd/next';
-import logo from '@/assets/paytube-black.png';
+import logo from '@/assets/logo.png';
 import styles from './index.module.scss';
 import store from '@/store';
 import { ethers } from 'ethers';
