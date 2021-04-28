@@ -4,7 +4,8 @@ import Icon from '@/components/Icon';
 
 import store from '@/store';
 
-const url = 'https://metamask.io/';
+// const url = 'https://metamask.io/';
+const url = 'https://metamask.app.link/dapp/wallet.zktube.io';
 
 const MetaDialog = () => {
   const [{ unMetaDialogVisible }, action] = store.useModel('wallet');
