@@ -3,13 +3,16 @@
     .next-tabs-nav-scroll {
       display: flex;
       justify-content: center;
+      background-color: #14132D;
     }
     .next-tabs-tab {
       &::before {
-        border-color: #841CDA!important;
+        border-color: white !important;
+        color: white;
       }
       &.active {
-        color: #841CDA!important;
+        color: white!important;
+        // color: white;
       }
     }
   }
@@ -18,4 +21,15 @@
   padding-top: 30px;
   display: flex;
   justify-content: center;
+  background-image: url(../../../../zktube-fe/src/assets/zktube.png);
+  height: 100%;
+  position: relative;
+  // margin-top: 1px;
+}
+
+.header{
+  position: absolute;
+  top: 0px;
+  left:0px;
+  // background-color: #14132D;
 }

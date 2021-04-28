@@ -4,8 +4,10 @@
   align-items: center;
   width: 500px;
   height: 680px;
-  background-color: #fff;
-  border-radius: 2px;
+  background-color: white;
+  border: 0px solid;
+  // box-shadow: 5px 5px rgba(10, 9, 10, 0.719);  
+  border-radius: 20px;
   .upperContainer {
     display: flex;
     flex-direction: column;
