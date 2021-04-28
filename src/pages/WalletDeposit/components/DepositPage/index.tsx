@@ -71,6 +71,9 @@ function WalletDeposit() {
 
           let retry = 40;
           function retriveFun () {
+            console.log("wallet1", wallet1);
+            console.log("_deposit", _deposit);
+
             if (wallet1?.web3 && _deposit?.ethTx?.hash) {
               // 0x237e87d6834186f9908f20c61337f1f72773b457e2c298ceeee73f8dcf9dae6e
               const receipt = wallet1.web3.eth.getTransactionReceipt(_deposit.ethTx.hash);

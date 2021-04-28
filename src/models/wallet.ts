@@ -50,7 +50,8 @@ interface IState {
 
 // eslint-disable-next-line @iceworks/best-practices/no-http-url
 // const url = 'http://119.28.75.86:3030/jsrpc';
-const url = 'https://rinkeby-jsrpc.zktube.io/';
+// const url = 'https://rinkeby-jsrpc.zktube.io/';
+const url = "http://124.156.151.46:3030/jsrpc";
 
 async function getWeb3(): Promise<Web3> {
   return new Promise((resolve, reject) => {
@@ -289,34 +290,39 @@ export default {
       return deposit;
     },
 
-    async transfer(data) {
-
-      
-      let  syncWallet = await this.refreshWallet();
-      if(!syncWallet){
-        const _web3: Web3 = await getWeb3();
-        await zkTubeInitialize(_web3);
-         syncWallet = await zkTubeInitialize(_web3);
+    async transfer(data, thisModel) {
+      let syncWallet = null;
+      let syncHTTPProvider = null;
+      if (thisModel && thisModel.wallet && thisModel.wallet.syncWallet) {
+        syncWallet = thisModel.wallet.syncWallet;
+      } else {
+        const { syncWallet: _wallet, syncHTTPProvider: _provider } = await this.refreshWallet();
+        syncWallet = _wallet;
+        syncHTTPProvider = _provider;
       }
+
+      // let  syncWallet = await this.refreshWallet();
+      // if(!syncWallet){
+      //   const _web3: Web3 = await getWeb3();
+      //   await zkTubeInitialize(_web3);
+      //    syncWallet = await zkTubeInitialize(_web3);
+      // }
+      // const amount = zktube.utils.closestPackableTransactionAmount(ethers.utils.parseEther(data.amount));
       
-      const amount = zktube.utils.closestPackableTransactionAmount(ethers.utils.parseEther(data.amount));
-    
-      try {
-        const _transfer = await syncWallet.syncTransfer({
+        const transfer = await syncWallet.syncTransfer({
           to: data.address,
           // eslint-disable-next-line @iceworks/best-practices/no-secret-info
           token: 'ETH',
-          amount,
+          amount: ethers.utils.parseEther(data.amount),
         });
-        wallet.update({
-          amount,
-          transfer: _transfer,
-          resolveTransfer: true,
-        });
-        return await _transfer.awaitReceipt();
-      } catch (error) {
-        console.log('Transfer Error', error);
-      }
+        // wallet.update({
+        //   amount,
+        //   transfer: _transfer,
+        //   resolveTransfer: true,
+        // });
+        // return await _transfer.awaitReceipt();
+        return transfer;
+   
     },
 
     async withdraw(amount) {
