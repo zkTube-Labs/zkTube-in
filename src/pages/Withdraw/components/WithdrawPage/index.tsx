@@ -91,7 +91,7 @@ function WithdrawPage() {
   }, []);
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} style={{marginTop:"20px"}}>
       {loading}
       {loading ? <WithdrawSuccess add = {address} amt={amount} 
       load={effectState.withdraw.isLoading}

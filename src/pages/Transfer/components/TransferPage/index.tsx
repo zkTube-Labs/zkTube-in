@@ -90,7 +90,7 @@ const TransferPage = () => {
     setList(_list);
   };
   return ( 
-    <div className={styles.container}>
+    <div className={styles.container} style={{marginTop : "20px"}}>
       {loading? (<TransferSuccess add = {address} amt={amount}
       load={effectState.transfer.isLoading } resolve={resolve}/> ): 
 

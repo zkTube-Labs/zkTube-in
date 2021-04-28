@@ -8,7 +8,7 @@ import styles from './index.module.scss';
 function WithdrawSuccess(props) {
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <div className={styles.contentStyle}>
         <WithdrawSuccessPage add ={props.add} amt={props.amt} resolve = {props.resolve} load={props.load}/>
       </div>
