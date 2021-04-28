@@ -5,7 +5,7 @@ import Status from '../../../WalletStatus/components/StatusPage';
 
   let TransferSuccessPage = (props) => {
   // const [loading, loadPage] = useState<boolean>(true);
-  console.log(props.resolve);
+  console.log(props);
 
   return (
    

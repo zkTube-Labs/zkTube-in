@@ -1,5 +1,7 @@
 import React, { useCallback, useState } from 'react';
-import {Input, Form, Button, Dialog} from '@alifd/next';
+import {Input, Form, Button, NumberPicker, Dialog, List} from '@alifd/next';
+import { ethers } from 'ethers';
+
 import {history} from 'ice';
 import Icon from '@/components/Icon';
 import store from '@/store';
@@ -8,33 +10,48 @@ import CryptoItem from '../../../WalletDetail/components/CtyptoItem/index';
 import styles from './index.module.scss';
 
 
-
 const TransferPage = () => {
  
   const FormItem = Form.Item;
   
   const [wallet1, action] = store.useModel('wallet');
   const [empty] = useState(false);
-
   const effectState = store.useModelEffectsState('wallet')
   const [visible, setVisible] = useState<boolean>(false);
   const [selected, setSelected] = useState<any>();
   let [address, setAddress] = useState('');
   let [amount, setAmount] = useState('0.0')
   let [loading, setLoading] = useState(false);
+  const [balance, setBalance] = useState('0.0');
+  const [ethL1Balance, setEthL1Balance] = useState<any>();
+  const [gasPrice, setgasPrice] = useState<any>();
+
   const [list, setList] = useState([]);
   const [resolve, resolveTransfer] = useState(false);
+  const [transferRadOnly, setReadOnly] = useState<boolean>(true);
+  const [assetsList, setAssets] = useState([]);
+  const [loadingBalance, setLoadingBalance] = useState<boolean>(false);
+  const [ethPrice, setEthPrice] = useState(0);
 
+
+  let eBalance = null;
+  let ePrice = 0;
+
+  const goBack = useCallback(() => {
+    history.goBack();
+  }, []);
 
   const handleClose = useCallback(() => {
     setVisible(false);
   }, []);
 
-  const onSelect = useCallback((crypto: string) => {
-    setVisible(false);
-    setSelected(crypto);
-    action.checkStatus(wallet1.syncWallet);
-  }, []);
+  const onSelect = useCallback((crypto: any) => {
+     setVisible(false);
+    setReadOnly(false);
+    setSelected(crypto.currency);
+
+    setBalance(crypto.amount);
+  }, [wallet1]);
 
   const formItemLayout = {
     labelCol: {
@@ -46,12 +63,10 @@ const TransferPage = () => {
     }
   };
 
-  const goBack = useCallback(() => {
-    history.goBack();
-  }, [])
-
-  const handleSelectToken = useCallback(() => {
+   const handleSelectToken = useCallback(() => {
     setVisible(true);
+    updateAssets();
+
   }, []);
 
   let transferMoney = useCallback(() => {
@@ -59,39 +74,160 @@ const TransferPage = () => {
      address: address,
      amount : `${amount}`
     }
-    // const value = action.transfer(data);
+    setLoading(true) 
+
     try{
-      setLoading(true) 
-      action.transfer(data).then(res =>{
-        console.log("res", res);
-        if(res == undefined){
-          // window.location.reload();
+      const transfer = action.transfer(data)
+      transfer.then((_transfer) =>{
+        let gasPrices = ethers.BigNumber.from(0);
+        setgasPrice(gasPrices);
+        if (_transfer?.awaitReceipt) {
+  
+          action.update({ transferContract: _transfer });
+          // Await confirmation from the zkTube operator
+          // Completes when a promise is issued to process the tx
+          const receipt = _transfer.awaitReceipt(); 
+          receipt.then((_receipt) => {
+            resolveTransfer(true);
+   
+            // history.push('/wallet/deposit/success');
+          });
+  
+          // // Await verification
+          // // Completes when the tx reaches finality on Ethereum
+          const verify = _transfer.awaitVerifyReceipt();
+          verify.then((_verify) => {
+          });
         }
-        else if(res.success == true){
-          resolveTransfer(true);
-        }
-        else{
-          resolveTransfer(false)
-        }
-      });
+        
+        if (wallet1?.web3?.eth) {
+          const promGasPrice = wallet1.web3.eth.getGasPrice();
+          promGasPrice.then((val) => {
+            gasPrices = ethers.BigNumber.from(val);
+            setgasPrice (gasPrices);
+
+            // setTimeout(getTransferData, 200);
+          });
+        }      
+      
+    
+      })
+      
     }
     catch (e){
-      console.log("error from transfer page", e);
+      const exceptionMsg = 'UserDeniedTransaction';
+      wallet1.update({
+        exceptionMsg,
+      });
+      // throw(exceptionMsg);
 
     }
 
-  },[amount, address]);
+  },[amount, wallet1, address]);
 
-  
+  function formatBalance(currency, curBalance) {
+    if (currency == 'ETH') {
+      const wei = ethers.BigNumber.from(curBalance);
+      return ethers.utils.formatEther(wei);
+    } else {
+      return curBalance;
+    }
+  } 
+
+  const updateAssets = useCallback(() => {
+    try {
+      const walletSigned = action.walletSigned();
+      walletSigned.then((signed) => {
+        if (signed) {
+          refreshEthBalance(wallet1);
+        } else {
+          setLoadingBalance(true);
+          const provider = action.refreshWallet();
+          provider.then((val) => {
+            refreshEthBalance(wallet1);
+          });
+        }
+      });
+    } catch (e) {
+    }
+
+  }, [wallet1]);
+
+
   const onSearch = (value: string) => {
     const _list = list.filter((item: any) => {
       return item.name.indexOf(value) > -1;
     });
     setList(_list);
   };
+
+  const refreshEthBalance = useCallback((wallet) => {
+    const promRefresh = action.refreshEthBalance();
+    // let eBalance = ethL1Balance;
+    // let ePrice = ethPrice;
+    promRefresh.then((val) => {
+      if (val) {
+        const _ethL1Balance = val.ethL1Balance;
+        const _ethPrice = val.ethPrice;
+        _ethL1Balance.then((val) => {
+          setLoadingBalance(false);
+          setEthL1Balance(val);
+          eBalance = val;
+          UIrefreshEthBalance(eBalance, ePrice);
+        });
+        _ethPrice.then((val) => {
+          setEthPrice(val);
+          ePrice = val;
+          UIrefreshEthBalance(eBalance, ePrice);
+        });
+      }
+    }, [eBalance, ePrice]);
+  }, [wallet1, ethL1Balance, ethPrice]);
+
+  
+  // function UIrefreshEthBalance() {
+    const UIrefreshEthBalance = useCallback(() => {
+      if (eBalance != null) {
+        const dataSource = [];
+        const currency = 'ETH';
+        const formatedBalance = formatBalance(currency, `${eBalance}`);
+        dataSource.push({
+          icon: 'icon-' + currency.toLowerCase(),
+          currency,
+          amount: formatedBalance,
+          dollar: ePrice > 0 ? formatedBalance * ePrice : 0,
+        });
+        setAssets(dataSource);
+      }
+    }, [wallet1, eBalance, ePrice]);
+  const onAmountChange = useCallback((_amount) => {
+  if (_amount <= 0.0) {
+    setAmount(_amount);
+  } else if (typeof _amount == 'number') {
+    const ethAmount = ethers.utils.parseEther(_amount.toString());
+    if (ethAmount.gte(ethL1Balance)) {
+      setAmount(ethers.utils.formatEther(ethL1Balance));
+    } else {
+      setAmount(_amount.toString());
+    }
+  } else {
+  }
+  }, [ethL1Balance]);
+
+  const onException = useCallback((message) => {
+  }, [wallet1]);
+
+  const setAmountByWei = useCallback((wei) => {
+    const _wei = ethers.BigNumber.from(wei);
+    const eth = ethers.utils.formatEther(_wei);
+    setAmount(eth);
+
+  }, []);
+
   return ( 
     <div className={styles.container} style={{marginTop : "20px"}}>
-      {loading? (<TransferSuccess add = {address} amt={amount}
+      {loading? 
+      (<TransferSuccess add = {address} amt={amount}
       load={effectState.transfer.isLoading } resolve={resolve}/> ): 
 
       (
@@ -124,12 +260,26 @@ const TransferPage = () => {
                   fontSize: "32px",
                   fontWeight: 800
                 }}>
-                <span style={{display : "inline", overflow: "hidden"}}>
-                  <Input type="decimal" name="amount" className = {styles.inputWidth2} placeholder="Amount" 
+                <span style={{display : "inline", overflow: "hidden", width: "286px"}}>
+                  {/* <Input type="decimal" name="amount" className = {styles.inputWidth2} placeholder="Amount" 
                   size="medium" step={0.1}
                   onChange = {(amount) => {
                     setAmount(amount);
-                  }} />
+                  }} /> */}
+                  {/* <div className={styles.fieldContainer}> */}
+
+                   <NumberPicker
+                    size="large"
+                    className={styles.input}
+                    disabled={transferRadOnly}
+                    defaultValue={0}
+                    value={Number(amount)}
+                    min={0.0}
+                    step={0.001}
+                    precision={18}
+                    onChange={(_amount) => { onAmountChange(_amount); }}
+                  />
+                {/* </div> */}
                 </span>
                 <div style={{textAlign: "right", display: "inline"}}>
                   {/* <Select value={wallet} onChange={handleChange} style = {{backgroundColor: "black", padding: "6px"}}> 
@@ -145,8 +295,17 @@ const TransferPage = () => {
                   {/* {selected && ( */}
                     
                   <div className= {styles.balance}>
-                    <h3 className = {styles.text} >Balance: {wallet1.verifiedBalances}
-                    <Button size="small" text className={styles.button} > MAX</Button>        
+                    {/* <h3 className = {styles.text} >Balance: {wallet1.verifiedBalances} */}
+                    <h3 className = {styles.text} >Balance: {balance}
+
+                    <Button size="small" text className={styles.button} 
+                     onClick={() => {
+                      setAmountByWei(ethL1Balance);
+                    }}
+                    > 
+                    <span style={{ marginBottom : "30px", fontSize : "16px", fontWeight : "bold"}}>MAX</span> 
+
+                    </Button>        
                     </h3>
                   </div>
                   {/* )} */}
@@ -156,7 +315,7 @@ const TransferPage = () => {
                 <Button size="large" className={styles.buttonshow} onClick={transferMoney}> Transfer </Button>
 
                 <div className={styles.textBox}>
-                  <h3 style={{float:"left", marginLeft: "40px"}}> Fee:</h3>
+                  <h3 style={{float:"left", marginLeft: "40px"}}> Fee: {gasPrice}</h3>
 
                   <h3 style={{float:"right", marginRight: "40px"}}>
                   <a href="/#" > Choose fee token</a>
@@ -165,8 +324,9 @@ const TransferPage = () => {
                 </div>
                 <div style={{clear: "both"}}></div>
 
-                <p className={styles.comment}>
-                  MetaMask Tx Signature: User denied transaction signature.
+                <p className={styles.comment} >
+                  {(wallet1.exceptionMsg && onException(wallet1.exceptionMsg))}
+                  {/* MetaMask Tx Signature: User denied transaction signature. */}
                 </p>
             </Form>
             
@@ -182,24 +342,36 @@ const TransferPage = () => {
         className={styles.dialog}
         closeMode={['close', 'esc', 'mask']}
       >
-        <Input placeholder="Filter balance in L1" className={styles.search} hasClear onChange={onSearch} />
-        {empty ? (
-          <div className={styles.empty}>
-            <span>No tokens with balance were found!</span>
+        {/* <Input placeholder="Filter balance in L1" className={styles.search} hasClear onChange={onSearch} /> */}
+        <div className={styles.list} style={{cursor: "pointer"}}>
+        <List
+            size="medium"
+            loading={loadingBalance}
+            emptyContent="No tokens with balance were found!"
+            dataSource={assetsList}
+            renderItem={(item, i) => (
+              <List.Item
+                key={i}
+                extra={item.money}
+                title={item.title}
+                
+                media={
+                  <CryptoItem 
+                  icon={item.icon}
+                  currency={item.currency}
+                  amount={item.amount}
+                  dollar={item.dollar}
+                  onClick={() => onSelect(item)}
+                  
+                />}
+              />
+            )}
+          />
           </div>
-        ) : (
-          <div className={styles.list}>
-            <CryptoItem icon="icon-eth" currency="ETH" amount={3.4232} dollar={35.0} onClick={() => onSelect('ETH')} />
-            <CryptoItem
-              icon="icon-usdt"
-              currency="USDT"
-              amount={3.4232}
-              dollar={35.0}
-              onClick={() => onSelect('USDT')}
-            />
-          </div>
-        )}
       </Dialog>
+      <div>
+        { wallet1.exceptionMsg && onException(wallet1.exceptionMsg) }
+      </div>
     </div>
   );
 }
