@@ -34,7 +34,8 @@ let DepositSuccessPage = (props) => {
 
   const getDetailUrl = useCallback(() => {
     if (wallet?.depositContract?.blockNumber) {
-      const url = 'https://rinkeby-browser.zktube.io/blocks/' + wallet.depositContract.blockNumber.toString();
+      // const url = 'https://rinkeby-browser.zktube.io/blocks/' + wallet.depositContract.blockNumber.toString();
+      const url = 'https://rinkeby.etherscan.io/tx/' + wallet.depositContract.txHash;
       return url;
     }
     return '/wallet/detail';
@@ -53,6 +54,7 @@ let DepositSuccessPage = (props) => {
             icon = "icon-success"
             status = "success"
             description = "Your Deposit will be processed shortly. Use the transaction link to track the progress"
+            detailUrl = {getDetailUrl()}
             onClickButton ={() => window.open(getDetailUrl(),'target', '')}
             />
           ) : (
