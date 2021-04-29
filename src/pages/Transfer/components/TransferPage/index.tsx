@@ -18,7 +18,7 @@ const TransferPage = () => {
   const [empty] = useState(false);
   const effectState = store.useModelEffectsState('wallet')
   const [visible, setVisible] = useState<boolean>(false);
-  const [selected, setSelected] = useState<any>();
+  const [selected, setSelected] = useState<any>('ETH');
   let [address, setAddress] = useState('');
   let [amount, setAmount] = useState('0.0')
   let [loading, setLoading] = useState(false);
@@ -139,12 +139,12 @@ const TransferPage = () => {
       const walletSigned = action.walletSigned();
       walletSigned.then((signed) => {
         if (signed) {
-          refreshEthBalance(wallet1);
+          refreshAssets(wallet1);
         } else {
           setLoadingBalance(true);
           const provider = action.refreshWallet();
           provider.then((val) => {
-            refreshEthBalance(wallet1);
+            refreshAssets(wallet1);
           });
         }
       });
@@ -161,58 +161,60 @@ const TransferPage = () => {
     setList(_list);
   };
 
-  const refreshEthBalance = useCallback((wallet) => {
-    const promRefresh = action.refreshEthBalance();
-    // let eBalance = ethL1Balance;
-    // let ePrice = ethPrice;
-    promRefresh.then((val) => {
-      if (val) {
-        const _ethL1Balance = val.ethL1Balance;
-        const _ethPrice = val.ethPrice;
-        _ethL1Balance.then((val) => {
-          setLoadingBalance(false);
-          setEthL1Balance(val);
-          eBalance = val;
-          UIrefreshEthBalance(eBalance, ePrice);
-        });
-        _ethPrice.then((val) => {
-          setEthPrice(val);
-          ePrice = val;
-          UIrefreshEthBalance(eBalance, ePrice);
-        });
+  const refreshAssets = useCallback((wallet) => {
+    const promRefresh = action.refreshL2Assets();
+    const promEthPrice = action.refreshTokenPrice('ETH');
+    promRefresh.then((assets) => {
+      if (assets) {
+        UIrefreshEthBalance(assets, ePrice);
+        console.log('updateAssets, refreshWallet, ethL1Balance', assets, ePrice);
       }
-    }, [eBalance, ePrice]);
-  }, [wallet1, ethL1Balance, ethPrice]);
-
+    });
+    promEthPrice.then((val) => {
+      setEthPrice(val);
+      ePrice = val;
+      UIrefreshEthBalance(wallet1.assets, ePrice);
+    });
+  }, [wallet1, ePrice]);
   
   // function UIrefreshEthBalance() {
-    const UIrefreshEthBalance = useCallback(() => {
-      if (eBalance != null) {
-        const dataSource = [];
-        const currency = 'ETH';
-        const formatedBalance = formatBalance(currency, `${eBalance}`);
-        dataSource.push({
-          icon: 'icon-' + currency.toLowerCase(),
-          currency,
-          amount: formatedBalance,
-          dollar: ePrice > 0 ? formatedBalance * ePrice : 0,
-        });
+    const UIrefreshEthBalance = useCallback((assets, ePrice) => {
+      const dataSource = [];
+      console.log('UIrefreshEthBalance', wallet1, assets, ePrice);
+      if (assets?.verified?.balances) {
+        for (const [token, balance] of Object.entries(assets.verified.balances)) {
+          console.log('token, balance', token, balance);
+  
+          const formatedBalance = formatBalance(token, balance);
+          dataSource.push({
+            icon: 'icon-' + token.toLowerCase(),
+            currency: token,
+            amount: formatedBalance,
+            dollar: ePrice > 0 ? formatedBalance * ePrice : 0,
+          });
+        }
         setAssets(dataSource);
+        setLoadingBalance(false);
       }
-    }, [wallet1, eBalance, ePrice]);
+    }, [wallet1, ePrice]);
+  
+
+
   const onAmountChange = useCallback((_amount) => {
   if (_amount <= 0.0) {
-    setAmount(_amount);
-  } else if (typeof _amount == 'number') {
+    setAmount('0.0');
+  } else if (typeof _amount == 'number' && wallet1?.assets?.verified?.balances?.ETH > 0.0) {
     const ethAmount = ethers.utils.parseEther(_amount.toString());
-    if (ethAmount.gte(ethL1Balance)) {
-      setAmount(ethers.utils.formatEther(ethL1Balance));
+    if (ethAmount.gte(wallet1?.assets?.verified?.balances?.ETH)) {
+      setAmount(ethers.utils.formatEther(wallet1.assets.verified.balances.ETH));
     } else {
       setAmount(_amount.toString());
     }
   } else {
+    setAmount('0.0');
+
   }
-  }, [ethL1Balance]);
+  }, [wallet1]);
 
   const onException = useCallback((message) => {
   }, [wallet1]);
@@ -286,9 +288,9 @@ const TransferPage = () => {
                     <Option value="ETH">ETH</Option>
                     <Option value="Ropsten">Ropsten</Option>
                   </Select> */}
-
+                  
                   <Button type="primary"  style={{backgroundColor: "#333340", width: "22%", height : "38px"}} className={styles.buttonSelected} onClick={handleSelectToken}>
-            
+                    {selected}
                     <Icon type="icon-select" />
                   </Button>
                 </div>
@@ -318,7 +320,7 @@ const TransferPage = () => {
                   <h3 style={{float:"left", marginLeft: "40px"}}> Fee: {gasPrice}</h3>
 
                   <h3 style={{float:"right", marginRight: "40px"}}>
-                  <a href="/#" > Choose fee token</a>
+                  <a href="" > Choose fee token</a>
 
                   </h3>
                 </div>
@@ -334,7 +336,7 @@ const TransferPage = () => {
         )}
 
       <Dialog
-        title="Balances in L1Account"
+        title="Balances in L2 Account"
         height="300px"
         footer={false}
         visible={visible}
