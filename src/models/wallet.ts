@@ -24,7 +24,6 @@ interface IState {
   account: string;
   syncHTTPProvider: provider;
   signErrorMsg: string | undefined;
-  amount: string;
   transfer: any;
   ethL1Balance: ethers.utils.BigNumber | null;
   ethPrice: ethers.utils.BigDecimal | null;
@@ -111,7 +110,6 @@ export default {
     account: undefined,
     syncHTTPProvider: undefined,
     signErrorMsg: undefined,
-    amount: undefined,
     transfer: undefined,
     // wei, 1 ETH = 10^18 wei
     committedBalances: 0,
@@ -175,17 +173,24 @@ export default {
         console.log('ethL1Balance', val, ethers.utils.formatEther(val));
       });
 
-      const syncHTTPProvider = thisModel.wallet.syncHTTPProvider;
-      const ethPrice = syncHTTPProvider.getTokenPrice('ETH');
+      const ethPrice = wallet.refreshTokenPrice('ETH');
       ethPrice.then((val) => {
         wallet.update({
           ethPrice: val,
         });
-        console.log('ethPrice', val);
+        console.log('ethPrice', val, wallet.syncHTTPProvider);
       });
       return { ethL1Balance, ethPrice };
     },
-    async refreshL2Assets(_, thisModel) {
+    refreshTokenPrice(token, thisModel) {
+      const promToken = thisModel.wallet.syncHTTPProvider.getTokenPrice(token);
+      // promToken.then((val) => {
+
+      // })
+      return promToken;
+    },
+
+    refreshL2Assets(_, thisModel) {
       const assets = thisModel.wallet.syncWallet.getAccountState();
       assets.then((val) => {
         console.log('account assets:', val);
@@ -325,26 +330,27 @@ export default {
    
     },
 
-    async withdraw(amount) {
+    async withdraw(amount, thisModel) {
 
-      let  syncWallet = await this.refreshWallet();
-      if(!syncWallet){
-        const _web3: Web3 = await getWeb3();
-        await zkTubeInitialize(_web3);
-         syncWallet = await zkTubeInitialize(_web3);
+      let syncWallet = null;
+      let syncHTTPProvider = null;
+      if (thisModel && thisModel.wallet && thisModel.wallet.syncWallet) {
+        syncWallet = thisModel.wallet.syncWallet;
+      } else {
+        const { syncWallet: _wallet, syncHTTPProvider: _provider } = await this.refreshWallet();
+        syncWallet = _wallet;
+        syncHTTPProvider = _provider;
       }
-  
+
       const withdraw = await syncWallet.withdrawFromSyncToEthereum({
         ethAddress: syncWallet.address(),
         // eslint-disable-next-line @iceworks/best-practices/no-secret-info
         token: 'ETH',
         amount: ethers.utils.parseEther(amount),
       });
-      await withdraw.awaitReceipt();
+      const receipt = await withdraw.awaitReceipt();
+      console.log('withdraw receipt', receipt);
       // await withdraw.awaitVerifyReceipt();
-      wallet.update({
-        amount,
-      });
       return await withdraw.awaitVerifyReceipt();
 
     },

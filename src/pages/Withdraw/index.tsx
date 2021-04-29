@@ -2,6 +2,7 @@ import React from 'react';
 
 import Header from '@/components/WalletHeader';
 import WithdrawPage from './components/WithdrawPage';
+import SelectWalletDialog from '../MyWallet/components/SelectWalletDialog';
 
 import styles from './index.module.scss';
 
@@ -13,6 +14,7 @@ function Withdraw() {
         <WithdrawPage />
 
       </div>
+      <SelectWalletDialog />   
 
     </>
   );

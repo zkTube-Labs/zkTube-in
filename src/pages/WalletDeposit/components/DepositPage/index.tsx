@@ -186,16 +186,14 @@ function WalletDeposit() {
     // let ePrice = ethPrice;
     promRefresh.then((val) => {
       if (val) {
-        const _ethL1Balance = val.ethL1Balance;
-        const _ethPrice = val.ethPrice;
-        _ethL1Balance.then((val) => {
+        val.ethL1Balance.then((val) => {
           setLoadingBalance(false);
           setEthL1Balance(val);
           eBalance = val;
           UIrefreshEthBalance(eBalance, ePrice);
           console.log('updateAssets, refreshWallet, ethL1Balance', val, wallet);
         });
-        _ethPrice.then((val) => {
+        val.ethPrice.then((val) => {
           setEthPrice(val);
           ePrice = val;
           UIrefreshEthBalance(eBalance, ePrice);
