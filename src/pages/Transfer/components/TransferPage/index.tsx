@@ -383,7 +383,7 @@ const TransferPage = () => {
                 <p className={styles.comment} >
                   {/* {(wallet1.exceptionMsg && onException(wallet1.exceptionMsg))} */}
                   {message ? (
-                    <span>Fee is not is not enough. Please use another token</span>
+                    <span>Fee is not enough. Please use another token</span>
 
                   ) : ""}
                 </p>
