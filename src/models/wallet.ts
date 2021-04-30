@@ -47,10 +47,12 @@ interface IState {
   verifiedBalances: string | undefined;
 }
 
+
 // eslint-disable-next-line @iceworks/best-practices/no-http-url
 // const url = 'http://119.28.75.86:3030/jsrpc';
 // const url = 'https://rinkeby-jsrpc.zktube.io/';
 const url = "http://124.156.151.46:3030/jsrpc";
+// const url = "http://101.32.219.21:3030/jsrpc";
 
 async function getWeb3(): Promise<Web3> {
   return new Promise((resolve, reject) => {
@@ -156,7 +158,7 @@ export default {
 
 
     parseException(e) {
-      if (e.message?.toUpperCase().indexOf('ACCOUNT DOES NOT EXIST') > 0) {
+      if (e.message?.toUpperCase().indexOf('ACCOUNT IS LOCKED') > 0) {
         // message:'Failed to Set Signing Key: Account does not exist in the zkTube network'
         throw ('AccountNotExist');
       }
@@ -295,6 +297,17 @@ export default {
       return deposit;
     },
 
+    async getTxFee(data, thisModel){
+        const promTransFee = wallet1.syncHTTPProvider.getTransactionFee({
+          txType: data.type,
+          address: data.address,
+          tokenLike: 'ETH',
+        });
+     
+      return promTransFee;
+    },
+
+
     async transfer(data, thisModel) {
       let syncWallet = null;
       let syncHTTPProvider = null;
@@ -306,20 +319,16 @@ export default {
         syncHTTPProvider = _provider;
       }
 
-      // let  syncWallet = await this.refreshWallet();
-      // if(!syncWallet){
-      //   const _web3: Web3 = await getWeb3();
-      //   await zkTubeInitialize(_web3);
-      //    syncWallet = await zkTubeInitialize(_web3);
-      // }
-      // const amount = zktube.utils.closestPackableTransactionAmount(ethers.utils.parseEther(data.amount));
-      
+      const amount = zktube.utils.closestPackableTransactionAmount(ethers.utils.parseEther(data.amount));
+      console.log("amount", amount);
+           
         const transfer = await syncWallet.syncTransfer({
           to: data.address,
           // eslint-disable-next-line @iceworks/best-practices/no-secret-info
           token: 'ETH',
-          amount: ethers.utils.parseEther(data.amount),
+          amount,
         });
+        console.log("tras", transfer)
         // wallet.update({
         //   amount,
         //   transfer: _transfer,

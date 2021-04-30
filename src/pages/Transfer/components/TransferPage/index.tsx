@@ -15,26 +15,25 @@ const TransferPage = () => {
   const FormItem = Form.Item;
   
   const [wallet1, action] = store.useModel('wallet');
-  const [empty] = useState(false);
   const effectState = store.useModelEffectsState('wallet')
   const [visible, setVisible] = useState<boolean>(false);
   const [selected, setSelected] = useState<any>('ETH');
   let [address, setAddress] = useState('');
   let [amount, setAmount] = useState('0.0')
   let [loading, setLoading] = useState(false);
-  const [balance, setBalance] = useState('0.0');
+  const [balance, setBalance] = useState<any>('0.0');
   const [ethL1Balance, setEthL1Balance] = useState<any>();
   const [gasPrice, setgasPrice] = useState<any>();
-
+  const [canTransfer, setCanTransfer] = useState<boolean>(false);
   const [list, setList] = useState([]);
   const [resolve, resolveTransfer] = useState(false);
   const [transferRadOnly, setReadOnly] = useState<boolean>(true);
   const [assetsList, setAssets] = useState([]);
   const [loadingBalance, setLoadingBalance] = useState<boolean>(false);
   const [ethPrice, setEthPrice] = useState(0);
+  const [message,setMessage] = useState<boolean>(false);
+  let [fee, setFee] = useState(null);
 
-
-  let eBalance = null;
   let ePrice = 0;
 
   const goBack = useCallback(() => {
@@ -49,8 +48,9 @@ const TransferPage = () => {
      setVisible(false);
     setReadOnly(false);
     setSelected(crypto.currency);
-
     setBalance(crypto.amount);
+    onChangeAddress(address);
+
   }, [wallet1]);
 
   const formItemLayout = {
@@ -63,11 +63,44 @@ const TransferPage = () => {
     }
   };
 
+ 
+
    const handleSelectToken = useCallback(() => {
     setVisible(true);
     updateAssets();
 
   }, []);
+
+
+  const onChangeAddress = useCallback((_address) => {
+
+    if(_address && wallet1.assets){
+      setAddress(address);
+      const promTransFee = wallet1.syncHTTPProvider.getTransactionFee('Transfer', _address,'ETH');
+   promTransFee.then((val) => {
+      let totalFee =  ethers.utils.formatEther(val?.totalFee);
+      setFee(totalFee);
+
+      const feewei = ethers.utils.parseEther(`${totalFee}`);
+      const amt = ethers.utils.parseEther(`${amount}`);
+
+      const feeAmount = feewei.add(amt);
+
+      if(feeAmount.lte(wallet1?.assets?.verified?.balances?.ETH)){
+        setCanTransfer(true);
+      }
+     
+
+      // if(balance > feeAmount)
+
+   });
+    }
+ 
+  }, [address, wallet1]);
+
+  const showTranferButton = useCallback(()=>{
+
+  }, [])
 
   let transferMoney = useCallback(() => {
    let data = {
@@ -75,26 +108,17 @@ const TransferPage = () => {
      amount : `${amount}`
     }
     setLoading(true) 
-
     try{
-      const transfer = action.transfer(data)
+      const transfer = action.transfer(data);
       transfer.then((_transfer) =>{
         let gasPrices = ethers.BigNumber.from(0);
         setgasPrice(gasPrices);
         if (_transfer?.awaitReceipt) {
-  
-          action.update({ transferContract: _transfer });
-          // Await confirmation from the zkTube operator
-          // Completes when a promise is issued to process the tx
+            action.update({ transferContract: _transfer });
           const receipt = _transfer.awaitReceipt(); 
           receipt.then((_receipt) => {
             resolveTransfer(true);
-   
-            // history.push('/wallet/deposit/success');
           });
-  
-          // // Await verification
-          // // Completes when the tx reaches finality on Ethereum
           const verify = _transfer.awaitVerifyReceipt();
           verify.then((_verify) => {
           });
@@ -109,17 +133,19 @@ const TransferPage = () => {
             // setTimeout(getTransferData, 200);
           });
         }      
-      
-    
       })
       
     }
     catch (e){
-      const exceptionMsg = 'UserDeniedTransaction';
-      wallet1.update({
-        exceptionMsg,
-      });
-      // throw(exceptionMsg);
+      // const exceptionMsg = 'UserDeniedTransaction';
+      // wallet1.update({
+      //   exceptionMsg,
+      // });
+      // // throw(exceptionMsg);
+      console.log("messageerror", e.message);
+      if (e.message?.indexOf('User denied message signature.') > 0) {
+        setLoading(false);
+      }
 
     }
 
@@ -133,6 +159,7 @@ const TransferPage = () => {
       return curBalance;
     }
   } 
+
 
   const updateAssets = useCallback(() => {
     try {
@@ -167,7 +194,6 @@ const TransferPage = () => {
     promRefresh.then((assets) => {
       if (assets) {
         UIrefreshEthBalance(assets, ePrice);
-        console.log('updateAssets, refreshWallet, ethL1Balance', assets, ePrice);
       }
     });
     promEthPrice.then((val) => {
@@ -180,11 +206,8 @@ const TransferPage = () => {
   // function UIrefreshEthBalance() {
     const UIrefreshEthBalance = useCallback((assets, ePrice) => {
       const dataSource = [];
-      console.log('UIrefreshEthBalance', wallet1, assets, ePrice);
       if (assets?.verified?.balances) {
-        for (const [token, balance] of Object.entries(assets.verified.balances)) {
-          console.log('token, balance', token, balance);
-  
+        for (const [token, balance] of Object.entries(assets.verified.balances)) { 
           const formatedBalance = formatBalance(token, balance);
           dataSource.push({
             icon: 'icon-' + token.toLowerCase(),
@@ -201,20 +224,51 @@ const TransferPage = () => {
 
 
   const onAmountChange = useCallback((_amount) => {
+
+  let amount1 = '0.0'
   if (_amount <= 0.0) {
+    amount1 = '0.0';
     setAmount('0.0');
   } else if (typeof _amount == 'number' && wallet1?.assets?.verified?.balances?.ETH > 0.0) {
     const ethAmount = ethers.utils.parseEther(_amount.toString());
     if (ethAmount.gte(wallet1?.assets?.verified?.balances?.ETH)) {
+      amount1 = ethers.utils.formatEther(wallet1.assets.verified.balances.ETH);
       setAmount(ethers.utils.formatEther(wallet1.assets.verified.balances.ETH));
     } else {
+      amount1 = _amount.toString();
       setAmount(_amount.toString());
     }
   } else {
+    amount1 = '0.0';
+
     setAmount('0.0');
 
   }
-  }, [wallet1]);
+
+  const promTransFee = wallet1.syncHTTPProvider.getTransactionFee('Transfer', address,'ETH');
+  promTransFee.then((val) => {
+     let totalFee =  ethers.utils.formatEther(val?.totalFee);
+     const feewei = ethers.utils.parseEther(`${totalFee}`);
+     const amt = ethers.utils.parseEther(`${amount1}`);
+
+     const feeAmount = feewei.add(amt);
+     
+     if(feeAmount.lte(wallet1?.assets?.verified?.balances?.ETH)){
+       setCanTransfer(true);
+       setMessage(false);
+
+     }
+     else{
+       setCanTransfer(false);
+       setMessage(true);
+     }
+    
+
+     // if(balance > feeAmount)
+
+  });
+
+  }, [wallet1, amount]);
 
   const onException = useCallback((message) => {
   }, [wallet1]);
@@ -314,21 +368,24 @@ const TransferPage = () => {
                   
                 </FormItem>
                 </div>
-                <Button size="large" className={styles.buttonshow} onClick={transferMoney}> Transfer </Button>
+                <Button size="large" className={styles.buttonshow} disabled={!canTransfer} onClick={transferMoney}> Transfer </Button>
 
                 <div className={styles.textBox}>
-                  <h3 style={{float:"left", marginLeft: "40px"}}> Fee: {gasPrice}</h3>
+                  <h3 style={{float:"left", marginLeft: "40px"}}> Fee: { fee ? fee +"ETH": ''}</h3>
 
                   <h3 style={{float:"right", marginRight: "40px"}}>
-                  <a href="" > Choose fee token</a>
+                  {/* <a href="" > Choose fee token</a> */}
 
                   </h3>
                 </div>
                 <div style={{clear: "both"}}></div>
 
                 <p className={styles.comment} >
-                  {(wallet1.exceptionMsg && onException(wallet1.exceptionMsg))}
-                  {/* MetaMask Tx Signature: User denied transaction signature. */}
+                  {/* {(wallet1.exceptionMsg && onException(wallet1.exceptionMsg))} */}
+                  {message ? (
+                    <span>Fee is not is not enough. Please use another token</span>
+
+                  ) : ""}
                 </p>
             </Form>
             
