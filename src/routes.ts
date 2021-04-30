@@ -61,6 +61,7 @@ const routerConfig = [
         path: '/',
         redirect: '/wallet',
       },
+     
     ],
   },
 ];

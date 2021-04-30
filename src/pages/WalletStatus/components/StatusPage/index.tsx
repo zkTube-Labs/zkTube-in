@@ -19,7 +19,7 @@ import styles from './index.module.scss';
   const StatusPage : React.FC<IProps> = ({ title, icon, color,description, onClickButton, detailUrl, add, amt}) => {
    
     const goBack = useCallback(() => {
-        history.goBack();
+        // history.goBack();
       }, []);
 
       const viewDetail = useCallback(() => {
