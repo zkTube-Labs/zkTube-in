@@ -168,7 +168,7 @@ export default {
 
 
     parseException(e) {
-      if (e.message?.toUpperCase().indexOf('ACCOUNT DOES NOT EXIST') > 0) {
+      if (e.message?.toUpperCase().indexOf('ACCOUNT IS LOCKED') > 0) {
         // message:'Failed to Set Signing Key: Account does not exist in the zkTube network'
         throw ('AccountNotExist');
       }
@@ -331,6 +331,17 @@ export default {
       return deposit;
     },
 
+    async getTxFee(data, thisModel){
+        const promTransFee = wallet1.syncHTTPProvider.getTransactionFee({
+          txType: data.type,
+          address: data.address,
+          tokenLike: 'ETH',
+        });
+     
+      return promTransFee;
+    },
+
+
     async transfer(data, thisModel) {
       let syncWallet = null;
       let syncHTTPProvider = null;
@@ -343,8 +354,10 @@ export default {
       }
 
       const amount = zktube.utils.closestPackableTransactionAmount(ethers.utils.parseEther(data.amount));
-      const transfer = await syncWallet.syncTransfer({
-        to: data.address,
+      console.log("amount", amount);
+           
+        const transfer = await syncWallet.syncTransfer({
+          to: data.address,
         // eslint-disable-next-line @iceworks/best-practices/no-secret-info
         token: 'ETH',
         amount,
