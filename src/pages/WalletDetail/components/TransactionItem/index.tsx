@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react';
+import store from '@/store';
 import { Button, Form, Input } from '@alifd/next';
 
 import { shortAddress } from '@/utils';
@@ -20,12 +21,23 @@ const StatusMap = {
 
 function TransactionItem() {
   const [expand, setExpand] = useState<boolean>(false);
+  const [wallet1, action] = store.useModel('wallet');
 
   const viewDetail = useCallback(() => {
     console.log('view detail');
   }, []);
 
   const toggle = useCallback(() => {
+    // https://zksync.io/api/v0.1.html#rest-api
+    // https://rinkeby-api.zksync.io/api/v0.1/account/0x264B100C3d4B5379EaafDC489208873d31462879/history/0/25
+    // https://101.32.219.21:3030/api/v0.1/account/0x264B100C3d4B5379EaafDC489208873d31462879/history/0/25
+    
+
+    const promTx = wallet1?.syncWallet?.getTransfer();
+
+    promTx.then((val) => {
+      console.log(val);
+    })
     setExpand((value) => !value);
   }, []);
 

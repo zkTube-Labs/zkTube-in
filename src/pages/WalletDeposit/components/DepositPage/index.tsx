@@ -324,7 +324,7 @@ function WalletDeposit() {
             {selected && (
               <>
                 <div className={styles.balance}>
-                  <span className={styles.text} >L2 Balance:{balance}</span>
+                  <span className={styles.text} >L1 Balance:{balance}</span>
                   <Button
                     size="small"
                     text

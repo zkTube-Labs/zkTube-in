@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { IStoreDispatch, history } from 'ice';
 import { provider } from 'web3-core';
 import Web3 from 'web3';
-import { ethers } from 'ethers';
+import { ethers, Wallet } from 'ethers';
 import * as zktube from 'zktube-soft-launch';
 import { updateLocale } from 'moment';
 
@@ -10,12 +10,25 @@ declare const window: any;
 
 type Wallet = zktube.Wallet;
 
+// eslint-disable-next-line @iceworks/best-practices/no-http-url
+// const url = 'http://119.28.75.86:3030/jsrpc';
+// const url = 'https://rinkeby-jsrpc.zktube.io/';
+// const g_providerUrl = "http://124.156.151.46:3030/jsrpc";
+// // eslint-disable-next-line @iceworks/best-practices/no-http-url
+// const g_l2BlockUrl = 'http://124.156.151.46:7000/blocks/';
+const g_providerUrl = "http://101.32.219.21:3030/jsrpc";
+const g_l2BlockUrl = 'http://101.32.219.21:7000/blocks/';
+const g_l1TxUrl = 'https://rinkeby.etherscan.io/tx/';
+
+
 interface CustomError {
   code: number;
   message: string;
 }
 
 interface IState {
+  l1TxUrl: string;
+  l2BlockUrl: string;
   metaDialogVisible: boolean;
   selectWalletDialogVisible: boolean;
   unMetaDialogVisible: boolean;
@@ -47,11 +60,6 @@ interface IState {
   verifiedBalances: string | undefined;
 }
 
-// eslint-disable-next-line @iceworks/best-practices/no-http-url
-// const url = 'http://119.28.75.86:3030/jsrpc';
-// const url = 'https://rinkeby-jsrpc.zktube.io/';
-const url = "http://124.156.151.46:3030/jsrpc";
-
 async function getWeb3(): Promise<Web3> {
   return new Promise((resolve, reject) => {
     if (window.ethereum) {
@@ -70,22 +78,22 @@ async function getWeb3(): Promise<Web3> {
   });
 }
 
-const signKey = async (_syncWallet: Wallet) => {
-  if (!(await _syncWallet?.isSigningKeySet())) {
-    // alert('_syncWallet?.isSigningKeySet()');
-    const changePubkey = await _syncWallet?.setSigningKey({
-      // eslint-disable-next-line @iceworks/best-practices/no-secret-info
-      feeToken: 'ETH',
-    });
-    const receipt = await changePubkey?.awaitReceipt();
-    console.log('receipt', receipt);
-  }
-};
+// const signKey = async (_syncWallet: Wallet) => {
+//   if (!(await _syncWallet?.isSigningKeySet())) {
+//     // alert('_syncWallet?.isSigningKeySet()');
+//     const changePubkey = await _syncWallet?.setSigningKey({
+//       // eslint-disable-next-line @iceworks/best-practices/no-secret-info
+//       feeToken: 'ETH',
+//     });
+//     const receipt = await changePubkey?.awaitReceipt();
+//     console.log('receipt', receipt);
+//   }
+// };
 
 const zkTubeInitialize = async (_web3: any, callback?: (e: CustomError) => void) => {
   await _web3.currentProvider?.enable();
   const ethersProvider = new ethers.providers.Web3Provider(_web3.currentProvider);
-  const _syncHTTPProvider = await zktube.Provider.newHttpProvider(url);
+  const _syncHTTPProvider = await zktube.Provider.newHttpProvider(g_providerUrl);
   const singer = ethersProvider.getSigner();
   let _syncWallet: Wallet;
   try {
@@ -102,6 +110,8 @@ const zkTubeInitialize = async (_web3: any, callback?: (e: CustomError) => void)
 
 export default {
   state: {
+    l1TxUrl: g_l1TxUrl,
+    l2BlockUrl: g_l2BlockUrl,
     metaDialogVisible: false,
     selectWalletDialogVisible: false,
     unMetaDialogVisible: false,
@@ -140,6 +150,8 @@ export default {
       });
       // console.log('state 1', state);
       wallet.update({
+        // l1TxUrl: g_l1TxUrl,
+        // l2BlockUrl: g_l2BlockUrl,
         web3: _web3,
         syncWallet: _wallet,
         account: _account,
@@ -147,11 +159,11 @@ export default {
       });
       // console.log('state 2', state);
       history.push('/wallet/detail');
-      try {
-        await signKey(_wallet);
-      } catch (e) {
-        this.parseException(e);
-      }
+      // try {
+      //   await signKey(_wallet);
+      // } catch (e) {
+      //   this.parseException(e);
+      // }
     },
 
 
@@ -212,6 +224,28 @@ export default {
       }
     },
 
+    async signKey(_, thisModel) {
+      if (thisModel?.wallet?.syncWallet && thisModel?.wallet?.assets?.verified?.balances?.ETH) {
+        if (Number(thisModel.wallet.assets.verified.balances.ETH) > 0.0) {
+          const _syncWallet = thisModel.wallet.syncWallet;
+          if (!(await _syncWallet?.isSigningKeySet())) {
+            // alert('_syncWallet?.isSigningKeySet()');
+            const changePubkey = await _syncWallet?.setSigningKey({
+              // eslint-disable-next-line @iceworks/best-practices/no-secret-info
+              feeToken: 'ETH',
+            });
+            const receipt = changePubkey?.awaitReceipt();
+            receipt.then((val) => {
+              console.log('receipt', val);
+            });
+            return receipt;
+          }
+        }
+      }
+      return null;
+    },
+    
+
     // issue: param 2 always be the 'this' pointer to the wallet model, neither you pass some thing or not
     // async deposit(amount, thisModel, address)
     // the first param is correct
@@ -249,16 +283,18 @@ export default {
       const allAcounts = await _web3.eth.getAccounts();
       const _account: string = allAcounts[0];
       wallet.update({
+        // l1TxUrl: g_l1TxUrl,
+        // l2BlockUrl: g_l2BlockUrl,
         web3: _web3,
         account: _account,
         syncWallet: _wallet,
         syncHTTPProvider: _provider,
       });
-      try {
-        await signKey(_wallet);
-      } catch (e) {
-        this.parseException(e);
-      }
+      // try {
+      //   await signKey(_wallet);
+      // } catch (e) {
+      //   this.parseException(e);
+      // }
       return { syncWallet: _wallet, syncHTTPProvider: _provider };
     },
 
@@ -306,53 +342,48 @@ export default {
         syncHTTPProvider = _provider;
       }
 
-      // let  syncWallet = await this.refreshWallet();
-      // if(!syncWallet){
-      //   const _web3: Web3 = await getWeb3();
-      //   await zkTubeInitialize(_web3);
-      //    syncWallet = await zkTubeInitialize(_web3);
-      // }
-      // const amount = zktube.utils.closestPackableTransactionAmount(ethers.utils.parseEther(data.amount));
-      
-        const transfer = await syncWallet.syncTransfer({
-          to: data.address,
-          // eslint-disable-next-line @iceworks/best-practices/no-secret-info
-          token: 'ETH',
-          amount: ethers.utils.parseEther(data.amount),
-        });
-        // wallet.update({
-        //   amount,
-        //   transfer: _transfer,
-        //   resolveTransfer: true,
-        // });
-        // return await _transfer.awaitReceipt();
-        return transfer;
-   
-    },
-
-    async withdraw(amount, thisModel) {
-
-      let syncWallet = null;
-      let syncHTTPProvider = null;
-      if (thisModel && thisModel.wallet && thisModel.wallet.syncWallet) {
-        syncWallet = thisModel.wallet.syncWallet;
-      } else {
-        const { syncWallet: _wallet, syncHTTPProvider: _provider } = await this.refreshWallet();
-        syncWallet = _wallet;
-        syncHTTPProvider = _provider;
-      }
-
-      const withdraw = await syncWallet.withdrawFromSyncToEthereum({
-        ethAddress: syncWallet.address(),
+      const amount = zktube.utils.closestPackableTransactionAmount(ethers.utils.parseEther(data.amount));
+      const transfer = await syncWallet.syncTransfer({
+        to: data.address,
         // eslint-disable-next-line @iceworks/best-practices/no-secret-info
         token: 'ETH',
-        amount: ethers.utils.parseEther(amount),
+        amount,
       });
-      const receipt = await withdraw.awaitReceipt();
-      console.log('withdraw receipt', receipt);
-      // await withdraw.awaitVerifyReceipt();
-      return await withdraw.awaitVerifyReceipt();
+      // wallet.update({
+      //   amount,
+      //   transfer: _transfer,
+      //   resolveTransfer: true,
+      // });
+      // return await _transfer.awaitReceipt();
+      return transfer;
 
+    },
+
+    async withdraw(data, thisModel) {
+      if (data?.amount && data?.token && data?.to) {
+        let syncWallet = null;
+        let syncHTTPProvider = null;
+        if (thisModel && thisModel.wallet && thisModel.wallet.syncWallet) {
+          syncWallet = thisModel.wallet.syncWallet;
+        } else {
+          const { syncWallet: _wallet, syncHTTPProvider: _provider } = await this.refreshWallet();
+          syncWallet = _wallet;
+          syncHTTPProvider = _provider;
+        }
+
+        const withdraw = await syncWallet.withdrawFromSyncToEthereum({
+          ethAddress: data.to,
+          // eslint-disable-next-line @iceworks/best-practices/no-secret-info
+          token: data.token,
+          amount: ethers.utils.parseEther(data.amount),
+        });
+        const receipt = withdraw.awaitReceipt();
+        // await withdraw.awaitVerifyReceipt();
+        const verifyReceipt = withdraw.awaitVerifyReceipt();
+        return {receipt, verifyReceipt};
+      } else {
+        return null;
+      }
     },
 
     async setState(payload: IState) {

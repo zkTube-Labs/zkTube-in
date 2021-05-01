@@ -17,7 +17,7 @@ function WithdrawPage() {
   const [wallet1, action] = store.useModel('wallet');
 
   const [wallet, setWallet] = useState('ETH');
-  let [address, setAddress] = useState('');
+  const [address, setAddress] = useState('');
   let [amount, setAmount] = useState('')
   const [withdrawReadonly, setReadonly] = useState<boolean>(false);
   const [selected, setSelected] = useState<any>();
@@ -28,11 +28,13 @@ function WithdrawPage() {
   const [resolve, resolveTransfer] = useState(false);
   const [balance, setBalance] = useState('0.0');
 
+  const [detailUrl, setDetailUrl] = useState('');
+
   const [loadingBalance, setLoadingBalance] = useState<boolean>(false);
   const [assetsList, setAssets] = useState([]);
   const [ethPrice, setEthPrice] = useState(0);
   let ePrice = 0;
-  
+
   let handleChange = (wallet) => {
     setWallet(wallet)
   }
@@ -61,33 +63,45 @@ function WithdrawPage() {
 
   let withdrawMoney = useCallback(() => {
     if (amount && selected?.currency) {
-      let data = {amount, token: selected.currency};
+      let data = {amount, token: selected.currency, to: address};
       try {
         setLoading(true) 
-        const promWithdraw = action.withdraw(data).then(res => {
-          if(res == undefined){
-            window.location.reload();
-            console.log(res)
+        const promWithdraw = action.withdraw(data);
+        promWithdraw.then((ret) => {
+          if (ret?.receipt) {
+            ret.receipt.then((_receipt) => {
+              const checkUrl = wallet1.l2BlockUrl + _receipt.block.blockNumber;
+              setDetailUrl(checkUrl);
+              // console.log('receipt', _receipt)
+            })
           }
-          else if(res.success == true){
-            resolveTransfer(true);
-          }
-          else{
-            resolveTransfer(false)
-          }
-        });
 
-        promWithdraw.then((val) => {
-          console.log('withdraw awaitVerifyReceipt', val);
+          if (ret?.verifyReceipt) {
+            ret.verifyReceipt.then((_verifyReceipt) => {
+              console.log('verifyReceipt', _verifyReceipt);
+              const checkUrl = wallet1.l2BlockUrl + _verifyReceipt.block.blockNumber;
+              setDetailUrl(checkUrl);
+              if(_verifyReceipt == undefined){
+                // window.location.reload();
+                console.log(_verifyReceipt);
+              }
+              else if(_verifyReceipt.success == true){
+                resolveTransfer(true);
+              }
+              else{
+                resolveTransfer(false)
+              }
+            })
+          }
         });
       }
       catch(e){
         console.log("error from withdraw page", e);
       }
     }
-   }, [amount,address])
+   }, [wallet1, amount, address])
 
-   const goBack = useCallback(() => {
+  const goBack = useCallback(() => {
     history.goBack();
   }, [])
 
@@ -142,6 +156,21 @@ function WithdrawPage() {
 
   }, [wallet1]);
 
+  const onChangeAddress = useCallback((_address) => {
+    if (_address && wallet1?.assets) {
+      try {
+        setAddress(_address);
+        const promTransFee = wallet1.syncHTTPProvider.getTransactionFee('Withdraw', _address, 'ETH');
+        promTransFee.then((val) => {
+          console.log('Withdraw fee', val);
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    }
+
+  }, [wallet1, address]);
+
   const refreshAssets = useCallback((wallet) => {
     const promRefresh = action.refreshL2Assets();
     const promEthPrice = action.refreshTokenPrice('ETH');
@@ -157,7 +186,7 @@ function WithdrawPage() {
       UIrefreshEthBalance(wallet1.assets, ePrice);
       console.log('refreshAssets, refreshWallet, ethL1Balance', val);
     });
-  }, [wallet1, ePrice]);
+  }, [wallet1, ePrice, address]);
 
   function formatBalance(currency, curBalance) {
     if (currency == 'ETH') {
@@ -193,12 +222,21 @@ function WithdrawPage() {
     updateAssets();
   }, []);
 
+  const setMaxAmount = useCallback(() => {
+    if (selected?.amount) {
+      setAmount(selected.amount);
+    } else {
+      setAmount('0.0');
+    }
+  }, [wallet1]);
+
   return (
     <div className={styles.container} style={{marginTop:"20px"}}>
       {loading}
       {loading ? <WithdrawSuccess add = {address} amt={amount} 
       load={effectState.withdraw.isLoading}
       resolve = {resolve}
+      detailUrl = {detailUrl}
       fail = {effectState.withdraw.error}/> : 
         <div>
          
@@ -212,63 +250,73 @@ function WithdrawPage() {
               </h3>
             </div>
           <Form style = {{width: '100%'}} {...formItemLayout}>
-              <div style = {{ margin: "0px 25px"}}>
-                <FormItem label = "Amount" style = {{ margin : "100px 0px 0px 20px", 
-                fontSize: "32px",
-              //  fontFamily: "SourceHanSansSC-regular",
-                fontWeight: 800
-                }}>
-                <span style={{display : "inline", overflow: "hidden"}}>
-                <NumberPicker
-                  size="large"
-                  className={styles.input}
-                  disabled={withdrawReadonly}
-                  defaultValue={0}
-                  value={Number(amount)}
-                  min={0.0}
-                  step={0.001}
-                  precision={18}
-                  onChange={(_amount) => { onAmountChange(_amount); }}
-                />
-                </span>
-                  <div style={{textAlign: "right", display: "inline"}}>
-                  {/* <Select value={wallet} onChange={handleChange} style = {{backgroundColor: "black", padding: "6px"}}> 
-                    <Option value="ETH">ETH</Option>
-                    <Option value="Ropsten">Ropsten</Option>
-                  </Select> */}
-                  <Button type="primary"  style={{backgroundColor: "#333340", width: "22%", height : "38px"}} className={styles.buttonSelected} onClick={handleSelectToken}>
-                    <Icon type="icon-select" />
-                  </Button>
-                  </div>
-
-                  <div className= {styles.balance}>
-                    <h3 className = {styles.text} >
-                      Balance: {wallet1?.assets?.verified?.balances?.ETH ? (Number(ethers.utils.formatEther(wallet1?.assets?.verified?.balances?.ETH))) : 0}
-                      <Button size="small" text className={styles.button} onClick={() => {setAmountByWei(wallet1?.assets?.verified?.balances?.ETH);}}> MAX</Button>
-                    </h3>
-                  </div>
-                </FormItem>
+            <div style = {{ margin: "0px 25px" }}>
+              <FormItem label = "To"  className= {styles.to} hasFeedback required requiredTrigger="onBlur" format={undefined}>
+              <div>
+                <Input type="text" name = "to" className = {styles.inputWidth} 
+                placeholder="address" size="medium"  onChange = {(address) => {
+                  onChangeAddress(address);
+                }}/>
               </div>
-              <Button size="large" className={styles.buttonshow} onClick={withdrawMoney}> Withdraw </Button>
+              </FormItem>
+            </div>
+            <div style = {{ margin: "0px 25px"}}>
+              <FormItem label = "Amount" style = {{ margin : "100px 0px 0px 20px", 
+              fontSize: "32px",
+            //  fontFamily: "SourceHanSansSC-regular",
+              fontWeight: 800
+              }}>
+              <span style={{display : "inline", overflow: "hidden"}}>
+              <NumberPicker
+                size="large"
+                className={styles.input}
+                disabled={withdrawReadonly}
+                defaultValue={0}
+                value={Number(amount)}
+                min={0.0}
+                step={0.001}
+                precision={18}
+                onChange={(_amount) => { onAmountChange(_amount); }}
+              />
+              </span>
+                <div style={{textAlign: "right", display: "inline"}}>
+                {/* <Select value={wallet} onChange={handleChange} style = {{backgroundColor: "black", padding: "6px"}}> 
+                  <Option value="ETH">ETH</Option>
+                  <Option value="Ropsten">Ropsten</Option>
+                </Select> */}
+                <Button type="primary"  style={{backgroundColor: "#333340", width: "22%", height : "38px"}} className={styles.buttonSelected} onClick={handleSelectToken}>
+                  <Icon type="icon-select" />
+                </Button>
+                </div>
 
-              {/* <div className={styles.textBox}>
-                <h3 style={{float:"left", marginLeft: "40px"}}> Fee:</h3>
+                <div className= {styles.balance}>
+                  <h3 className = {styles.text} >
+                    Balance: {wallet1?.assets?.verified?.balances?.ETH ? (Number(ethers.utils.formatEther(wallet1?.assets?.verified?.balances?.ETH))) : 0}
+                    <Button size="small" text className={styles.button} onClick={setMaxAmount}> MAX</Button>
+                  </h3>
+                </div>
+              </FormItem>
+            </div>
+            <Button size="large" className={styles.buttonshow} onClick={withdrawMoney} disabled={Number(amount) <= 0.0}> Withdraw </Button>
 
-                <h3 style={{float:"right", marginRight: "40px"}}>
-                <a href="/#" > Choose fee token</a>
+            {/* <div className={styles.textBox}>
+              <h3 style={{float:"left", marginLeft: "40px"}}> Fee:</h3>
 
-                </h3>
-              </div>
-                <div style={{clear: "both"}}></div>
+              <h3 style={{float:"right", marginRight: "40px"}}>
+              <a href="/#" > Choose fee token</a>
 
-                <p className={styles.comment}>
-                  MetaMask Tx Signature: User denied transaction signature.
-                </p>              */}
-          </Form>       
-            
-        </div>
+              </h3>
+            </div>
+              <div style={{clear: "both"}}></div>
+
+              <p className={styles.comment}>
+                MetaMask Tx Signature: User denied transaction signature.
+              </p>              */}
+        </Form>       
+          
+      </div>
     } <Dialog
-    title="Balances in L1Account"
+    title="Balances in L2Account"
     height="300px"
     footer={false}
     visible={visible}
@@ -276,7 +324,7 @@ function WithdrawPage() {
     className={styles.dialog}
     closeMode={['close', 'esc', 'mask']}
   >
-    <Input placeholder="Filter balance in L1" className={styles.search} hasClear onChange={onSearch} />
+    {/* <Input placeholder="Filter balance in L2" className={styles.search} hasClear onChange={onSearch} /> */}
     {empty ? (
       <div className={styles.empty}>
         <span>No tokens with balance were found!</span>

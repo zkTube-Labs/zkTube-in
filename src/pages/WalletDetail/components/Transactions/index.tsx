@@ -1,5 +1,4 @@
 import React, { useCallback } from 'react';
-
 import Item from '../TransactionItem';
 
 import styles from './index.module.scss';

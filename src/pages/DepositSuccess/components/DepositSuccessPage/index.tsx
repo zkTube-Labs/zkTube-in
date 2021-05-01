@@ -35,7 +35,7 @@ let DepositSuccessPage = (props) => {
   const getDetailUrl = useCallback(() => {
     if (wallet?.depositContract?.blockNumber) {
       // const url = 'https://rinkeby-browser.zktube.io/blocks/' + wallet.depositContract.blockNumber.toString();
-      const url = 'https://rinkeby.etherscan.io/tx/' + wallet.depositContract.txHash;
+      const url = wallet.l1TxUrl + wallet.depositContract.txHash;
       return url;
     }
     return '/wallet/detail';

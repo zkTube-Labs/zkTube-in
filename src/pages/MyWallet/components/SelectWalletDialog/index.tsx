@@ -9,7 +9,7 @@ import styles from './index.module.scss';
 declare const window: any;
 const SelectWalletDialog = () => {
   const [hasMask, setHasMask] = useState(false);
-  const [{ selectWalletDialogVisible }, action] = store.useModel('wallet');
+  const [wallet, action] = store.useModel('wallet');
 
   function onClose() {
     action.setState({ selectWalletDialogVisible: false });
@@ -20,9 +20,15 @@ const SelectWalletDialog = () => {
     if (hasMask) {
       action.setState({ metaDialogVisible: true });
       const initResult = action.init();
-      initResult.then(() => {
+      initResult.then((init) => {
         action.refreshEthBalance();
-        action.refreshL2Assets();
+
+        const promAssets = action.refreshL2Assets();
+        promAssets.then((val) => {
+          if (val?.verified?.balances?.ETH && Number(val.verified.balances.ETH) > 0.0) {
+            action.signKey();
+          }
+        });
       });
     } else {
       action.setState({ unMetaDialogVisible: true });
@@ -38,7 +44,7 @@ const SelectWalletDialog = () => {
   return (
     <Dialog
       title={<h2>Select Wallet</h2>}
-      visible={selectWalletDialogVisible}
+      visible={wallet?.selectWalletDialogVisible}
       onClose={onClose}
       footer={false}
       className={styles.dialog}
