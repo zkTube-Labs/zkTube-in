@@ -2,6 +2,7 @@ import React, { useCallback, useState } from 'react';
 import styles from './index.module.scss';
 import Loading from '../../../loadTransfer/components/loading'
 import Status from '../../../WalletStatus/components/StatusPage';
+import WalletDetail from '../../../WalletDetail/index';
 
   let TransferSuccessPage = (props) => {
   // const [loading, loadPage] = useState<boolean>(true);
@@ -20,7 +21,8 @@ import Status from '../../../WalletStatus/components/StatusPage';
     ) :  
     (
       <div>
-       <Status
+        <WalletDetail transaction={"2"}/>
+       {/* <Status
         add = {props.add}
         amt ={props.amt}
         title = "Transfer"
@@ -29,7 +31,7 @@ import Status from '../../../WalletStatus/components/StatusPage';
         status = "success"
         description = "Your Transfer will be processed shortly. Use the transaction link to track the progress"
         onClickButton ={() => window.location.reload(false)}
-       />
+       /> */}
 
 
        

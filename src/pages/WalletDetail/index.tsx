@@ -9,7 +9,9 @@ import SelectWalletDialog from '../MyWallet/components/SelectWalletDialog';
 
 import styles from './index.module.scss';
 
-const WalletDetail = () => {
+const WalletDetail = (props) => {
+
+  const transactionPage = props.transaction;
   return (
     <div>
      
@@ -23,10 +25,10 @@ const WalletDetail = () => {
         navClassName={styles.navStyle}
         contentClassName={styles.contentStyle}
         unmountInactiveTabs
-        defaultActiveKey="1"
+        defaultActiveKey= {transactionPage !== "2" ? "1" : "2"}
       >
         
-        <Tab.Item title="Wallet" key="1" style = {{marginRight:"20px"}}>
+        <Tab.Item title="Wallet" key="1"  style = {{marginRight:"20px"}}>
           <Wallet/>
         </Tab.Item>
         <Tab.Item title="Transactions" key="2">
