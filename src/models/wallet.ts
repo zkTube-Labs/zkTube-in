@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { IStoreDispatch, history } from 'ice';
 import { provider } from 'web3-core';
 import Web3 from 'web3';
-import { ethers, Wallet } from 'ethers';
+import { ethers, EWallet } from 'ethers';
 import * as zktube from 'zktube-soft-launch';
 import { updateLocale } from 'moment';
 
@@ -12,12 +12,27 @@ type Wallet = zktube.Wallet;
 
 // eslint-disable-next-line @iceworks/best-practices/no-http-url
 // const url = 'http://119.28.75.86:3030/jsrpc';
-// const url = 'https://rinkeby-jsrpc.zktube.io/';
+
+const g_providerUrl = 'https://rinkeby-jsrpc.zktube.io';
+// eslint-disable-next-line @iceworks/best-practices/no-http-url
+const g_l2BlockUrl = 'https://rinkeby-browser.zktube.io';
+const g_restApiUrl = 'http://rinkeby-api.zktube.io/api/v0.1';
+
 // const g_providerUrl = "http://124.156.151.46:3030/jsrpc";
-// // eslint-disable-next-line @iceworks/best-practices/no-http-url
-// const g_l2BlockUrl = 'http://124.156.151.46:7000/blocks/';
-const g_providerUrl = "http://101.32.219.21:3030/jsrpc";
-const g_l2BlockUrl = 'http://101.32.219.21:7000/blocks/';
+// const g_l2BlockUrl = 'http://124.156.151.46:7000';
+
+// const g_providerUrl = "http://101.32.219.21:3030/jsrpc";
+// const g_l2BlockUrl = 'http://101.32.219.21:7000';
+
+// const g_providerUrl = 'http://t5tz:3030/jsrpc';
+// const g_l2BlockUrl = 'http://t5tz:7000';
+// const g_restApiUrl = 'http://t5tz:3001/api/v0.1';
+
+// const g_providerUrl = 'http://t5tz.ceja.co:3030/jsrpc';
+// const g_l2BlockUrl = 'http://t5tz.ceja.co:7000';
+// const g_restApiUrl = 'http://t5tz.ceja.co:3001/api/v0.1';
+
+
 const g_l1TxUrl = 'https://rinkeby.etherscan.io/tx/';
 
 
@@ -244,7 +259,6 @@ export default {
       }
       return null;
     },
-    
 
     // issue: param 2 always be the 'this' pointer to the wallet model, neither you pass some thing or not
     // async deposit(amount, thisModel, address)
@@ -331,13 +345,14 @@ export default {
       return deposit;
     },
 
-    async getTxFee(data, thisModel){
-        const promTransFee = wallet1.syncHTTPProvider.getTransactionFee({
-          txType: data.type,
-          address: data.address,
-          tokenLike: 'ETH',
-        });
-     
+    async getTxFee(data, thisModel) {
+      const kw = 'ETH';
+      const promTransFee = thisModel.wallet.syncHTTPProvider.getTransactionFee({
+        txType: data.type,
+        address: data.address,
+        tokenLike: kw,
+      });
+
       return promTransFee;
     },
 
@@ -354,10 +369,9 @@ export default {
       }
 
       const amount = zktube.utils.closestPackableTransactionAmount(ethers.utils.parseEther(data.amount));
-      console.log("amount", amount);
-           
-        const transfer = await syncWallet.syncTransfer({
-          to: data.address,
+      console.log('amount', amount);
+      const transfer = await syncWallet.syncTransfer({
+        to: data.address,
         // eslint-disable-next-line @iceworks/best-practices/no-secret-info
         token: 'ETH',
         amount,
@@ -393,10 +407,29 @@ export default {
         const receipt = withdraw.awaitReceipt();
         // await withdraw.awaitVerifyReceipt();
         const verifyReceipt = withdraw.awaitVerifyReceipt();
-        return {receipt, verifyReceipt};
+        return { receipt, verifyReceipt };
       } else {
         return null;
       }
+    },
+
+    async history(data, thisModel) {
+      let syncWallet = null;
+      let syncHTTPProvider = null;
+      if (thisModel && thisModel.wallet && thisModel.wallet.syncWallet) {
+        syncWallet = thisModel.wallet.syncWallet;
+      } else {
+        const { syncWallet: _wallet, syncHTTPProvider: _provider } = await this.refreshWallet();
+        syncWallet = _wallet;
+        syncHTTPProvider = _provider;
+      }
+
+      const account = syncWallet.cachedAddress;
+      const queryUrl = g_restApiUrl + '/account/' + account + '/history/0/25';
+
+      const response = await fetch(queryUrl);
+      const result = await response.json();
+      return result;
     },
 
     async setState(payload: IState) {

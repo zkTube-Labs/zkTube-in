@@ -70,7 +70,7 @@ function WithdrawPage() {
         promWithdraw.then((ret) => {
           if (ret?.receipt) {
             ret.receipt.then((_receipt) => {
-              const checkUrl = wallet1.l2BlockUrl + _receipt.block.blockNumber;
+              const checkUrl = wallet1.l2BlockUrl + '/blocks/' + _receipt.block.blockNumber;
               setDetailUrl(checkUrl);
               // console.log('receipt', _receipt)
             })
@@ -79,7 +79,7 @@ function WithdrawPage() {
           if (ret?.verifyReceipt) {
             ret.verifyReceipt.then((_verifyReceipt) => {
               console.log('verifyReceipt', _verifyReceipt);
-              const checkUrl = wallet1.l2BlockUrl + _verifyReceipt.block.blockNumber;
+              const checkUrl = wallet1.l2BlockUrl + '/blocks/' + _verifyReceipt.block.blockNumber;
               setDetailUrl(checkUrl);
               if(_verifyReceipt == undefined){
                 // window.location.reload();

@@ -291,9 +291,7 @@ const TransferPage = () => {
          
             <div className={styles.textBox}>
               <div style={{float: "left", margin: "-5px 0px 0px 30px" }}>
-                <a href="/#">
-                  <Icon type="icon-back" size= {30} color = "black" onClick={goBack}/>
-                </a> 
+                <Icon type="icon-back" size= {30} color = "black" onClick={goBack}/>
               </div>
               <h3 className={styles.withdraw}>
                   Transfer

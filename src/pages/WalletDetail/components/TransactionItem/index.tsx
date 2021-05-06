@@ -1,9 +1,11 @@
 import React, { useState, useCallback } from 'react';
 import store from '@/store';
 import { Button, Form, Input } from '@alifd/next';
-
+import { useMount } from 'ahooks';
 import { shortAddress } from '@/utils';
 import Icon from '@/components/Icon';
+import { ethers } from 'ethers';
+import moment from 'moment';
 
 import styles from './index.module.scss';
 
@@ -19,27 +21,86 @@ const StatusMap = {
   pending: <Pending />,
 };
 
-function TransactionItem() {
+function TransactionItem(props) {
   const [expand, setExpand] = useState<boolean>(false);
-  const [wallet1, action] = store.useModel('wallet');
+  const [wallet, action] = store.useModel('wallet');
+
+  const [amount, setAmount] = useState<string>('');
+  const [toAddress, setToAddress] = useState<string>('');
+  const [direction, setDirection] = useState<string>('');
+  const [stSuccess, setSuccess] = useState<boolean>(false);
+  const [createTime, setCreateTime] = useState<string>('');
+
+  useMount(() => {
+    switch (props?.data?.tx?.priority_op?.token) {
+      case 'ETH':
+        if (props?.data?.tx?.priority_op?.amount) {
+          const wei = ethers.BigNumber.from(props.data.tx.priority_op.amount);
+          const formatedBalance = ethers.utils.formatEther(wei);
+          // const dollar = ePrice > 0 ? formatedBalance * ePrice : 0,
+          setAmount(formatedBalance + 'ETH');
+        }
+        // wallet.ethPrice *
+        break;
+      default:
+        break;
+    }
+
+    switch (props?.data?.tx?.type) {
+      case 'Deposit':
+        setDirection('ETHL1 -> ETHL2');
+        break;
+      case 'Withdraw':
+        setDirection('ETHL2 -> ETHL1');
+        break;
+      case 'Transfer':
+        setDirection('ETHL2 -> ETHL2');
+        break;
+      default:
+        break;
+    }
+
+    if (props?.data?.success) {
+      setSuccess(true);
+    } else {
+      setSuccess(false);
+      console.log('stat failed', props.data, moment.locale());
+    }
+
+    if (props?.data?.tx?.priority_op?.to) {
+      const add = shortAddress(props?.data?.tx?.priority_op?.to);
+      setToAddress(add);
+    }
+
+    if (props?.data?.created_at) {
+      // UTC => "03/10/2020 15:27:07"
+      const ftime = moment(props.data.created_at).format('MM/DD/YYYY hh:mm:ss');
+      setCreateTime(ftime);
+      // wallet.syncHTTPProvider.getTransactionFee()
+    }
+  }, [wallet]);
 
   const viewDetail = useCallback(() => {
     console.log('view detail');
   }, []);
 
   const toggle = useCallback(() => {
-    // https://zksync.io/api/v0.1.html#rest-api
-    // https://rinkeby-api.zksync.io/api/v0.1/account/0x264B100C3d4B5379EaafDC489208873d31462879/history/0/25
-    // https://101.32.219.21:3030/api/v0.1/account/0x264B100C3d4B5379EaafDC489208873d31462879/history/0/25
-    
+    // const promTx = wallet?.syncWallet?.getTransfer();
 
-    const promTx = wallet1?.syncWallet?.getTransfer();
-
-    promTx.then((val) => {
-      console.log(val);
-    })
+    // promTx.then((val) => {
+    //   console.log(val);
+    // });
     setExpand((value) => !value);
   }, []);
+
+  const getDetailUrl = useCallback(() => {
+    if (props?.data?.hash) {
+      // const url = http://192.168.30.110:7000/transactions/0x09ccc365dc1b3b7cee44f819fa68ffcd93999d51964a92633a1e2b9f0ede9d16;
+      const url = wallet.l2BlockUrl + '/transactions/' + props?.data?.hash;
+      return url;
+    }
+    return '/wallet/detail';
+  }, [wallet]);
 
   const visibleStyle: React.CSSProperties = {
     visibility: expand ? 'visible' : 'hidden',
@@ -57,14 +118,14 @@ function TransactionItem() {
             <Icon type="icon-down" size="small" color="#060606" />
           </div>
           <div className={styles.leftDetail}>
-            <div className={styles.to}>Deposit to {shortAddress('0xD6649922bAe39aCA4F36CaA5B957969D')}</div>
-            <div className={styles.path}>ETHL1 {'->'} ETHL2</div>
+            <div className={styles.to}>{props?.data?.tx?.type} to {toAddress}</div>
+            <div className={styles.path}>{direction}</div>
           </div>
         </div>
         <div className={styles.right}>
           <div className={styles.rightDetail}>
-            <div className={styles.amount}>10.00</div>
-            <div className={styles.status}>{StatusMap.failed}</div>
+            <div className={styles.amount}>{amount}</div>
+            <div className={styles.status}>{stSuccess ? StatusMap.success : StatusMap.failed}</div>
           </div>
           <div className={styles.expand} style={rotateStyle}>
             <Icon type="icon-right" size="xl" onClick={toggle} />
@@ -73,27 +134,34 @@ function TransactionItem() {
       </div>
       <div className={styles.expandContainer} style={visibleStyle}>
         <Form {...incomeFormItemLayout} className={styles.form} size="small" isPreview labelTextAlign="left">
-          <FormItem label="Miner Fee">
+          { !stSuccess &&
+            <FormItem label="Message">
+              <Input value={props?.data?.fail_reason} />
+            </FormItem>
+          }
+          {/* <FormItem label="Miner Fee">
             <Input value="0.03567ETH" />
             <p className={styles.formItemTip}>{'=Gas(231,988)*Gas Price(231,988GWEI)'}</p>
-          </FormItem>
+          </FormItem> */}
           <FormItem label="From">
-            <Input value="0xD6649922bAe39aC532fA9b5A4F36CaA5B957969D" />
+            <Input value={props?.data?.tx?.priority_op?.from || props?.data?.tx?.from} />
           </FormItem>
           <FormItem label="To">
-            <Input value="0xD6649922bAe39aC532fA9b5A4F36CaA5B957969D" />
+            <Input value={props?.data?.tx?.priority_op?.to || props?.data?.tx?.to} />
           </FormItem>
           <FormItem label="Transaction Hash">
-            <Input value="0xD6649922bAe39aC532fA9b5A4F36CaA5B957969D" />
+            <Input value={props?.data?.hash} />
           </FormItem>
           <FormItem label="time">
-            <Input value="03/10/2020 15:27:07" />
+            <Input value={createTime} />
           </FormItem>
         </Form>
-        <Button text className={styles.button} onClick={viewDetail}>
-          View transaction details
-          <Icon size="small" type="icon-up-right" color="#5E45EB" />
-        </Button>
+        <a href={getDetailUrl()} target="_blank">
+          <Button text className={styles.button} >
+            View transaction details
+            <Icon size="small" type="icon-up-right" color="#5E45EB" />
+          </Button>
+        </a>
       </div>
     </div>
   );
