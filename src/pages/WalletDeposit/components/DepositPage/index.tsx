@@ -292,7 +292,7 @@ function WalletDeposit() {
       ) : (
         <div className={styles.card}>
           <div className={styles.header}>
-            <Icon type="icon-back" size="xl" onClick={goBack} />
+            <Icon type="icon-back" size="xl" onClick={goBack} style={{color:"white"}}/>
             <div className={styles.title}>Deposit</div>
             <div className={styles.extra} />
           </div>
@@ -316,7 +316,7 @@ function WalletDeposit() {
                   <Icon type="icon-select" />
                 </Button>
               ) : (
-                <Button className={styles.button} text size="medium" onClick={handleSelectToken}>
+                <Button className={styles.button}  text size="medium" onClick={handleSelectToken}>
                   Select Token
                 </Button>
               )}
