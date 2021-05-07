@@ -52,6 +52,7 @@ interface IState {
   account: string;
   syncHTTPProvider: provider;
   signErrorMsg: string | undefined;
+  changingPubKey: boolean;
   transfer: any;
   ethL1Balance: ethers.utils.BigNumber | null;
   ethPrice: ethers.utils.BigDecimal | null;
@@ -135,6 +136,7 @@ export default {
     account: undefined,
     syncHTTPProvider: undefined,
     signErrorMsg: undefined,
+    changingPubKey: false,
     transfer: undefined,
     // wei, 1 ETH = 10^18 wei
     committedBalances: 0,
@@ -243,8 +245,9 @@ export default {
       if (thisModel?.wallet?.syncWallet && thisModel?.wallet?.assets?.verified?.balances?.ETH) {
         if (Number(thisModel.wallet.assets.verified.balances.ETH) > 0.0) {
           const _syncWallet = thisModel.wallet.syncWallet;
-          if (!(await _syncWallet?.isSigningKeySet())) {
+          if (!thisModel.changingPubKey && !(await _syncWallet?.isSigningKeySet())) {
             // alert('_syncWallet?.isSigningKeySet()');
+            wallet.update({changingPubKey:true});
             const changePubkey = await _syncWallet?.setSigningKey({
               // eslint-disable-next-line @iceworks/best-practices/no-secret-info
               feeToken: 'ETH',
@@ -252,12 +255,21 @@ export default {
             const receipt = changePubkey?.awaitReceipt();
             receipt.then((val) => {
               console.log('receipt', val);
+              wallet.update({changingPubKey:false});
             });
             return receipt;
           }
         }
       }
       return null;
+    },
+
+    checkNetworkSupport(_, thisModel) {
+      let support = false;
+      if (thisModel?.wallet?.syncWallet?.ethSigner?.provider?._network?.name == 'rinkeby') {
+        support = true;
+      }
+      return support;
     },
 
     // issue: param 2 always be the 'this' pointer to the wallet model, neither you pass some thing or not

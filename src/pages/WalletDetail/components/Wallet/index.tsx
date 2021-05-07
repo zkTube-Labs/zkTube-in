@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { Message } from '@alifd/next';
 import copy from 'copy-text-to-clipboard';
 import { history } from 'ice';
-
+import { useMount } from 'ahooks';
 import Icon from '@/components/Icon';
 import ActionButton from '../ActionButton';
 import CryptoItem from '../CtyptoItem';
@@ -13,6 +13,12 @@ import styles from './index.module.scss';
 
 function Wallet() {
   const [wallet, action] = store.useModel('wallet');
+
+  useMount(() => {
+    if (wallet?.assets?.verified?.balances?.ETH) {
+      action.signKey();
+    }
+  });
 
   const onDeposit = useCallback(() => {
     action.setState({ selectWalletDialogVisible: false, metaDialogVisible: false });
@@ -86,10 +92,7 @@ function Wallet() {
           <ActionButton icon="icon-transfer" title="Transfer" onClick={onTransfer} />
         </div>
       </div>
-      <br/><br/>
-      <div>
-        
-      </div>
+      <br /><br />
       <div className={styles.title}>Assets</div>
       <div className={styles.cryptoList}>
         <CryptoItem

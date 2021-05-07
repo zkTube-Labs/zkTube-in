@@ -21,12 +21,17 @@ const SelectWalletDialog = () => {
       action.setState({ metaDialogVisible: true });
       const initResult = action.init();
       initResult.then((init) => {
-        action.refreshEthBalance();
-
-        const promAssets = action.refreshL2Assets();
-        promAssets.then((val) => {
-          if (val?.verified?.balances?.ETH && Number(val.verified.balances.ETH) > 0.0) {
-            action.signKey();
+        action.checkNetworkSupport().then((networkSupport) => {
+          if (networkSupport) {
+            action.refreshEthBalance();
+            const promAssets = action.refreshL2Assets();
+            promAssets.then((val) => {
+              if (val?.verified?.balances?.ETH && Number(val.verified.balances.ETH) > 0.0) {
+                action.signKey();
+              }
+            });
+          } else {
+            alert('Change network\nPlease switch your wallet\'s network from mainnet to rinkeby network for this DAPP');
           }
         });
       });

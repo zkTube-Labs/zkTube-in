@@ -122,7 +122,7 @@ const WalletContent = () => {
                   <div className={styles.itemimg}>
                     <img src={TPS} style={{ width: '30', height: '80%', paddingTop: '10%' }} />
                   </div>
-                  <div className={styles.itemfirst}>TPS2000+</div>
+                  <div className={styles.itemfirst}>TPS3000+</div>
                   <div className={styles.itemsec}>
                     Zktube uses the principle of slicing technology to make the transaction flow between L2 faster and
                     meet more financial application in the field of defi,eg.swap transaction and other game applications

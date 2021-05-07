@@ -71,14 +71,14 @@ function WalletDeposit() {
 
           let retry = 40;
           function retriveFun () {
-            console.log("wallet1", wallet1);
-            console.log("_deposit", _deposit);
+            // console.log("wallet1", wallet1);
+            // console.log("_deposit", _deposit);
 
             if (wallet1?.web3 && _deposit?.ethTx?.hash) {
               // 0x237e87d6834186f9908f20c61337f1f72773b457e2c298ceeee73f8dcf9dae6e
               const receipt = wallet1.web3.eth.getTransactionReceipt(_deposit.ethTx.hash);
               receipt.then((contract) => {
-                console.log('getTransactionReceipt', _deposit, contract);
+                // console.log('getTransactionReceipt', _deposit, contract);
                 if (contract?.status) {
                   const bgu = ethers.BigNumber.from(contract.gasUsed);
                   const fee = gasPrice.mul(bgu);
@@ -100,7 +100,7 @@ function WalletDeposit() {
                     fee: ethers.utils.formatEther(fee),
                     blockNumber: contract.blockNumber,
                   };
-                  console.log('getTransactionReceipt', depositResult);
+                  // console.log('getTransactionReceipt', depositResult);
                   action.update({ depositContract: depositResult });
                   setLoadingDeposit(false);
                   history.push('/wallet/deposit/success');
@@ -117,7 +117,7 @@ function WalletDeposit() {
           if (wallet1?.web3?.eth) {
             const promGasPrice = wallet1.web3.eth.getGasPrice();
             promGasPrice.then((val) => {
-              console.log('wallet1.web3.eth.getGasPrice', val);
+              // console.log('wallet1.web3.eth.getGasPrice', val);
               gasPrice = ethers.BigNumber.from(val);
               setTimeout(retriveFun, 200);
             });
@@ -128,7 +128,7 @@ function WalletDeposit() {
           // Completes when a promise is issued to process the tx
           const receipt = _deposit.awaitReceipt();
           receipt.then((_receipt) => {
-            console.log('deposit, receipt', _receipt);
+            // console.log('deposit, receipt', _receipt);
             history.push('/wallet/deposit/success');
           });
 
