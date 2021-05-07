@@ -34,7 +34,7 @@ const WalletHeader = () => {
       <a href="#/" className={styles.wallet}  style={{color: "white"}}>
         My Wallet
       </a>
-      <a href="#/" className={styles.wallet} style={{color: "white"}}>
+      <a href="https://rinkeby-browser.zktube.io/" className={styles.wallet} style={{color: "white"}}>
         zkTube Scan
       </a>
       <input className={styles.menubtn} type="checkbox" id="menubtn" />

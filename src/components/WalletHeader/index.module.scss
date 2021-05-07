@@ -65,7 +65,7 @@ a:link {
   // box-shadow: 1px 1px 4px 0 rgba(0,0,0,.1);
   position: fixed;
   width: 100%;
-  z-index: 3;
+  // z-index: 3;
 }
 
 .header ul {
@@ -106,112 +106,136 @@ a:link {
 
 /* account */
 .account {
-  margin-top: 8px;
+  margin-top: 3px;
   width: 220px;
   .ethAssets {
-    background-color: #7a00ce;
+    background-color:#0095ffa6;
     color: white;
-    width: 75px;
-    padding: 5px;
+    width: 80px;
+    padding: 8px 2px ;
+    border-radius: 25px;
   }
   .ethAddress {
     background-color: #2d2d37;
     color: white;
     width: 145px;
-    padding: 5px;
+    padding: 8px 8px 8px 0px;
+    border-radius: 8px;
+
   }
 }
 
 /* menu */
 
-.header .menu {
-  clear: both;
-  // max-height: 0;
-  transition: max-height .2s ease-out;
-}
+// .header .menu {
+//   clear: both;
+//   // max-height: 0;
+//   transition: max-height .2s ease-out;
+// }
 
 /* menu icon */
 
-.header .menuicon {
-  cursor: pointer;
-  display: inline-block;
-  float: right;
-  padding: 28px 20px;
-  position: relative;
-  user-select: none;
-}
+// .header .menuicon {
+//   cursor: pointer;
+//   display: inline-block;
+//   float: right;
+//   padding: 28px 20px;
+//   position: relative;
+//   user-select: none;
+// }
 
-.header .menuicon .navicon {
-  background: white;
-  display: block;
-  height: 2px;
-  position: relative;
-  transition: background .2s ease-out;
-  width: 18px;
-}
+// .header .menuicon .navicon {
+//   background: white;
+//   display: block;
+//   height: 2px;
+//   position: relative;
+//   transition: background .2s ease-out;
+//   width: 18px;
+// }
 
-.header .menuicon .navicon:before,
-.header .menuicon .navicon:after {
-  background: white;
-  content: '';
-  display: block;
-  height: 100%;
-  position: absolute;
-  transition: all .2s ease-out;
-  width: 100%;
-}
+// .header .menuicon .navicon:before,
+// .header .menuicon .navicon:after {
+//   background: white;
+//   content: '';
+//   display: block;
+//   height: 100%;
+//   position: absolute;
+//   transition: all .2s ease-out;
+//   width: 100%;
+// }
 
-.header .menuicon .navicon:before {
-  top: 5px;
-}
+// .header .menuicon .navicon:before {
+//   top: 5px;
+// }
 
-.header .menuicon .navicon:after {
-  top: -5px;
-}
+// .header .menuicon .navicon:after {
+//   top: -5px;
+// }
 
 /* menu btn */
 
-.header .menubtn {
-  display: none;
-}
+// .header .menubtn {
+//   display: none;
+// }
 
-.header .menubtn:checked ~ .menu {
-  max-height: 240px;
-}
+// .header .menubtn:checked ~ .menu {
+//   // max-height: 240px;
+// }
 
-.header .menubtn:checked ~ .menuicon .navicon {
-  background: transparent;
-}
+// .header .menubtn:checked ~ .menuicon .navicon {
+//   background: transparent;
+// }
 
-.header .menubtn:checked ~ .menuicon .navicon:before {
-  transform: rotate(-45deg);
-}
+// .header .menubtn:checked ~ .menuicon .navicon:before {
+//   transform: rotate(-45deg);
+// }
 
-.header .menubtn:checked ~ .menuicon .navicon:after {
-  transform: rotate(45deg);
-}
+// .header .menubtn:checked ~ .menuicon .navicon:after {
+//   transform: rotate(45deg);
+// }
 
-.header .menubtn:checked ~ .menuicon:not(.steps) .navicon:before,
-.header .menubtn:checked ~ .menuicon:not(.steps) .navicon:after {
-  top: 0;
-}
+// .header .menubtn:checked ~ .menuicon:not(.steps) .navicon:before,
+// .header .menubtn:checked ~ .menuicon:not(.steps) .navicon:after {
+//   top: 0;
+// }
 
 /* 48em = 768px */
 
-@media (min-width: 48em) {
-  .header li {
-    float: left;
-  }
-  .header li a {
-    padding: 20px 30px;
-  }
-  .header .menu {
-    clear: none;
-    float: right;
-    max-height: none;
-    padding: "20px";
-  }
-  .header .menuicon {
-    display: none;
-  }
+// @media (min-width: 48em) {
+//   .header li {
+//     float: left;
+//   }
+//   .header li a {
+//     padding: 20px 30px;
+//   }
+//   // .header .menu {
+//   //   clear: none;
+//   //   float: right;
+//   //   max-height: none;
+//   //   padding: "20px";
+//   // }
+//   // .header .menuicon {
+//   //   display: none;
+//   // }
+// }
+
+
+.header .logo {
+  margin: 0px 20px;
+  width: 100px;
+  color: #FFFFFF;
+  font-size: 9px;
+}
+.header.footer {
+  margin: 0 20px;
+  color: #FFFFFF;
+}
+.header .next-nav-item {
+  width: 120px;
+}
+
+.size{
+  font-size: 12px ;
+  margin-left: 20px;
+
 }
