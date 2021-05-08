@@ -7,6 +7,8 @@ import CryptoItem from '../../../WalletDetail/components/CtyptoItem/index';
 import store from '@/store';
 import styles from './index.module.scss';
 import { ethers } from 'ethers';
+import web3 from 'web3';
+
 
 
 function WithdrawPage() {
@@ -17,10 +19,10 @@ function WithdrawPage() {
   const [wallet1, action] = store.useModel('wallet');
 
   const [wallet, setWallet] = useState('ETH');
-  const [address, setAddress] = useState('');
-  let [amount, setAmount] = useState('')
+  let [address, setAddress] = useState('');
+  let [amount, setAmount] = useState('0.0');
   const [withdrawReadonly, setReadonly] = useState<boolean>(false);
-  const [selected, setSelected] = useState<any>();
+  const [selected, setSelected] = useState<any>('ETH');
   const [visible, setVisible] = useState<boolean>(false);
 
   let [loading, setLoading] = useState(false);
@@ -33,6 +35,12 @@ function WithdrawPage() {
   const [loadingBalance, setLoadingBalance] = useState<boolean>(false);
   const [assetsList, setAssets] = useState([]);
   const [ethPrice, setEthPrice] = useState(0);
+  const [message,setMessage] = useState<boolean>(false);
+  const [canWithdraw, setCanWithdraw] = useState<boolean>(false);
+  let [fee, setFee] = useState(null);
+  const [validAddress, setValidAddress] = useState<boolean>(false);
+
+
   let ePrice = 0;
 
   let handleChange = (wallet) => {
@@ -55,21 +63,32 @@ function WithdrawPage() {
   }, []);
 
   const onSelect = useCallback((crypto : any) => {
+    // console.log(crypto.amount)
     setVisible(false);
-    setSelected(crypto);
+    setSelected(crypto.currency);
+    setBalance(crypto.amount);
+    onChangeAddress(address);
     action.checkStatus(wallet1.syncWallet);
-  }, []);
+  }, [wallet1]);
 
 
   let withdrawMoney = useCallback(() => {
-    if (amount && selected?.currency) {
-      let data = {amount, token: selected.currency, to: address};
-      try {
+    console.log("amot", amount)
+    console.log("selected", selected)
+
+    // if (amount && selected?.currency) {
+    //   let data = {amount, token: selected.currency, to: address};
+    if (amount) {
+      let data = {amount, to: address};  
+    try {
         setLoading(true) 
         const promWithdraw = action.withdraw(data);
+      
         promWithdraw.then((ret) => {
+          console.log("ret", ret)
           if (ret?.receipt) {
             ret.receipt.then((_receipt) => {
+              console.log("_receipt", _receipt);
               const checkUrl = wallet1.l2BlockUrl + '/blocks/' + _receipt.block.blockNumber;
               setDetailUrl(checkUrl);
               // console.log('receipt', _receipt)
@@ -120,20 +139,31 @@ function WithdrawPage() {
   }, []);
 
   const onAmountChange = useCallback((_amount) => {
+    
+    let amount1 = '0.0'
+
     if (_amount <= 0.0) {
+      amount1 = '0.0';
+
       setAmount('0.0');
     } else if (typeof _amount == 'number' && wallet1?.assets?.verified?.balances?.ETH > 0.0) {
       const ethAmount = ethers.utils.parseEther(_amount.toString());
       if (ethAmount.gte(wallet1?.assets?.verified?.balances?.ETH)) {
+        amount1 = ethers.utils.formatEther(wallet1.assets.verified.balances.ETH);
+
         setAmount(ethers.utils.formatEther(wallet1.assets.verified.balances.ETH));
       } else {
+        amount1 = _amount.toString();
+
         setAmount(_amount.toString());
       }
     } else {
+      amount1 = '0.0';
+
       setAmount('0.0');
       console.log('error input', _amount);
     }
-  }, [wallet1]);
+  }, [wallet1, amount]);
 
   const updateAssets = useCallback(() => {
     try {
@@ -158,21 +188,37 @@ function WithdrawPage() {
 
   const onChangeAddress = useCallback((_address) => {
     if (_address && wallet1?.assets) {
-      try {
         setAddress(_address);
         const promTransFee = wallet1.syncHTTPProvider.getTransactionFee('Withdraw', _address, 'ETH');
         promTransFee.then((val) => {
+          console.log("val",val)
+          let totalFee =  ethers.utils.formatEther(val?.totalFee);
+          setFee(totalFee);
+
+          const feewei = ethers.utils.parseEther(`${totalFee}`);
+          console.log("feewei", feewei);
+          console.log("amtt", amount);
+
+        const amt = ethers.utils.parseEther(`${amount}`);
+
+        const feeAmount = feewei.add(amt);
+
+        if(feeAmount.lte(wallet1?.assets?.verified?.balances?.ETH)){
+          setCanWithdraw(true);
+        }    
           console.log('Withdraw fee', val);
         });
-      } catch (e) {
-        console.log(e);
-      }
+      // } catch (e) {
+      //   console.log(e);
+      // }
     }
 
   }, [wallet1, address]);
 
   const refreshAssets = useCallback((wallet) => {
     const promRefresh = action.refreshL2Assets();
+    const promRefreshL1 = action.refreshEthBalance();
+
     const promEthPrice = action.refreshTokenPrice('ETH');
     promRefresh.then((assets) => {
       if (assets) {
@@ -223,12 +269,24 @@ function WithdrawPage() {
   }, []);
 
   const setMaxAmount = useCallback(() => {
-    if (selected?.amount) {
-      setAmount(selected.amount);
+    if (amount) {
+      setAmount(amount);
     } else {
       setAmount('0.0');
     }
   }, [wallet1]);
+
+  const checkAddress = useCallback((_address) => {
+    setAddress(_address);
+    if (!web3.utils.isAddress(_address)){
+      setValidAddress(true);
+    }
+    else{
+      setValidAddress(false);
+
+    }
+
+  }, [address])
 
   return (
     <div className={styles.container} style={{marginTop:"20px"}}>
@@ -255,9 +313,13 @@ function WithdrawPage() {
               <div>
                 <Input type="text" name = "to" className = {styles.inputWidth} 
                 placeholder="address" size="medium"  onChange = {(address) => {
-                  onChangeAddress(address);
+                  checkAddress(address);
                 }}/>
               </div>
+              {validAddress ? (
+                    <p style={{color: "red", fontSize: "12px", fontWeight: "bold", marginTop:"0px"}}>Incorrect Address</p>
+
+                  ) : ""}
               </FormItem>
             </div>
             <div style = {{ margin: "0px 25px"}}>
@@ -284,7 +346,8 @@ function WithdrawPage() {
                   <Option value="ETH">ETH</Option>
                   <Option value="Ropsten">Ropsten</Option>
                 </Select> */}
-                <Button type="primary"  style={{backgroundColor: "#333340", width: "22%", height : "38px"}} className={styles.buttonSelected} onClick={handleSelectToken}>
+                <Button type="primary"  style={{padding: "7px", height: "38px", borderRadius: "0px 10px 10px 0px"}} className={styles.buttonSelected1} onClick={handleSelectToken}>
+                {selected}
                   <Icon type="icon-select" />
                 </Button>
                 </div>
@@ -292,26 +355,30 @@ function WithdrawPage() {
                 <div className= {styles.balance}>
                   <h3 className = {styles.text} >
                     Balance: {wallet1?.assets?.verified?.balances?.ETH ? (Number(ethers.utils.formatEther(wallet1?.assets?.verified?.balances?.ETH))) : 0}
-                    <Button size="small" text className={styles.button} onClick={setMaxAmount}> MAX</Button>
+                    <Button size="small" text className={styles.button} onClick={setMaxAmount}>    <span style={{  fontSize : "16px", fontWeight : "bold"}}>MAX</span> 
+                    </Button>
                   </h3>
                 </div>
               </FormItem>
             </div>
-            <Button size="large" className={styles.buttonshow} onClick={withdrawMoney} disabled={Number(amount) <= 0.0}> Withdraw </Button>
+            <Button size="large" className={styles.buttonshow} onClick={withdrawMoney} disabled={Number(amount) <= 0.0 || validAddress}> Withdraw </Button>
 
-            {/* <div className={styles.textBox}>
-              <h3 style={{float:"left", marginLeft: "40px"}}> Fee:</h3>
+            <div className={styles.textBox}>
+              <h3 style={{float:"left", marginLeft: "40px"}}> Fee:{ fee ? fee +"ETH": ''}</h3>
 
               <h3 style={{float:"right", marginRight: "40px"}}>
-              <a href="/#" > Choose fee token</a>
+              {/* <a href="/#" > Choose fee token</a> */}
 
               </h3>
             </div>
               <div style={{clear: "both"}}></div>
 
               <p className={styles.comment}>
-                MetaMask Tx Signature: User denied transaction signature.
-              </p>              */}
+                {message ? (
+                  <span>Fee is not enough. Please use another token</span>
+
+                ) : ""}
+              </p>      
         </Form>       
           
       </div>
@@ -330,7 +397,7 @@ function WithdrawPage() {
         <span>No tokens with balance were found!</span>
       </div>
     ) : (
-      <div className={styles.list}>
+      <div className={styles.list} style={{cursor: "pointer"}}>
         <List
           size="medium"
           loading={loadingBalance}

@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import styles from './index.module.scss';
+import { Link } from "ice";
 import Loading from '../../../WalletDeposit/components/Loading';
 import Status from '../../../WalletStatus/components/StatusPage';
 
   let WithdrawSuccessPage = (props) => {
   const [loading] = useState<boolean>(true);
   const [status] = useState <boolean> (true);
+
+  const loadWithdrawPage = (() =>{
+    return <Link to='wallet/withdraw'/>
+  })
 
   return (
     <div className={styles.container}>

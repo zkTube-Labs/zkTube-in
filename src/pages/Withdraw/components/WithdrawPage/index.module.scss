@@ -93,6 +93,29 @@
           margin-left: 5px;
         }
       }
+
+      .buttonSelected1{
+        margin: 0 10px 0px 10px;      
+        background-color: black;
+        color:white;
+        user-select: none;
+        align-self: center;
+        padding: 13px 11px 32px 10px;
+        // margin-top: 6px;
+        width: 90px;
+  
+      }
+
+      .button {
+        margin: 0 10px;
+        user-select: none;
+        align-self: center;
+        color: #5E45EB;
+        &:hover {
+          color: #5E45EB;
+        }
+      }
+
     .withdraw{
         font-family: "SourceHanSansSC-bold";
         font-size: 16px;
