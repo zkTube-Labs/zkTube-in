@@ -25,17 +25,30 @@ function TransactionItem(props) {
   const [expand, setExpand] = useState<boolean>(false);
   const [wallet, action] = store.useModel('wallet');
 
+  const [iconType, setIcon] = useState<string>('icon-down');
   const [amount, setAmount] = useState<string>('');
+  const [minerFee, setMinerFee] = useState<string>('');
   const [toAddress, setToAddress] = useState<string>('');
   const [direction, setDirection] = useState<string>('');
   const [stSuccess, setSuccess] = useState<boolean>(false);
   const [createTime, setCreateTime] = useState<string>('');
 
   useMount(() => {
-    switch (props?.data?.tx?.priority_op?.token) {
+    let _token = props?.data?.tx?.priority_op?.token;
+    if (!_token) {
+      _token = props?.data?.tx?.token;
+    }
+    let _amount = props?.data?.tx?.priority_op?.amount;
+    if (!_amount) {
+      _amount = props?.data?.tx?.amount;
+    }
+
+    let _fee = props?.data?.tx?.fee;
+
+    switch (_token) {
       case 'ETH':
-        if (props?.data?.tx?.priority_op?.amount) {
-          const wei = ethers.BigNumber.from(props.data.tx.priority_op.amount);
+        if (_amount) {
+          const wei = ethers.BigNumber.from(_amount);
           const formatedBalance = ethers.utils.formatEther(wei);
           // const dollar = ePrice > 0 ? formatedBalance * ePrice : 0,
           setAmount(formatedBalance + 'ETH');
@@ -46,15 +59,35 @@ function TransactionItem(props) {
         break;
     }
 
+    if (_fee) {
+      const weiFee = ethers.BigNumber.from(_fee);
+      const formatedFee = ethers.utils.formatEther(weiFee);
+      // const dollar = ePrice > 0 ? formatedBalance * ePrice : 0,
+      setMinerFee(formatedFee + 'ETH');
+    } else {
+      console.log('???', props.data);
+    }
+
     switch (props?.data?.tx?.type) {
       case 'Deposit':
+        setIcon('icon-down');
         setDirection('ETHL1 -> ETHL2');
         break;
       case 'Withdraw':
+        setIcon('icon-up');
         setDirection('ETHL2 -> ETHL1');
         break;
       case 'Transfer':
         setDirection('ETHL2 -> ETHL2');
+        setIcon('icon-transfer');
+        console.log('TransactionItem', props?.data);
+        break;
+      case 'ChangePubKey':
+        setIcon('icon-unlock');
+        setDirection('ETHL2 -> ETHL2');
+        const add = shortAddress(props?.data?.tx?.account);
+        setToAddress(add);
+        console.log('TransactionItem', props?.data);
         break;
       default:
         break;
@@ -69,6 +102,9 @@ function TransactionItem(props) {
 
     if (props?.data?.tx?.priority_op?.to) {
       const add = shortAddress(props?.data?.tx?.priority_op?.to);
+      setToAddress(add);
+    } else if (props?.data?.tx?.to) {
+      const add = shortAddress(props?.data?.tx?.to);
       setToAddress(add);
     }
 
@@ -115,7 +151,7 @@ function TransactionItem(props) {
       <div className={styles.item}>
         <div className={styles.left}>
           <div className={styles.iconContainer}>
-            <Icon type="icon-down" size="small" color="#060606" />
+            <Icon type={iconType} size="small" color="#060606" />
           </div>
           <div className={styles.leftDetail}>
             <div className={styles.to}>{props?.data?.tx?.type} to {toAddress}</div>
@@ -139,10 +175,10 @@ function TransactionItem(props) {
               <Input value={props?.data?.fail_reason} />
             </FormItem>
           }
-          {/* <FormItem label="Miner Fee">
-            <Input value="0.03567ETH" />
-            <p className={styles.formItemTip}>{'=Gas(231,988)*Gas Price(231,988GWEI)'}</p>
-          </FormItem> */}
+          <FormItem label="Miner Fee">
+            <Input value={minerFee} />
+            {/* <p className={styles.formItemTip}>{'=Gas(231,988)*Gas Price(231,988GWEI)'}</p> */}
+          </FormItem>
           <FormItem label="From">
             <Input value={props?.data?.tx?.priority_op?.from || props?.data?.tx?.from} />
           </FormItem>

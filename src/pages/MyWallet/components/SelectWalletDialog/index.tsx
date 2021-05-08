@@ -18,10 +18,10 @@ const SelectWalletDialog = () => {
   const onBtnClick = useCallback(() => {
     action.setState({ selectWalletDialogVisible: false });
     if (hasMask) {
-      action.setState({ metaDialogVisible: true });
       action.checkNetworkSupport().then((networkSupport) => {
         console.log('networkSupport', wallet);
         if (networkSupport) {
+          action.setState({ metaDialogVisible: true });
           const initResult = action.init();
           initResult.then((wallet1) => {
             if (wallet1) {

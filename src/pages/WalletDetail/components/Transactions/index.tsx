@@ -27,6 +27,9 @@ function Transactions() {
           });
           setItems(rows);
         }
+
+        action.refreshEthBalance();
+        action.refreshL2Assets();
       });
     } catch (e) {
 
