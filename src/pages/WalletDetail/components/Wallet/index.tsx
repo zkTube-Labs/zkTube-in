@@ -17,6 +17,8 @@ function Wallet() {
   useMount(() => {
     if (wallet?.assets?.verified?.balances?.ETH) {
       action.signKey();
+      action.refreshL2Assets();
+      action.refreshEthBalance();
     }
   });
 
@@ -88,7 +90,7 @@ function Wallet() {
         </div>
         <div className={styles.actions}>
           <ActionButton icon="icon-down" title="Deposit" onClick={onDeposit} />
-          <ActionButton icon="icon-up" title="Withdraw" onClick={onWithdraw} />
+          {/* <ActionButton icon="icon-up" title="Withdraw" onClick={onWithdraw} /> */}
           <ActionButton icon="icon-transfer" title="Transfer" onClick={onTransfer} />
         </div>
       </div>

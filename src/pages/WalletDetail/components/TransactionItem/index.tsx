@@ -32,6 +32,9 @@ function TransactionItem(props) {
   const [direction, setDirection] = useState<string>('');
   const [stSuccess, setSuccess] = useState<boolean>(false);
   const [createTime, setCreateTime] = useState<string>('');
+  const [txHash, setTxHash] = useState<string>('');
+  const [actTo, setActTo] = useState<boolean>(true);
+  const [feeVisible, setFeeVisible] = useState<boolean>(true);
 
   useMount(() => {
     let _token = props?.data?.tx?.priority_op?.token;
@@ -65,13 +68,14 @@ function TransactionItem(props) {
       // const dollar = ePrice > 0 ? formatedBalance * ePrice : 0,
       setMinerFee(formatedFee + 'ETH');
     } else {
-      console.log('???', props.data);
+      // console.log('???', props.data);
     }
 
     switch (props?.data?.tx?.type) {
       case 'Deposit':
         setIcon('icon-down');
         setDirection('ETHL1 -> ETHL2');
+        setFeeVisible(false);
         break;
       case 'Withdraw':
         setIcon('icon-up');
@@ -80,18 +84,19 @@ function TransactionItem(props) {
       case 'Transfer':
         setDirection('ETHL2 -> ETHL2');
         setIcon('icon-transfer');
-        console.log('TransactionItem', props?.data);
+        // console.log('TransactionItem', props?.data);
         break;
       case 'ChangePubKey':
         setIcon('icon-unlock');
-        setDirection('ETHL2 -> ETHL2');
-        const add = shortAddress(props?.data?.tx?.account);
-        setToAddress(add);
-        console.log('TransactionItem', props?.data);
+        setDirection('');
+        setActTo(false);
+        // const add = shortAddress(props?.data?.tx?.account);
+        // setToAddress(add);
         break;
       default:
         break;
     }
+    // console.log('TransactionItem', props?.data);
 
     if (props?.data?.success) {
       setSuccess(true);
@@ -106,6 +111,15 @@ function TransactionItem(props) {
     } else if (props?.data?.tx?.to) {
       const add = shortAddress(props?.data?.tx?.to);
       setToAddress(add);
+    }
+
+    if (props?.data?.hash) {
+      const bp = props.data.hash?.indexOf('sync-tx:');
+      if (bp >= 0) {
+        setTxHash(props.data.hash.substring(bp +8));
+      } else {
+        setTxHash(props.data.hash);
+      }
     }
 
     if (props?.data?.created_at) {
@@ -154,7 +168,7 @@ function TransactionItem(props) {
             <Icon type={iconType} size="small" color="#060606" />
           </div>
           <div className={styles.leftDetail}>
-            <div className={styles.to}>{props?.data?.tx?.type} to {toAddress}</div>
+            <div className={styles.to}>{props?.data?.tx?.type} {actTo && 'to'} {toAddress}</div>
             <div className={styles.path}>{direction}</div>
           </div>
         </div>
@@ -186,18 +200,18 @@ function TransactionItem(props) {
             <Input value={props?.data?.tx?.priority_op?.to || props?.data?.tx?.to} />
           </FormItem>
           <FormItem label="Transaction Hash">
-            <Input value={props?.data?.hash} />
+            <Input value={txHash} />
           </FormItem>
           <FormItem label="time">
             <Input value={createTime} />
           </FormItem>
         </Form>
-        <a href={getDetailUrl()} target="_blank">
+        {/* <a href={getDetailUrl()} target="_blank">
           <Button text className={styles.button} >
             View transaction details
             <Icon size="small" type="icon-up-right" color="#5E45EB" />
           </Button>
-        </a>
+        </a> */}
       </div>
     </div>
   );

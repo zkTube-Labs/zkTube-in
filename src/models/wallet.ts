@@ -13,10 +13,10 @@ type Wallet = zktube.Wallet;
 // eslint-disable-next-line @iceworks/best-practices/no-http-url
 // const url = 'http://119.28.75.86:3030/jsrpc';
 
-// const g_providerUrl = 'https://rinkeby-jsrpc.zktube.io';
-// // eslint-disable-next-line @iceworks/best-practices/no-http-url
-// const g_l2BlockUrl = 'https://rinkeby-browser.zktube.io';
-// const g_restApiUrl = 'http://rinkeby-api.zktube.io/api/v0.1';
+const g_providerUrl = 'https://rinkeby-jsrpc.zktube.io';
+// eslint-disable-next-line @iceworks/best-practices/no-http-url
+const g_l2BlockUrl = 'https://rinkeby-browser.zktube.io';
+const g_restApiUrl = 'https://rinkeby-api.zktube.io/api/v0.1';
 
 // const g_providerUrl = "http://124.156.151.46:3030/jsrpc";
 // const g_l2BlockUrl = 'http://124.156.151.46:7000';
@@ -24,9 +24,9 @@ type Wallet = zktube.Wallet;
 // const g_providerUrl = "http://101.32.219.21:3030/jsrpc";
 // const g_l2BlockUrl = 'http://101.32.219.21:7000';
 
-const g_providerUrl = 'http://t5tz:3030/jsrpc';
-const g_l2BlockUrl = 'http://t5tz:7000';
-const g_restApiUrl = 'http://t5tz:3001/api/v0.1';
+// const g_providerUrl = 'http://t5tz:3030/jsrpc';
+// const g_l2BlockUrl = 'http://t5tz:7000';
+// const g_restApiUrl = 'http://t5tz:3001/api/v0.1';
 
 // const g_providerUrl = 'http://t5tz.ceja.co:3030/jsrpc';
 // const g_l2BlockUrl = 'http://t5tz.ceja.co:7000';
