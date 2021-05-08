@@ -432,7 +432,9 @@ export default {
     },
 
     async withdraw(data, thisModel) {
-      if (data?.amount && data?.token && data?.to) {
+      // if (data?.amount && data?.token && data?.to) {
+       if (data?.amount && data?.to) {
+
         let syncWallet = null;
         let syncHTTPProvider = null;
         if (thisModel && thisModel.wallet && thisModel.wallet.syncWallet) {
@@ -446,7 +448,8 @@ export default {
         const withdraw = await syncWallet.withdrawFromSyncToEthereum({
           ethAddress: data.to,
           // eslint-disable-next-line @iceworks/best-practices/no-secret-info
-          token: data.token,
+          // token: data.token,
+          token: 'ETH',
           amount: ethers.utils.parseEther(data.amount),
         });
         const receipt = withdraw.awaitReceipt();
