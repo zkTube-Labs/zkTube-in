@@ -109,18 +109,20 @@ a:link {
   margin-top: 3px;
   width: 220px;
   .ethAssets {
-    background-color:#0095ffa6;
+    background-color:#5E45EB;
     color: white;
     width: 80px;
-    padding: 8px 2px ;
+    padding: 11px 11px ;
     border-radius: 25px;
+    margin-right: 5px;
   }
   .ethAddress {
     background-color: #2d2d37;
     color: white;
     width: 145px;
-    padding: 8px 8px 8px 0px;
-    border-radius: 8px;
+    padding: 12px 12px 11px 11px;
+    border-radius: 15px;
+    margin-left: -9px;
 
   }
 }

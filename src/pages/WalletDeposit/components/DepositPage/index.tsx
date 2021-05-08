@@ -311,7 +311,7 @@ function WalletDeposit() {
                 onChange={(_amount) => { onAmountChange(_amount); }}
               />
               {selected ? (
-                <Button type="primary" className={styles.buttonSelected} onClick={handleSelectToken}>
+                <Button type="primary" className={styles.buttonSelected1} onClick={handleSelectToken}>
                   {selected}
                   <Icon type="icon-select" />
                 </Button>
@@ -324,19 +324,19 @@ function WalletDeposit() {
             {selected && (
               <>
                 <div className={styles.balance}>
-                  <span className={styles.text} >L1 Balance:{balance}</span>
+                  <span className={styles.text} >Balances: {balance}</span>
                   <Button
-                    size="small"
+                    size="medium"
                     text
-                    className={styles.button}
+                    className={styles.button1}
                     onClick={() => {
                       setAmountByWei(ethL1Balance);
                     }}
                   >
-                   <span style={{marginTop : "30px", marginBottom : "30px", fontSize : "16px", fontWeight : "bold"}}>MAX</span> 
+                   <span style={{marginTop : "5px", marginLeft: "5px", marginBottom : "30px", color:"#6a61f1", fontSize : "16px", fontWeight : "bold"}}>MAX</span> 
                   </Button>
                 </div>
-                <Button size="medium" style={{marginTop: "50px", marginBottom : "20px"}} disabled={Number(amount) <= 0.0} onClick={handleDoDeposit}>
+                <Button size="medium" className={styles.deposit} disabled={Number(amount) <= 0.0} onClick={handleDoDeposit}>
                   Deposit
                 </Button>
 
