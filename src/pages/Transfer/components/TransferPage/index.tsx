@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import {Input, Form, Button, NumberPicker, Dialog, List} from '@alifd/next';
 import { ethers } from 'ethers';
+import web3 from 'web3';
 
 import {history} from 'ice';
 import Icon from '@/components/Icon';
@@ -32,6 +33,7 @@ const TransferPage = () => {
   const [loadingBalance, setLoadingBalance] = useState<boolean>(false);
   const [ethPrice, setEthPrice] = useState(0);
   const [message,setMessage] = useState<boolean>(false);
+  const [validAddress, setValidAddress] = useState<boolean>(false);
   let [fee, setFee] = useState(null);
 
   let ePrice = 0;
@@ -87,8 +89,7 @@ const TransferPage = () => {
 
       if(feeAmount.lte(wallet1?.assets?.verified?.balances?.ETH)){
         setCanTransfer(true);
-      }
-     
+      }    
 
       // if(balance > feeAmount)
 
@@ -96,10 +97,6 @@ const TransferPage = () => {
     }
  
   }, [address, wallet1]);
-
-  const showTranferButton = useCallback(()=>{
-
-  }, [])
 
   let transferMoney = useCallback(() => {
    let data = {
@@ -189,6 +186,7 @@ const TransferPage = () => {
 
   const refreshAssets = useCallback((wallet) => {
     const promRefresh = action.refreshL2Assets();
+    const promRefreshL1 = action.refreshEthBalance();
     const promEthPrice = action.refreshTokenPrice('ETH');
     promRefresh.then((assets) => {
       if (assets) {
@@ -221,9 +219,21 @@ const TransferPage = () => {
     }, [wallet1, ePrice]);
   
 
+  const checkAddress = useCallback((_address) => {
+    setAddress(_address);
+    console.log("add", _address);
+    if (!web3.utils.isAddress(_address)){
+      setValidAddress(true);
+    }
+    else{
+      setValidAddress(false);
+
+    }
+
+  }, [address])
 
   const onAmountChange = useCallback((_amount) => {
-
+   
   let amount1 = '0.0'
   if (_amount <= 0.0) {
     amount1 = '0.0';
@@ -239,22 +249,23 @@ const TransferPage = () => {
     }
   } else {
     amount1 = '0.0';
-
     setAmount('0.0');
-
   }
 
+  
   const promTransFee = wallet1.syncHTTPProvider.getTransactionFee('Transfer', address,'ETH');
   promTransFee.then((val) => {
      let totalFee =  ethers.utils.formatEther(val?.totalFee);
      const feewei = ethers.utils.parseEther(`${totalFee}`);
      const amt = ethers.utils.parseEther(`${amount1}`);
-
      const feeAmount = feewei.add(amt);
      
      if(feeAmount.lte(wallet1?.assets?.verified?.balances?.ETH)){
        setCanTransfer(true);
        setMessage(false);
+     }
+     else if(_amount <= 0){
+      setCanTransfer(true);
 
      }
      else{
@@ -262,7 +273,6 @@ const TransferPage = () => {
        setMessage(true);
      }
     
-
      // if(balance > feeAmount)
 
   });
@@ -306,9 +316,13 @@ const TransferPage = () => {
                     <Input type="text" name = "to" className = {styles.inputWidth} 
                       placeholder="address" size="medium" 
                       // value ={address}
-                      onChange = {(address) => {setAddress(address);}}
+                      onChange = {(address) => {checkAddress(address);}}
                     />
                   </div>
+                  {validAddress ? (
+                    <p style={{color: "red", fontSize: "12px", fontWeight: "bold", marginTop:"0px"}}>Incorrect Address</p>
+
+                  ) : ""}
                 </FormItem>
               </div>
               <div  style = {{ margin: "0px 25px"}}>
@@ -317,13 +331,7 @@ const TransferPage = () => {
                   fontWeight: 800
                 }}>
                 <span style={{display : "inline", overflow: "hidden", width: "286px"}}>
-                  {/* <Input type="decimal" name="amount" className = {styles.inputWidth2} placeholder="Amount" 
-                  size="medium" step={0.1}
-                  onChange = {(amount) => {
-                    setAmount(amount);
-                  }} /> */}
-                  {/* <div className={styles.fieldContainer}> */}
-
+                 
                    <NumberPicker
                     size="large"
                     className={styles.input}
@@ -368,10 +376,10 @@ const TransferPage = () => {
                   
                 </FormItem>
                 </div>
-                <Button size="large" className={styles.buttonshow} disabled={!canTransfer} onClick={transferMoney}> Transfer </Button>
+                <Button size="large" className={styles.buttonshow} disabled={!canTransfer || Number(amount) <= 0.0 || validAddress} onClick={transferMoney} > Transfer </Button>
 
                 <div className={styles.textBox}>
-                  <h3 style={{float:"left", marginLeft: "40px"}}> Fee: { fee ? fee +"ETH": ''}</h3>
+                  <h3 style={{float:"left", marginLeft: "40px"}}>  Fee: { fee ? fee +"ETH": ''}</h3>
 
                   <h3 style={{float:"right", marginRight: "40px"}}>
                   {/* <a href="" > Choose fee token</a> */}

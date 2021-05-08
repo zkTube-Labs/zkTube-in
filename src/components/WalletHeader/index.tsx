@@ -4,14 +4,15 @@ import logo from '@/assets/logo.png';
 import styles from './index.module.scss';
 import store from '@/store';
 import { ethers } from 'ethers';
+import {Link} from 'ice';
 import { Tab } from '@alifd/next';
 import Wallet from '../../pages/WalletDetail/components/Wallet';
 
 const { Option } = Select;
 const { Item } = Nav;
-const header = <a href="#/"> 
+const header = <Link to="/wallet"> 
                 <img src={logo} alt="logo" width="10%" height= "20%" className={styles.logo} style={{padding: "0px", height:"34px", marginLeft: "9px"}}/>
-              </a> 
+              </Link> 
 
 
 
@@ -64,9 +65,11 @@ const WalletHeader = () => {
   return (
 
     <Nav className={styles.header} direction="hoz" type="primary" header={header} footer ={footer} defaultSelectedKeys={['My Wallet']} triggerType="hover">
-      <Item key="My Wallet" className={styles.size} style={{marginLeft: "0px"}}> My Wallet</Item>
+      <Item key="My Wallet"  className={styles.size} style={{marginLeft: "0px"}}>
+        <Link to="/wallet/detail"  style={{marginTop: "-14px"}}> My Wallet</Link> 
+         </Item>
       <Item key="ZKTubeScan" className={styles.size}  style={{marginLeft: "5px"}}> 
-      <a href="https://rinkeby-browser.zktube.io/" style={{marginTop: "-14px"}}> ZkTubeScan</a>
+      <a href="https://rinkeby-browser.zktube.io/" target = "_blank" style={{marginTop: "-14px"}}> ZkTubeScan</a>
       </Item>
 
     </Nav>
