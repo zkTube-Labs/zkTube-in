@@ -22,7 +22,7 @@ const TransferPage = () => {
   let [amount, setAmount] = useState('0.0')
   let [loading, setLoading] = useState(false);
   const [balance, setBalance] = useState<any>('0.0');
-  const [ethL1Balance, setEthL1Balance] = useState<any>();
+  const [ethL1Balance, setEthL1Balance] = useState<any>('0.0');
   const [gasPrice, setgasPrice] = useState<any>();
   const [canTransfer, setCanTransfer] = useState<boolean>(false);
   const [list, setList] = useState([]);
@@ -63,7 +63,6 @@ const TransferPage = () => {
     }
   };
 
- 
 
    const handleSelectToken = useCallback(() => {
     setVisible(true);
@@ -273,13 +272,16 @@ const TransferPage = () => {
   const onException = useCallback((message) => {
   }, [wallet1]);
 
-  const setAmountByWei = useCallback((wei) => {
-    const _wei = ethers.BigNumber.from(wei);
-    const eth = ethers.utils.formatEther(_wei);
+  const setAmountByWei = useCallback((eth) => {
+    // const _wei = ethers.BigNumber.from(wei);
+    // console.log("_wei", _wei)
+
+    // const eth = ethers.utils.formatEther(_wei);
     setAmount(eth);
 
   }, []);
 
+  // const setBalances  
   return ( 
     <div className={styles.container} style={{marginTop : "20px"}}>
       {loading? 
@@ -341,7 +343,7 @@ const TransferPage = () => {
                     <Option value="Ropsten">Ropsten</Option>
                   </Select> */}
                   
-                  <Button type="primary"  style={{backgroundColor: "#333340", width: "22%", height : "38px"}} className={styles.buttonSelected} onClick={handleSelectToken}>
+                  <Button type="primary"  style={{padding: "7px", height: "45px", borderRadius: "0px 10px 10px 0px"}} className={styles.buttonSelected1} onClick={handleSelectToken}>
                     {selected}
                     <Icon type="icon-select" />
                   </Button>
@@ -354,7 +356,7 @@ const TransferPage = () => {
 
                     <Button size="small" text className={styles.button} 
                      onClick={() => {
-                      setAmountByWei(ethL1Balance);
+                      setAmountByWei(balance);
                     }}
                     > 
                     <span style={{ marginBottom : "30px", fontSize : "16px", fontWeight : "bold"}}>MAX</span> 

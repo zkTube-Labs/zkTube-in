@@ -31,10 +31,10 @@ const WalletHeader = () => {
        <a href="#/"> 
         <img src={logo} alt="logo" width="10%" className={styles.logo} style={{padding: "10px"}}/>
        </a> 
-      <a href="#/" className={styles.wallet}  style={{color: "white"}}>
+      <a href="" className={styles.wallet}  style={{color: "white"}}>
         My Wallet
       </a>
-      <a href="#/" className={styles.wallet} style={{color: "white"}}>
+      <a href="https://rinkeby-browser.zktube.io/" target="_blank" className={styles.wallet} style={{color: "white"}}>
         zkTube Scan
       </a>
       <input className={styles.menubtn} type="checkbox" id="menubtn" />

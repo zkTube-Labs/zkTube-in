@@ -1,11 +1,19 @@
 import React from 'react';
-import { Select, Button } from '@alifd/next';
+import { Select, Button , Nav} from '@alifd/next';
 import logo from '@/assets/logo.png';
 import styles from './index.module.scss';
 import store from '@/store';
 import { ethers } from 'ethers';
+import { Tab } from '@alifd/next';
+import Wallet from '../../pages/WalletDetail/components/Wallet';
 
 const { Option } = Select;
+const { Item } = Nav;
+const header = <a href="#/"> 
+                <img src={logo} alt="logo" width="10%" height= "20%" className={styles.logo} style={{padding: "0px", height:"34px", marginLeft: "9px"}}/>
+              </a> 
+
+
 
 const WalletHeader = () => {
   const [wallet, action] = store.useModel('wallet');
@@ -26,45 +34,21 @@ const WalletHeader = () => {
     }
   }
 
-  return (
-    <header className={styles.header}>
-       <a href="#/"> 
-        <img src={logo} alt="logo" width="10%" height= "20%" className={styles.logo} style={{padding: "18px 6px", marginLeft: "50px"}}/>
-       </a> 
-      {/* <a href="#/" className={styles.wallet}  style={{color: "white"}}>
-        My Wallet
-      </a>
-      <a href="#/" className={styles.wallet} style={{color: "white"}}>
-        zkTube Scan
-      </a> */}
-      <input className={styles.menubtn} type="checkbox" id="menubtn" />
-      <label className={styles.menuicon} htmlFor="menubtn"><span className={styles.navicon}></span></label>
-      <ul className={styles.menu} style={{padding: "15px", marginRight: "50px"}}>
-        <li className={styles.shift}>
-          <div className={styles.boxselect} style={{marginRight: "20px", width: "170px", height: "40px"}}>
-            <Select onChange={onChange} defaultValue="Rinkeby testnet">
-              {/* <Option value="ETHMain network">
-                <div className={styles.statuspoint} style = {{ display: "inline-block",width: "12px",height: "12px", borderRadius: "25px",
-                  backgroundColor: "green",marginRight: "7px",marginBottom: "3px",verticalAlign: "middle"}} />
-                ETHMain network
-              </Option>
-              <Option value="Ropsten test network">
-                <div className={styles.statuspoint} style = {{ display: "inline-block",width: "12px",height: "12px", borderRadius: "25px",
-                  backgroundColor: "green",marginRight: "7px",marginBottom: "3px",verticalAlign: "middle"}}/>
-                Ropsten test network
-              </Option> */}
-              <Option value="Rinkeby testnet">
-                <div className={styles.statuspoint} style = {{ display: "inline-block",width: "12px",height: "12px", borderRadius: "25px",
-                  backgroundColor: "green",marginRight: "7px",marginBottom: "3px",verticalAlign: "middle"}} />
-                Rinkeby testnet
-              </Option>
-            </Select>
-          </div>
-        </li>
-        <li> 
-          {wallet.account == null ? (
+  const footer =  
+  <div style={{margin: "10px 20px 10px 0px"}}>
+     <div className={styles.boxselect} style={{float: "left", marginRight: "30px"}}>
+  <Select onChange={onChange} defaultValue="Rinkeby testnet">
+    <Option value="Rinkeby testnet">
+      <div className={styles.statuspoint} style = {{ display: "inline-block",width: "12px",height: "12px", borderRadius: "25px",
+        backgroundColor: "green",marginRight: "7px",marginBottom: "3px",verticalAlign: "middle"}} />
+      Rinkeby testnet
+    </Option>
+  </Select>
+  </div>
+  <div style={{float: "left", marginRight: "5px"}}>
+    {wallet.account == null ? (
             <div className={styles.boxbtn}>
-              <Button type="primary" onClick={onClick} style={{borderRadius: "25px", height: "35px"}}>
+              <Button type="primary" onClick={onClick} style={{borderRadius: "25px"}}>
                 Connect to a wallet
               </Button>
             </div>
@@ -74,28 +58,20 @@ const WalletHeader = () => {
               <span className={styles.ethAddress}>{wallet?.account && (compressAccount(wallet.account)) }</span>
             </div>
           )}
-        </li>
-      </ul>
-    </header>
-    // <div className={styles.list}>
-    //   <div className={styles.boxselect}>
-    //     <Select onChange={onChange} defaultValue="ETHMain network">
-    //       <Option value="ETHMain network">
-    //         <div className={styles.statuspoint} />
-    //         ETHMain network
-    //       </Option>
-    //       <Option value="Ropsten test network">
-    //         <div className={styles.statuspoint} />
-    //         Ropsten test network
-    //       </Option>
-    //     </Select>
-    //   </div>
-    //   <div className={styles.boxbtn}>
-    //     <Button type="primary" onClick={onClick} className = {styles.round}>
-    //       Connect to a wallet
-    //     </Button>
-    //   </div>
-    // </div>
-  );
+  </div>
+  </div>
+ 
+  return (
+
+    <Nav className={styles.header} direction="hoz" type="primary" header={header} footer ={footer} defaultSelectedKeys={['My Wallet']} triggerType="hover">
+      <Item key="My Wallet" className={styles.size} style={{marginLeft: "0px"}}> My Wallet</Item>
+      <Item key="ZKTubeScan" className={styles.size}  style={{marginLeft: "5px"}}> 
+      <a href="https://rinkeby-browser.zktube.io/" style={{marginTop: "-14px"}}> ZkTubeScan</a>
+      </Item>
+
+    </Nav>
+
+
+);
 };
 export default WalletHeader;

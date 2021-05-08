@@ -1,16 +1,21 @@
 .container {
   width: 100%;
-  height:  100%;
+  height:  990px;
   display: flex;
+  position: relative;
   align-items: center;
   justify-content: center;
-  padding: 60px;
+  // padding: 60px;
+
   .card {
+    // margin-top: -150px;
+    top: 100px;
+    position: absolute;
     padding: 5px 15px;
-    width: 500px;
+    width: 450px;
     min-height: 180px;
-    border-radius: 4px;
-    background-color: #fff;
+    border-radius: 8px;
+    background-color: #363377;
     display: flex;
     flex-direction: column;
     .header {
@@ -21,9 +26,10 @@
         cursor: pointer;
       }
       .title {
-        font-size: 14px;
-        font-weight: 600;
-        color: #101010;
+        font-size: 16px;
+        font-weight: 800;
+        color: whitesmoke;
+        margin-top: 5px;
       }
       .extra {
         width: 32px;
@@ -35,21 +41,25 @@
       flex-direction: column;
       flex: 1;
       .label {
-        font-size: 14px;
+        font-size:12px;
         height: 30px;
         line-height: 30px;
+        color: white;
+        margin-left: 20px;
       }
       .fieldContainer {
         display: flex;
         align-items: center;
         .input {
-          width: 330px;
+          width: 340px;
           height: 36px;
           line-height: 36px;
           font-size: 30px;
-          border: 1px solid #f5f5f9;
+          border: 1px solid #14132D;
           border-radius: 4px;
-          background-color: #D3D3D5;
+          background-color: #14132D;
+          color: white;
+          margin-left: 20px;
         }
         .buttonSelected {
           background-color: #333340;
@@ -79,25 +89,56 @@
       }
     }
     .button {
-      margin: 0 10px;
+      margin: 0 10px 0px -2px;      
+      background-color: #5e45eb;
+      color:white;
       user-select: none;
       align-self: center;
-      color: #5E45EB;
-      &:hover {
-        color: #5E45EB;
-      }
+      padding: 13px 11px 32px 10px;
+      border-radius: 7px 16px 16px 0px;
+      margin-top: 6px;
+      // color: #5E45EB;
+      // &:hover {
+      //   color: white;
+      // }
+    }
+
+    .buttonSelected1 {
+      margin: 0 10px 0px 10px;      
+      background-color: #5e45eb;
+      color:white;
+      user-select: none;
+      align-self: center;
+      padding: 13px 11px 32px 10px;
+      border-radius: 7px 16px 16px 0px;
+      margin-top: 6px;
+      width: 80px;
+    }
+
+    .button1{
+      // margin: 0 10px 0px -2px;      
+      // background-color: #5e45eb;
+      color:white;
+      user-select: none;
+      align-self: center;
+      // padding: 13px 11px 32px 10px;
+      // border-radius: 7px 16px 16px 0px;
+      margin-top: 6px;
+      // position: absolute;
+      // top:0px;
     }
     .balance {
       width: 340px;
       display: flex;
-      justify-content: flex-end;
+      // justify-content: flex-end;
       height: 32px;
       line-height: 32px;
       .text {
-        color: #5e5a5a;
-        font-size: 18px;
-        font-weight: bold;
-        margin-top: 30px;
+        color:white;
+        font-size: 14px;
+        // font-weight: bold;
+        margin-left: 20px;
+        margin-top: 5px;
       }
     }
     .note {
@@ -106,6 +147,14 @@
       width: 340px;
       word-break: break-all;
       padding: 10px;
+    }
+    .deposit{
+      margin: 25px 20px 20px;
+      border-radius: 10px;
+      height: 46px;
+      border: 2px solid #5e45eb;
+      background-color: #09064b;
+      color: white;
     }
     .unlock {
       width: 432px;
@@ -119,6 +168,22 @@
       font-size: 12px;
       color: #ff0000;
     }
+  }
+
+  .next-number-picker-normal:not(.next-number-picker-no-trigger) .next-input input {
+    padding-right: 0px !important;
+      width: 305px !important;
+      height: 44px !important;
+      line-height: 36px !important;
+      font-size: 12px !important;
+      border: 1px solid #14132D !important;
+      border-radius: 9px 0px 0px 9px !important;
+      background-color: #09064b !important;
+      margin-top: -5px;
+      margin-bottom: -45px;
+      margin-right: -7px;
+      margin-left: -2px;
+      color: whitesmoke;
   }
 }
 .dialog {

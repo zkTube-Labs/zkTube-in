@@ -2,6 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { history } from 'ice';
 import store from '@/store';
 import styles from './index.module.scss';
+import WalletDetail from '../../../WalletDetail/index';
 import Loading from '../../../WalletDeposit/components/Loading';
 import Status from '../../../WalletStatus/components/StatusPage';
 import Icon from '@/components/Icon';
@@ -44,7 +45,12 @@ let DepositSuccessPage = (props) => {
   return (
     <div className={styles.container}>
       <div className={styles.card}>
-        <div >
+        <div>
+        {wallet?.depositContract?.status}
+          <WalletDetail transaction ={"2"}/>
+  
+        </div>
+        {/* <div >
           {wallet?.depositContract?.status ? (
             <Status
             add = {wallet?.depositContract?.to}
@@ -69,7 +75,7 @@ let DepositSuccessPage = (props) => {
             onClickButton ={() => window.open(getDetailUrl(),'target', '_blank')}
             />
           )}
-        </div>
+        </div> */}
       </div>
     </div>
   );
