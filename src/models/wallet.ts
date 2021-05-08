@@ -35,6 +35,7 @@ const g_restApiUrl = 'http://rinkeby-api.zktube.io/api/v0.1';
 
 const g_l1TxUrl = 'https://rinkeby.etherscan.io/tx/';
 
+const g_networks = {'Mainnet': 1, 'rinkeby-jsrpc': 4};
 
 interface CustomError {
   code: number;
@@ -47,6 +48,8 @@ interface IState {
   metaDialogVisible: boolean;
   selectWalletDialogVisible: boolean;
   unMetaDialogVisible: boolean;
+  errorNetworkVisible: boolean;
+
   web3: Web3;
   syncWallet: Wallet;
   account: string;
@@ -131,6 +134,7 @@ export default {
     metaDialogVisible: false,
     selectWalletDialogVisible: false,
     unMetaDialogVisible: false,
+    errorNetworkVisible: false,
     web3: undefined,
     syncWallet: undefined,
     account: undefined,
@@ -155,32 +159,39 @@ export default {
   effects: ({ wallet }: IStoreDispatch) => ({
     async init() {
       const _web3: Web3 = await getWeb3();
-      const allAcounts = await _web3.eth.getAccounts();
-      const _account: string = allAcounts[0];
-      const { syncWallet: _wallet, syncHTTPProvider: _provider } = await zkTubeInitialize(_web3, (e) => {
-        if (e.code === 4001) {
-          wallet.update({
-            signErrorMsg: 'This app needs access to your account information',
-            exceptionMsg: 'WalletSignFailed',
-          });
-        }
-      });
-      // console.log('state 1', state);
-      wallet.update({
-        // l1TxUrl: g_l1TxUrl,
-        // l2BlockUrl: g_l2BlockUrl,
-        web3: _web3,
-        syncWallet: _wallet,
-        account: _account,
-        syncHTTPProvider: _provider,
-      });
-      // console.log('state 2', state);
-      history.push('/wallet/detail');
-      // try {
-      //   await signKey(_wallet);
-      // } catch (e) {
-      //   this.parseException(e);
-      // }
+      const netId = await this.checkNetworkSupport();
+      if (netId) {
+        const allAcounts = await _web3.eth.getAccounts();
+        const _account: string = allAcounts[0];
+        const { syncWallet: _wallet, syncHTTPProvider: _provider } = await zkTubeInitialize(_web3, (e) => {
+          if (e.code === 4001) {
+            wallet.update({
+              signErrorMsg: 'This app needs access to your account information',
+              exceptionMsg: 'WalletSignFailed',
+            });
+          }
+        });
+        // console.log('state 1', state);
+        wallet.update({
+          // l1TxUrl: g_l1TxUrl,
+          // l2BlockUrl: g_l2BlockUrl,
+          web3: _web3,
+          syncWallet: _wallet,
+          account: _account,
+          syncHTTPProvider: _provider,
+        });
+        // console.log('state 2', state);
+        history.push('/wallet/detail');
+        // try {
+        //   await signKey(_wallet);
+        // } catch (e) {
+        //   this.parseException(e);
+        // }
+        return _wallet;
+      } else {
+        console.log('error network,', netId);
+      }
+      return null;
     },
 
 
@@ -264,11 +275,27 @@ export default {
       return null;
     },
 
-    checkNetworkSupport(_, thisModel) {
-      let support = false;
-      if (thisModel?.wallet?.syncWallet?.ethSigner?.provider?._network?.name == 'rinkeby') {
-        support = true;
+    async checkNetworkSupport(_, thisModel) {
+      let support = null;
+      const _web3: Web3 = await getWeb3();
+      const netId = await _web3.eth.net.getId();
+
+      let isDefined = false;
+      Object.keys(g_networks).forEach(function(key) {
+        // const g_providerUrl = 'https://rinkeby-jsrpc.zktube.io';
+        if (g_providerUrl.indexOf(key) > 0) {
+          isDefined = true;
+          const targetId = g_networks[key];
+          if (targetId == netId) {
+            support = netId;
+          }
+        }
+      });
+
+      if (!isDefined) {
+        support = netId;
       }
+
       return support;
     },
 
@@ -305,23 +332,29 @@ export default {
 
     async refreshWallet() {
       const _web3: Web3 = await getWeb3();
-      const { syncWallet: _wallet, syncHTTPProvider: _provider } = await zkTubeInitialize(_web3);
-      const allAcounts = await _web3.eth.getAccounts();
-      const _account: string = allAcounts[0];
-      wallet.update({
-        // l1TxUrl: g_l1TxUrl,
-        // l2BlockUrl: g_l2BlockUrl,
-        web3: _web3,
-        account: _account,
-        syncWallet: _wallet,
-        syncHTTPProvider: _provider,
-      });
-      // try {
-      //   await signKey(_wallet);
-      // } catch (e) {
-      //   this.parseException(e);
-      // }
-      return { syncWallet: _wallet, syncHTTPProvider: _provider };
+      const netId = await this.checkNetworkSupport();
+      if (netId) {
+        const { syncWallet: _wallet, syncHTTPProvider: _provider } = await zkTubeInitialize(_web3);
+        const allAcounts = await _web3.eth.getAccounts();
+        const _account: string = allAcounts[0];
+        wallet.update({
+          // l1TxUrl: g_l1TxUrl,
+          // l2BlockUrl: g_l2BlockUrl,
+          web3: _web3,
+          account: _account,
+          syncWallet: _wallet,
+          syncHTTPProvider: _provider,
+        });
+        // try {
+        //   await signKey(_wallet);
+        // } catch (e) {
+        //   this.parseException(e);
+        // }
+        return { syncWallet: _wallet, syncHTTPProvider: _provider };
+      } else {
+        console.log('error network,', netId);
+        return null;
+      }
     },
 
     // issue: param 2 always be the 'this' pointer to the wallet model, neither you pass some thing or not

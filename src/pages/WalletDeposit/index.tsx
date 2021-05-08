@@ -4,6 +4,7 @@ import Header from '@/components/WalletHeader';
 import DepositPage from './components/DepositPage';
 import SelectWalletDialog from '@/pages/MyWallet/components/SelectWalletDialog';
 import MetaDialog from '@/pages/MyWallet/components/MetaDialog';
+import ErrorNetworkDialog from '@/pages/MyWallet/components/ErrorNetworkDialog';
 import UnMetaDialog from '@/pages/MyWallet/components/UnMetaDialog';
 
 
@@ -20,6 +21,7 @@ function Withdraw() {
 
       <SelectWalletDialog />
       <MetaDialog />
+      <ErrorNetworkDialog />
       {/* <UnMetaDialog /> */}
 
     </>

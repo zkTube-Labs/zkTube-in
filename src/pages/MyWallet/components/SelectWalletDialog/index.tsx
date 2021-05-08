@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { Dialog } from '@alifd/next';
 
 import Icon from '@/components/Icon';
@@ -15,30 +15,34 @@ const SelectWalletDialog = () => {
     action.setState({ selectWalletDialogVisible: false });
   }
 
-  const onBtnClick = () => {
+  const onBtnClick = useCallback(() => {
     action.setState({ selectWalletDialogVisible: false });
     if (hasMask) {
       action.setState({ metaDialogVisible: true });
-      const initResult = action.init();
-      initResult.then((init) => {
-        action.checkNetworkSupport().then((networkSupport) => {
-          if (networkSupport) {
-            action.refreshEthBalance();
-            const promAssets = action.refreshL2Assets();
-            promAssets.then((val) => {
-              if (val?.verified?.balances?.ETH && Number(val.verified.balances.ETH) > 0.0) {
-                action.signKey();
-              }
-            });
-          } else {
-            alert('Change network\nPlease switch your wallet\'s network from mainnet to rinkeby network for this DAPP');
-          }
-        });
+      action.checkNetworkSupport().then((networkSupport) => {
+        console.log('networkSupport', wallet);
+        if (networkSupport) {
+          const initResult = action.init();
+          initResult.then((wallet1) => {
+            if (wallet1) {
+              action.refreshEthBalance();
+              const promAssets = action.refreshL2Assets();
+              promAssets.then((val) => {
+                if (val?.verified?.balances?.ETH && Number(val.verified.balances.ETH) > 0.0) {
+                  action.signKey();
+                }
+              });
+            }
+          });
+        } else {
+          action.setState({ metaDialogVisible: false });
+          action.setState({ errorNetworkVisible: true });
+        }
       });
     } else {
       action.setState({ unMetaDialogVisible: true });
     }
-  };
+  }, [wallet]);
 
   useEffect(() => {
     if (window.ethereum) {

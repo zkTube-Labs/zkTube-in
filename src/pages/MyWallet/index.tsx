@@ -5,6 +5,7 @@ import WalletHeader from './components/WalletHeader';
 import SelectWalletDialog from './components/SelectWalletDialog';
 import MetaDialog from './components/MetaDialog';
 import UnMetaDialog from './components/UnMetaDialog';
+import ErrorNetworkDialog from './components/ErrorNetworkDialog';
 import backImage from '../../assets/fullImage.png';
 
 const { Cell } = ResponsiveGrid;
@@ -21,6 +22,7 @@ const MyWallet = () => {
       <SelectWalletDialog />
       <MetaDialog />
       <UnMetaDialog />
+      <ErrorNetworkDialog />
     </ResponsiveGrid>
   );
 };

@@ -6,6 +6,7 @@ import WalletHeader from '@/components/WalletHeader';
 import Wallet from './components/Wallet';
 import Transactions from './components/Transactions';
 import SelectWalletDialog from '../MyWallet/components/SelectWalletDialog';
+import ErrorNetworkDialog from '../MyWallet/components/ErrorNetworkDialog';
 
 import styles from './index.module.scss';
 
@@ -36,6 +37,7 @@ const WalletDetail = (props) => {
         </Tab.Item>
       </Tab>
       <SelectWalletDialog />   
+      <ErrorNetworkDialog />
 
       {/* <WalletFooter/> */}
 

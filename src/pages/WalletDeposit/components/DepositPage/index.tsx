@@ -44,8 +44,14 @@ function WalletDeposit() {
   }, []);
 
   const handleSelectToken = useCallback(() => {
-    setVisible(true);
-    updateAssets();
+    action.checkNetworkSupport().then((support) => {
+      if (support) {
+        setVisible(true);
+        updateAssets();
+      } else {
+        action.setState({ errorNetworkVisible: true });
+      }
+    });
 
   }, []);
 
@@ -181,26 +187,35 @@ function WalletDeposit() {
   }
 
   const refreshEthBalance = useCallback((wallet) => {
-    const promRefresh = action.refreshEthBalance();
-    // let eBalance = ethL1Balance;
-    // let ePrice = ethPrice;
-    promRefresh.then((val) => {
-      if (val) {
-        val.ethL1Balance.then((val) => {
-          setLoadingBalance(false);
-          setEthL1Balance(val);
-          eBalance = val;
-          UIrefreshEthBalance(eBalance, ePrice);
-          console.log('updateAssets, refreshWallet, ethL1Balance', val, wallet);
-        });
-        val.ethPrice.then((val) => {
-          setEthPrice(val);
-          ePrice = val;
-          UIrefreshEthBalance(eBalance, ePrice);
-          console.log('updateAssets, refreshWallet, ethL1Balance', val);
-        });
+    action.checkNetworkSupport().then((networkSupport) => {
+      console.log('networkSupport', wallet, wallet1);
+      if (networkSupport) {
+        const promRefresh = action.refreshEthBalance();
+        // let eBalance = ethL1Balance;
+        // let ePrice = ethPrice;
+        promRefresh.then((val) => {
+          if (val) {
+            val.ethL1Balance.then((val) => {
+              setLoadingBalance(false);
+              setEthL1Balance(val);
+              eBalance = val;
+              UIrefreshEthBalance(eBalance, ePrice);
+              console.log('updateAssets, refreshWallet, ethL1Balance', val, wallet);
+            });
+            val.ethPrice.then((val) => {
+              setEthPrice(val);
+              ePrice = val;
+              UIrefreshEthBalance(eBalance, ePrice);
+              console.log('updateAssets, refreshWallet, ethL1Balance', val);
+            });
+          }
+        }, [eBalance, ePrice]);
+      } else {
+        setVisible(false);
+        action.setState({ errorNetworkVisible: false });
+        // alert('Change network and Refresh page\nPlease switch your wallet\'s network from mainnet to rinkeby network for this DAPP');
       }
-    }, [eBalance, ePrice]);
+    });
   }, [wallet1, ethL1Balance, ethPrice]);
 
   // function UIrefreshEthBalance() {
@@ -229,11 +244,17 @@ function WalletDeposit() {
         if (signed) {
           refreshEthBalance(wallet1);
         } else {
+          action.setState({ selectWalletDialogVisible : true });
           setLoadingBalance(true);
           const provider = action.refreshWallet();
-          provider.then((val) => {
-            console.log('updateAssets, refreshWallet', val);
-            refreshEthBalance(wallet1);
+          provider.then((wallet2) => {
+            if (wallet2) {
+              console.log('updateAssets, refreshWallet');
+              refreshEthBalance(wallet1);
+            } else {
+              handleClose();
+              console.log('user canceled');
+            }
           });
         }
       });
