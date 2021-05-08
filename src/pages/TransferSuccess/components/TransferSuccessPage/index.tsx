@@ -6,8 +6,6 @@ import WalletDetail from '../../../WalletDetail/index';
 
   let TransferSuccessPage = (props) => {
   // const [loading, loadPage] = useState<boolean>(true);
-  console.log(props);
-
   return (
    
     <div className={styles.container}>

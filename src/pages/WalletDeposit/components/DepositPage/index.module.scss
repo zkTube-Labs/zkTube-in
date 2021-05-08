@@ -169,6 +169,22 @@
       color: #ff0000;
     }
   }
+
+  .next-number-picker-normal:not(.next-number-picker-no-trigger) .next-input input {
+    padding-right: 0px !important;
+      width: 305px !important;
+      height: 44px !important;
+      line-height: 36px !important;
+      font-size: 12px !important;
+      border: 1px solid #14132D !important;
+      border-radius: 9px 0px 0px 9px !important;
+      background-color: #09064b !important;
+      margin-top: -5px;
+      margin-bottom: -45px;
+      margin-right: -7px;
+      margin-left: -2px;
+      color: whitesmoke;
+  }
 }
 .dialog {
   width: 520px;
