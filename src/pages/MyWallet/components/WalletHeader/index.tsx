@@ -1,9 +1,11 @@
 import React from 'react';
 import { Select, Button } from '@alifd/next';
+import {Link} from "ice";
 import logo from '@/assets/logo.png';
 import styles from './index.module.scss';
 import store from '@/store';
 import { ethers } from 'ethers';
+
 
 const { Option } = Select;
 
@@ -28,12 +30,12 @@ const WalletHeader = () => {
 
   return (
     <header className={styles.header} style={{}} >
-       <a href="#/"> 
+       <Link to="/wallet"> 
         <img src={logo} alt="logo" width="10%" className={styles.logo} style={{padding: "10px"}}/>
-       </a> 
-      <a href="" className={styles.wallet}  style={{color: "white"}}>
+       </Link> 
+      <Link to ="/wallet" className={styles.wallet}  style={{color: "white"}}>
         My Wallet
-      </a>
+      </Link>
       <a href="https://rinkeby-browser.zktube.io/" target="_blank" className={styles.wallet} style={{color: "white"}}>
         zkTube Scan
       </a>
