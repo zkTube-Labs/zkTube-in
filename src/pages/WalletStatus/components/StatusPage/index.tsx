@@ -72,7 +72,7 @@ import styles from './index.module.scss';
         </div>
         <div className={styles.detail}>
           <h3 style={{margin: "40px"}}>
-          <a href={detailUrl} target="_blank" > View Transaction details
+          <a href={detailUrl} target="_blank"  style={{cursor: "pointer"}}> View Transaction details
           <span style={{cursor: "pointer"}}>
               <Icon type="icon-up-right" size= {20}  color="#5E45EB" onClick={onClickButton}/>
           </span>
