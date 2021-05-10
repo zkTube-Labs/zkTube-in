@@ -25,9 +25,10 @@
     }
   }
   .shift{
-    padding: 10px 20px;
-    width: 40%;
-    margin: 20px;
+    // padding: 10px 20px;
+    // width: 40%;
+    margin: 5px;
+    font-size: 10px;
   }
   .boxbtn {
     position: absolute;
@@ -78,8 +79,8 @@ a:link {
 
 .header li a {
   display: block;
-  padding: 20px 20px;
-  border-right: 1px solid #f4f4f425;
+  padding: 20px 10px;
+  // border-right: 1px solid #f4f4f425;
   text-decoration: none;
 }
 
@@ -204,7 +205,7 @@ a:link {
     float: left;
   }
   .header li a {
-    padding: 20px 30px;
+    padding: 20px 10px;
   }
   .header .menu {
     clear: none;

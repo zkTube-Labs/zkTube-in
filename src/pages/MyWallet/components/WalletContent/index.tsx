@@ -228,7 +228,15 @@ const WalletContent = () => {
 
                   </td>
                   <td style={{color: "rgba(243, 229, 229, 0.719)",  fontSize: "10px", float:"right"}}>
-                    <a href={discord} target="_blank">
+                   
+                   <span>
+                    Feedback: work@zktube.io
+                   </span>
+                   <span style={{marginLeft: "20px"}}>
+                    Cooperation: support@zktube.io
+                   </span>
+                   
+                    {/* <a href={discord} target="_blank">
                       <img src={DISCORD} style={{height: "5%"}}/>
                     </a>
                     <a href={telegram} target="_blank">
@@ -242,7 +250,7 @@ const WalletContent = () => {
                     </a>
                     <a href= {medium} target="_blank">
                       <img src={MEDIUM} style={{height: "5%", marginLeft: "15px"}}/>
-                    </a>
+                    </a> */}
                   </td>
 
                 </tr>
