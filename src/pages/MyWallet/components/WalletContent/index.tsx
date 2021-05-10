@@ -14,11 +14,11 @@ import TPS from '@/assets/tps.png';
 import PHILO from '@/assets/philosophy.png';
 import ZKTUBE from '@/assets/zktube.png';
 import TECHNICAL from '@/assets/technical.png';
-import DISCORD from '@/assets/discord.png';
-import TELEGRAM from '@/assets/telegram.png';
-import TWITTER from '@/assets/twwiter.png';
-import FACEBOOK from '@/assets/facebook.png';
-import MEDIUM from '@/assets/medium.png';
+// import DISCORD from '@/assets/discord.png';
+// import TELEGRAM from '@/assets/telegram.png';
+// import TWITTER from '@/assets/twwiter.png';
+// import FACEBOOK from '@/assets/facebook.png';
+// import MEDIUM from '@/assets/medium.png';
 import BACK from '@/assets/backgroundImage.png';
 
 
@@ -28,11 +28,11 @@ import styles from './index.module.scss';
 const WalletContent = () => {
   const announce = "https://zktube.zendesk.com/hc/en-us/sections/360013215451-Announcements";
   const faq = "https://zktube.zendesk.com/hc/en-us/sections/360013215471-FAQ";
-  const telegram = "https://t.me/zkTubeGlobal";
-  const discord = "https://discord.gg/ZhcSuxhX4S";
-  const twitter = "https://twitter.com/zktubeofficial";
-  const medium = "https://zktube.medium.com";
-  const facebook = "https://www.facebook.com/zkTube.official/";
+  // const telegram = "https://t.me/zkTubeGlobal";
+  // const discord = "https://discord.gg/ZhcSuxhX4S";
+  // const twitter = "https://twitter.com/zktubeofficial";
+  // const medium = "https://zktube.medium.com";
+  // const facebook = "https://www.facebook.com/zkTube.official/";
   const wallet = "https://wallet.zktube.io/";
 
   const checkFAQ =() => {
@@ -223,7 +223,15 @@ const WalletContent = () => {
 
                   </td>
                   <td style={{color: "rgba(243, 229, 229, 0.719)",  fontSize: "10px", float:"right"}}>
-                    <a href={discord} target="_blank">
+                   
+                   <span>
+                    Feedback: work@zktube.io
+                   </span>
+                   <span style={{marginLeft: "20px"}}>
+                    Cooperation: support@zktube.io
+                   </span>
+                   
+                    {/* <a href={discord} target="_blank">
                       <img src={DISCORD} style={{height: "5%"}}/>
                     </a>
                     <a href={telegram} target="_blank">
@@ -237,7 +245,7 @@ const WalletContent = () => {
                     </a>
                     <a href= {medium} target="_blank">
                       <img src={MEDIUM} style={{height: "5%", marginLeft: "15px"}}/>
-                    </a>
+                    </a> */}
                   </td>
 
                 </tr>
