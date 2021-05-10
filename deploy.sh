@@ -10,4 +10,4 @@ HOST=${1}
 USER=${2}
 SSHKEY=${3}
 
-scp -r -i ${SSHKEY} ./src ${USER}@${HOST}:/home/${USER}/work/zktube-fe/
+scp -r -i ${SSHKEY} ./src ${USER}@${HOST}:/home/${USER}/work/zktube-homepage/

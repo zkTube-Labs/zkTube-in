@@ -1,12 +1,13 @@
 import React from 'react';
 import { Box, Button, Icon, Input } from '@alifd/next';
+import Announcement from '../Announcement';
 import LOGO from '@/assets/newlogo.png';
 import BUTTON from '@/assets/button.png';
 import TESTNET from '@/assets/testnet.png';
 import ETH from '@/assets/eth.png';
-import BACK1 from '@/assets/backimg1.png';
-import BACK2 from '@/assets/backimg2.png';
-import backImage from '../../../../../src/assets/fullImage.png';
+// import BACK1 from '@/assets/backimg1.png';
+// import BACK2 from '@/assets/backimg2.png';
+// import backImage from '../../../../../src/assets/fullImage.png';
 import SECURITY from '@/assets/security1.png';
 import TRANSACTION from '@/assets/transaction.png';
 import TPS from '@/assets/tps.png';
@@ -21,7 +22,6 @@ import MEDIUM from '@/assets/medium.png';
 import BACK from '@/assets/backgroundImage.png';
 
 
-import store from '@/store';
 
 import styles from './index.module.scss';
 
@@ -154,7 +154,7 @@ const WalletContent = () => {
               <Button className={styles.button}> More &gt;</Button>
               </a>
             </div>
-            <div className={styles.testnet}>
+            {/* <div className={styles.testnet}>
               <img src={TESTNET} style={{ width: '100%', height: '100%', paddingTop: '5%' }}/>
               <div className={styles.ourphil}>
                 
@@ -167,8 +167,8 @@ const WalletContent = () => {
               <div className={styles.arrow}>
                 <div style={{fontSize: "20px", fontWeight:"bold"}}>&gt;</div>
               </div>
-              
-            </div>
+            </div> */}
+            <Announcement />
 
             <div className={styles.faq}>
               <a href={faq} target="_blank">
