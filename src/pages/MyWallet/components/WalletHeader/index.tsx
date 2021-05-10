@@ -41,12 +41,12 @@ const WalletHeader = () => {
 
   return (
     <header className={styles.header} style={{}} >
-       <Link to="/wallet"> 
+       <Link to="#"> 
         <img src={logo} alt="logo" width="10%" className={styles.logo} style={{padding: "10px"}}/>
        </Link> 
-      <Link to ="/wallet" className={styles.wallet}  style={{color: "white"}}>
+      <a href="https://wallet.zktube.io/"  target="_blank" className={styles.wallet}  style={{color: "white"}}>
         My Wallet
-      </Link>
+      </a>
       <a href="https://rinkeby-browser.zktube.io/" target="_blank" className={styles.wallet} style={{color: "white"}}>
         zkTube Scan
       </a>
@@ -113,25 +113,6 @@ const WalletHeader = () => {
         </li> */}
       </ul>
     </header>
-    // <div className={styles.list}>
-    //   <div className={styles.boxselect}>
-    //     <Select onChange={onChange} defaultValue="ETHMain network">
-    //       <Option value="ETHMain network">
-    //         <div className={styles.statuspoint} />
-    //         ETHMain network
-    //       </Option>
-    //       <Option value="Ropsten test network">
-    //         <div className={styles.statuspoint} />
-    //         Ropsten test network
-    //       </Option>
-    //     </Select>
-    //   </div>
-    //   <div className={styles.boxbtn}>
-    //     <Button type="primary" onClick={onClick} className = {styles.round}>
-    //       Connect to a wallet
-    //     </Button>
-    //   </div>
-    // </div>
   );
 };
 export default WalletHeader;

@@ -13,11 +13,11 @@ import TPS from '@/assets/tps.png';
 import PHILO from '@/assets/philosophy.png';
 import ZKTUBE from '@/assets/zktube.png';
 import TECHNICAL from '@/assets/technical.png';
-import DISCORD from '@/assets/discord.png';
-import TELEGRAM from '@/assets/telegram.png';
-import TWITTER from '@/assets/twwiter.png';
-import FACEBOOK from '@/assets/facebook.png';
-import MEDIUM from '@/assets/medium.png';
+// import DISCORD from '@/assets/discord.png';
+// import TELEGRAM from '@/assets/telegram.png';
+// import TWITTER from '@/assets/twwiter.png';
+// import FACEBOOK from '@/assets/facebook.png';
+// import MEDIUM from '@/assets/medium.png';
 import BACK from '@/assets/backgroundImage.png';
 
 
@@ -26,19 +26,14 @@ import store from '@/store';
 import styles from './index.module.scss';
 
 const WalletContent = () => {
-  const [, action] = store.useModel('wallet');
   const announce = "https://zktube.zendesk.com/hc/en-us/sections/360013215451-Announcements";
   const faq = "https://zktube.zendesk.com/hc/en-us/sections/360013215471-FAQ";
-  const telegram = "https://t.me/zkTubeGlobal";
-  const discord = "https://discord.gg/ZhcSuxhX4S";
-  const twitter = "https://twitter.com/zktubeofficial";
-  const medium = "https://zktube.medium.com";
-  const facebook = "https://www.facebook.com/zkTube.official/";
-
-
-  const handleConnectClick = () => {
-    action.setState({ selectWalletDialogVisible: true });
-  };
+  // const telegram = "https://t.me/zkTubeGlobal";
+  // const discord = "https://discord.gg/ZhcSuxhX4S";
+  // const twitter = "https://twitter.com/zktubeofficial";
+  // const medium = "https://zktube.medium.com";
+  // const facebook = "https://www.facebook.com/zkTube.official/";
+  const wallet = "https://wallet.zktube.io/";
 
   const checkFAQ =() => {
     console.log("faq")
@@ -64,11 +59,11 @@ const WalletContent = () => {
                 <p style={{marginTop : "15px", fontSize :  "18px"}}>The combination of zero knowledge protocol and layer2</p>
               </div>
               <div className={styles.footbtn1}>
-                  <button onClick={handleConnectClick} style={{backgroundColor : "Transparent", backgroundRepeat: "no-repeat",
-                border: "none", cursor: "pointer", overflow: "hidden", outline: "none"}}>
-                    <img src={BUTTON} style={{borderRadius : "25px", backgroundColor: "#298dff"}} />
-                    <div className={styles.center}>Connect to a wallet</div>
-                  </button>
+                <a href={wallet + 'wallet/detail?c=1'} target="_blank" style={{backgroundColor : "Transparent", backgroundRepeat: "no-repeat",
+                  border: "none", cursor: "pointer", overflow: "hidden", outline: "none"}}>
+                  <img src={BUTTON} style={{borderRadius : "25px", backgroundColor: "#298dff"}} />
+                  <div className={styles.center}>Connect to a wallet</div>
+                </a>
               </div>
             </div>
             {/* <div className={styles.footbtn} style={{cursor: "pointer"}}>
