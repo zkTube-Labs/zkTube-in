@@ -67,9 +67,16 @@
         overflow: hidden;
       }
       .announceContent{
-        height: 100%;
         overflow: hidden;
         color: "rgba(243, 229, 229, 0.719)";
+        height: 40px;
+        padding-top: 0px;
+        margin-top: 0px;
+        width: 28%;
+        p{
+          margin-block-start: 0px;
+          height: 40px;          
+        }
       }
       .arrow{
         width: 78px;
