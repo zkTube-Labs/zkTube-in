@@ -119,8 +119,7 @@ const WalletContent = () => {
                   </div>
                   <div className={styles.itemfirst}>TPS3000+</div>
                   <div className={styles.itemsec}>
-                    Zktube uses the principle of slicing technology to make the transaction flow between L2 faster and
-                    meet more financial application in the field of defi,eg.swap transaction and other game applications
+                  zkTube uses the principle of slicing technology to make the transaction flow between Layer2 faster and meet more financial applications in the field of decentralized finance, dex transactions, and other game applications. zkTube will be a satisfactory solution for application scenarios that have higher requirements in terms of the transaction receipt, timeliness, and high-throughput Dapp.
                   </div>
                 </div>
               </div>
