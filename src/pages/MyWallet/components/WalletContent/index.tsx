@@ -76,9 +76,9 @@ const WalletContent = () => {
               </div> */}
             <div className={styles.foottitle}>
               <span className={styles.footlarge}>
-                <span style={{color:"blueviolet"}}>Introduction to </span>zktube</span>
+                <span style={{color:"blueviolet"}}>Introduction to </span>zkTube</span>
               <span className={styles.footsmall}>
-                zktube is a layer 2 protocol which uses zero knowledge proof and rollup of ZK rollup to realize low transaction fee and high
+                zkTube is a layer 2 protocol which uses zero knowledge proof and rollup of ZK rollup to realize low transaction fee and high
               </span>
               <span className={styles.footsmall}>
                  throughput transaction between ETH and erc20.
