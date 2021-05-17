@@ -55,7 +55,7 @@ const WalletHeader = () => {
       <ul className={styles.menu} style={{padding: "0px", marginRight: "100px"}}>
         <li>
         <a href={discord} target="_blank" title={discord}>
-          <img src={DISCORD}/>
+          <img src={DISCORD} style={{height:"18px"}}/>
         </a>
           {/* <div className={styles.boxselect} style={{marginRight: "20px", width: "170px", height: "40px"}}>
             <Select onChange={onChange} defaultValue="Rinkeby testnet"> */}
@@ -79,22 +79,22 @@ const WalletHeader = () => {
         </li>
         <li>
           <a href={telegram} target="_blank" title={telegram}>
-            <img src={TELEGRAM} />
+            <img src={TELEGRAM}  style={{height:"18px"}}/>
           </a> 
         </li>
         <li>
           <a href={twitter} target="_blank" title={twitter}>
-            <img src={TWITTER} />
+            <img src={TWITTER}  style={{height:"18px"}}/>
           </a> 
         </li>
         <li>
           <a href= {facebook} target="_blank" title={facebook}>
-            <img src={FACEBOOK} />
+            <img src={FACEBOOK} style={{height:"18px"}}/>
           </a>
         </li>
         <li>
           <a href= {medium} target="_blank" title={medium}>
-            <img src={MEDIUM}/>
+            <img src={MEDIUM} style={{height:"18px"}}/>
           </a>
         </li>
         {/* <li> 
