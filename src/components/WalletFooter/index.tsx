@@ -17,7 +17,7 @@ import styles from './index.module.scss';
 const WalletFooter = () => {
   const [, action] = store.useModel('wallet');
   
-  const telegram = "https://t.me/zkTubeGlobal";
+  const telegram = "https://t.me/zkTubeProtocol";
   const discord = "https://discord.gg/ZhcSuxhX4S";
   const twitter = "https://twitter.com/zktubeofficial";
   const medium = "https://zktube.medium.com";
