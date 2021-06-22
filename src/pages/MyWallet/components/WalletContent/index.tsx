@@ -132,7 +132,7 @@ const WalletContent = () => {
                   </div>
 
                   <div style={{color: "rgba(243, 229, 229, 0.719)"}}>
-                    We want to use zkcube technology to provide decentralized <br/> payment
+                    We want to use zkTube technology to provide decentralized <br/> payment
                     services for more <span style={{color:"blueviolet"}}>global entity services,</span> so that <br/>
                     people all over the world can enjoy
                     convenient, safe and fast services.
