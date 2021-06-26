@@ -105,7 +105,7 @@ const WalletContent = () => {
                   <div className={styles.itemfirst}>Transaction fee</div>
                   <div className={styles.itemsec}>
                     <span style={{ fontWeight: 'bold', color:"blueviolet" }}>Gasprice: </span>
-                    we can allow users to pay with a fixed range of gaspricesor or even move gaspayment outside the
+                    we can allow users to pay with a fixed range of gas prices or even move gas payment outside the
                     rollup protocol entirely and have transactors pay batch creators for inclusion through a channel.{' '}
                     <br /><br/>
                     <span style={{ fontWeight: 'bold', color:"blueviolet" }}>Gas: </span>
