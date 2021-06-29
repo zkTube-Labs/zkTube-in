@@ -1,10 +1,12 @@
 import React from 'react';
 import { Box, Button, Icon, Input } from '@alifd/next';
 import Announcement from '../Announcement';
-import LOGO from '@/assets/newlogo.png';
+import LOGO from '@/assets/logo.png';
 import BUTTON from '@/assets/button.png';
 import TESTNET from '@/assets/testnet.png';
 import ETH from '@/assets/eth.png';
+import UsersDetail from '../../../WalletDetail/components/UsersDetail/index';
+
 // import BACK1 from '@/assets/backimg1.png';
 // import BACK2 from '@/assets/backimg2.png';
 // import backImage from '../../../../../src/assets/fullImage.png';
@@ -14,6 +16,10 @@ import TPS from '@/assets/tps.png';
 import PHILO from '@/assets/philosophy.png';
 import ZKTUBE from '@/assets/zktube.png';
 import TECHNICAL from '@/assets/technical.png';
+import SHIELD from '@/assets/Chield_check.png';
+import TRANSFER from '@/assets/Regroup.png';
+import TPS1 from '@/assets/Setting_line_light.png';
+
 // import DISCORD from '@/assets/discord.png';
 // import TELEGRAM from '@/assets/telegram.png';
 // import TWITTER from '@/assets/twwiter.png';
@@ -47,24 +53,29 @@ const WalletContent = () => {
         <Box>
           <div className={styles.borderbox}>
             <div className={styles.firstImage}>
-            <img src={BACK} style={{ width: '100%', height: '70%' }}/>
+              <div>
+
+              </div>
+            <div style={{ width: '500px', height: '500px' }}/>
               <div className={styles.headimg1}>
-              <img  src={LOGO} style={{ width: '60%', height: '50%' }}/>
+              <img  src={LOGO}  style={{ width: '213px%', height: '68px' }}/>
+              {/* <img  src={LOGO} style={{ width: '60%', height: '50%' }}/> */}
+
 
               </div>
               <div className={styles.midtitle1}>
                 Decentralized wallet based on layer2
               </div>
               <div className={styles.midtitle2}>
-                <p style={{marginTop : "15px", fontSize :  "18px"}}>The combination of zero knowledge protocol and layer2</p>
+                The combination of zero knowledge protocol and layer2
               </div>
-              <div className={styles.footbtn1}>
+              {/* <div className={styles.footbtn1}>
                 <a href={wallet + 'wallet/detail?c=1'} target="_blank" style={{backgroundColor : "Transparent", backgroundRepeat: "no-repeat",
                   border: "none", cursor: "pointer", overflow: "hidden", outline: "none"}}>
                   <img src={BUTTON} style={{borderRadius : "25px", backgroundColor: "#298dff"}} />
                   <div className={styles.center}>Connect to a wallet</div>
                 </a>
-              </div>
+              </div> */}
             </div>
             {/* <div className={styles.footbtn} style={{cursor: "pointer"}}>
               <input type="image" src={BUTTON} onClick={handleConnectClick}/>
@@ -74,23 +85,60 @@ const WalletContent = () => {
               </button>
             
               </div> */}
+              <div className={styles.combine}>
+              <div className={styles.total}>
+                <div className = {styles.goLeft} style={{marginRight: "10px"}}> 
+                  <UsersDetail 
+                  color = '#EA3D2F'
+                  description = 'ZKTR Total'
+                  digit = {245600}
+                  />
+                  <span></span>
+                </div>
+                <div className = {styles.goLeft}>
+                  <UsersDetail color = '#367BF5' description = 'Holders' digit = {162}
+                />
+                </div>
+                <div className = {styles.goLeft}>
+                  <UsersDetail color = '#2FA84F' description = 'Transfers' digit = {162}
+                />
+                </div>
+                <div className = {styles.goLeft}>
+                <UsersDetail 
+                color = '#F3AA18'
+                description = 'ZKTR Total'
+                digit = {245600}
+                />
+              </div>
+              </div>
+              </div>
+            
+            
             <div className={styles.foottitle}>
               <span className={styles.footlarge}>
-                <span style={{color:"blueviolet"}}>Introduction to </span>zkTube</span>
+                <span className = {styles.blueviolet} >Introduction to </span>zkTube</span>
               <span className={styles.footsmall}>
-                zkTube is a layer 2 protocol which uses zero knowledge proof and rollup of ZK rollup to realize low transaction fee and high
+                zkTube is a layer 2 protocol which uses zero knowledge proof and rollup of ZK<br/>
+                rollup to realize low transaction fee and high throughput transaction between ETH and erc20.
+
               </span>
-              <span className={styles.footsmall}>
-                 throughput transaction between ETH and erc20.
-              </span>
+              {/* <span className={styles.footsmall}> */}
+              {/* </span> */}
             </div>
             <div className={styles.introlist}>
               <div className={styles.introcont}>
                 <div className={styles.introitem}>
-                  <div className={styles.itemimg}>
+                  {/* <div className={styles.itemimg}>
                     <img src={SECURITY} style={{ width: '30%', height: '80%', paddingTop: '10%' }} />
+                  </div> */}
+                  <div className={styles.up}>
+                    <div className={styles.introitem1}>
+                      <img src={SHIELD} className ={styles.shield} />
+                    </div>
+                    <div className={styles.itemfirst1}>Security</div>
                   </div>
-                  <div className={styles.itemfirst}>Security</div>
+                
+                {/* <div className={styles.itemfirst}>Security</div> */}
                   <div className={styles.itemsec}>
                     The rollup contract keeps track of its entire history of state roots and the hash of each batch. if
                     anyone discovers that one batch had an incorrect post-state root, they can publish a proof to chain,
@@ -99,54 +147,44 @@ const WalletContent = () => {
                   </div>
                 </div>
                 <div className={styles.introitem}>
-                  <div className={styles.itemimg}>
+                  {/* <div className={styles.itemimg}>
                     <img src={TRANSACTION} style={{ width: '30%', height: '80%' , paddingTop: '10%'}} />
                   </div>
-                  <div className={styles.itemfirst}>Transaction fee</div>
+                  <div className={styles.itemfirst}>Transaction fee</div> */}
+                  <div className={styles.up}>
+                    <div className={styles.introitem1}>
+                      <img src={TRANSFER} className ={styles.shield} />
+                    </div>
+                    <div className={styles.itemfirst1}>Transaction fee</div>
+                  </div>
                   <div className={styles.itemsec}>
-                    <span style={{ fontWeight: 'bold', color:"blueviolet" }}>Gasprice: </span>
+                    <span style={{ fontWeight: 'bold', color:"white" }}>Gasprice: </span>
                     we can allow users to pay with a fixed range of gas prices or even move gas payment outside the
                     rollup protocol entirely and have transactors pay batch creators for inclusion through a channel.{' '}
                     <br /><br/>
-                    <span style={{ fontWeight: 'bold', color:"blueviolet" }}>Gas: </span>
+                    <span style={{ fontWeight: 'bold', color:"white" }}>Gas: </span>
                     we could similarly restrict the total gas to a choice of consecutive powers of two. Alternatively,
                     we could just have a gas limit only at the batch level.
                   </div>
                 </div>
                 <div className={styles.introitem}>
-                  <div className={styles.itemimg}>
+                <div className={styles.up}>
+                    <div className={styles.introitem1}>
+                      <img src={TPS1} className ={styles.shield} />
+                    </div>
+                    <div className={styles.itemfirst1}>TPS3000+</div>
+                  </div>
+                  {/* <div className={styles.itemimg}>
                     <img src={TPS} style={{ width: '30', height: '80%', paddingTop: '10%' }} />
                   </div>
-                  <div className={styles.itemfirst}>TPS3000+</div>
+                  <div className={styles.itemfirst}>TPS3000+</div> */}
                   <div className={styles.itemsec}>
                   zkTube uses the principle of slicing technology to make the transaction flow between Layer2 faster and meet more financial applications in the field of decentralized finance, dex transactions, and other game applications. zkTube will be a satisfactory solution for application scenarios that have higher requirements in terms of the transaction receipt, timeliness, and high-throughput Dapp.
                   </div>
                 </div>
               </div>
             </div>
-            <div className={styles.imgphil}>
-                <img src={PHILO} style={{ width: '100%', height: '70%', paddingTop: '10%' }}/>
-                <div className={styles.ourphil}>
-                  <div style={{fontSize: "22PX", fontWeight:"bold", marginBottom:"20px"}}>
-                    <span style={{color:"blueviolet"}}>Our </span>philosophy
-                  </div>
-
-                  <div style={{color: "rgba(243, 229, 229, 0.719)"}}>
-                    We want to use zkTube technology to provide decentralized <br/> payment
-                    services for more <span style={{color:"blueviolet"}}>global entity services,</span> so that <br/>
-                    people all over the world can enjoy
-                    convenient, safe and fast services.
-                  </div>
-                  <div style={{fontSize: "22px", fontWeight:"bold", marginTop:"60px", marginBottom:"5px"}}>
-                    Join the technology community
-                  </div>
-                  <div style={{color: "rgba(243, 229, 229, 0.719)"}}>
-                    <Icon type="email" />
-                    &nbsp; work@zktube.io
-                  </div>
-              
-                </div>
-            </div>
+           
             <div className={styles.announce}>
               Announcement
               <a href={announce} target="_blank">
@@ -174,10 +212,40 @@ const WalletContent = () => {
               <input type="image" src={BUTTON} onClick={checkFAQ} style={{width: "110px", height: "55px", borderRadius: "25px"}}/>
                 <div className={styles.center}>FAQ</div>
               </a>
-              
-            
+                          
             </div>
+            <div className={styles.imgphil}>
+                <img src={PHILO} style={{ width: '100%', height: '400px' }}/>
+                <div className={styles.ourphil}>
+                  <div style={{fontSize: "22px", fontWeight:"bold", marginBottom:"20px"}}>
+                    <span style={{color:"blueviolet"}}>Our </span>philosophy
+                  </div>
 
+                  <div style={{color: "rgba(243, 229, 229, 0.719)"}}>
+                    We want to use zkTube technology to provide decentralized <br/> payment
+                    services for more <span style={{color:"blueviolet"}}>global entity services,</span> so that <br/>
+                    people all over the world can enjoy
+                    convenient, safe and fast services.
+                  </div>
+                  <div style={{fontSize: "22px", fontWeight:"bold", marginTop:"45px", marginBottom:"15px"}}>
+                    Join the technology community
+                  </div>
+                  <div style={{color: "rgba(243, 229, 229, 0.719)"}}>
+                    <Icon type="email" />
+                    &nbsp; work@zktube.io
+                  </div>
+                  <div style={{fontSize: "22px", fontWeight:"bold", marginTop:"38px", marginBottom:"10px"}}>
+                    Join our newsletter
+                  </div>
+                  <div>
+                    <input type="text" className= {styles.input}/> 
+                    <span className ={styles.sub}>
+                      <button className={styles.sub1}> subscribe</button>
+                    </span>
+                  </div>
+              
+                </div>
+            </div>
             <div className={styles.another}>
               <img src={ZKTUBE} style={{width : '100%', height: "100%"}}/>
               <div className={styles.eth}>

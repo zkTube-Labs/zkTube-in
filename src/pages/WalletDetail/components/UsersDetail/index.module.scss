@@ -1,0 +1,49 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: left;
+    padding: 10px 7px;
+    .left {
+      display: flex;
+      align-items: left;
+      margin-left: -10px;
+      .currency {
+        font-size: 14px;
+        padding-left: 2px;
+        color: #101010;
+      }
+    }
+
+    .circle{
+        height: 15px;
+        width: 15px;
+        border-radius: 50%;
+        display: inline-block;
+        margin-top: -15px;
+    }
+    .right {
+      display: flex;
+      flex-direction: column;
+      justify-content: left;
+      align-items: left;
+      margin-right: 20px;
+      .description {
+        font-size: 20px;
+        color: white;
+        font-weight: bold;
+        font-family: "Open Sans";
+        text-align: left;
+        line-height: 13px;
+        margin-left: 29px;
+      }
+      .digit {
+        color: white;
+        text-align: left;
+        font-weight: 700;
+        font-family: "Open Sans";
+        font-size: 50.25px;
+        line-height: 67px;
+        margin-left: 30px;
+      }
+    }
+  }
