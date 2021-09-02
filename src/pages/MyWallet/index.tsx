@@ -12,11 +12,11 @@ const { Cell } = ResponsiveGrid;
 
 const MyWallet = () => {
   return (
-    <ResponsiveGrid gap={20}>
+    <ResponsiveGrid>
       <Cell>
         <WalletHeader />
       </Cell>
-      <Cell colSpan={12} style={{backgroundImage: "url(" + backImage + ")" }}>
+      <Cell colSpan={12}>
         <WalletContent />
       </Cell>
       <SelectWalletDialog />

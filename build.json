@@ -1,11 +1,11 @@
 {
+  "hash":true,
   "plugins": [
     [
       "build-plugin-fusion",
       {
         "themePackage": "@alifd/theme-design-pro",
-        "themeConfig": {
-        }
+        "themeConfig": {}
       }
     ],
     [
@@ -18,10 +18,19 @@
     ]
   ],
   "proxy": {
-    "/api": {
-      "enable": true,
-      "target": "http://127.0.0.1:7001",
-      "pathRewrite": { "^/api": "" }
+  },
+  "webpackLoaders": {
+    "mp4": {
+      "test": ".mp4$",
+      "loaders": {
+        "file-loader": { }
+      }
+    },
+    "pdf": {
+      "test": ".pdf$",
+      "loaders": {
+        "file-loader": { }
+      }
     }
   }
 }

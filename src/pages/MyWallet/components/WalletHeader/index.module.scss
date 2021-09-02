@@ -95,14 +95,17 @@ a:link {
   font-size: 2em;
   padding: 10px 20px;
   text-decoration: none;
-  
+  margin-left: 107px;
 }
 .wallet{
-    font-size: 1em;
+    // font-size: 1em;
+    font-size: 16px;
     float: left;
-  padding: 20px 20px;
+  // padding: 20px;
+  padding-top: 30px;
   text-decoration: none;
   color: whitesmoke;
+  margin-right: 36px;
 }
 
 /* account */
@@ -205,7 +208,8 @@ a:link {
     float: left;
   }
   .header li a {
-    padding: 20px 10px;
+    // padding: 20px 10px;
+    padding-top: 30px;
   }
   .header .menu {
     clear: none;

@@ -1,0 +1,2099 @@
+.Container {
+  width: 100%;
+  background: #131212;
+  height: auto;
+  margin-top: 103px;
+}
+.topContent {
+  width: 100%;
+  height: 800px;
+  // background: url(../../../../assets/bgContainer.png) no-repeat;
+  // background-position: center center;
+  // background-size: cover;
+  position: relative;
+  margin-bottom: 166px;
+  & > img {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}
+.mTopContent {
+  width: 41.4rem;
+  height: 17.3rem;
+  background: url(../../../../assets/bgContainer.png) no-repeat;
+  background-position: center center;
+  background-size: cover;
+  margin-bottom: 28.4rem;
+}
+.firstInfo {
+  //   width: 1148px;
+  // margin-left: 260px;
+  // margin-right: 160px;
+  margin-left: 15%;
+  // margin-right
+  //   margin: 0 auto;
+  display: flex;
+  justify-content: flex-start;
+  .leftInfo {
+    width: 690px;
+    padding-top: 119px;
+    position: relative;
+    z-index: 1;
+    .infoTitle {
+      position: absolute;
+      width: 900px;
+      height: 300px;
+      //   p {
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 65px;
+      line-height: 74px;
+      letter-spacing: -1px;
+      color: #ffffff;
+    }
+    .infoDesc {
+      position: absolute;
+      width: 780px;
+      top: 423px;
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 22px;
+      line-height: 24px;
+      letter-spacing: 1px;
+      color: #ffffff;
+      & > div {
+        margin-bottom: 10px;
+      }
+    }
+    .infoBtns {
+      position: absolute;
+      top: 520px;
+      width: 630px;
+      height: 60px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      .btnWP {
+        background: #24dfbe;
+        border-radius: 16px;
+        width: 189px;
+        height: 58px;
+        line-height: 58px;
+        text-align: center;
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        cursor: pointer;
+        color: #131212;
+      }
+      .btnEth {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 58px;
+        cursor: pointer;
+        // line-height: 58px;
+        border: 1px solid #ffffff;
+        box-sizing: border-box;
+        border-radius: 16px;
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        letter-spacing: 1px;
+        color: #ffffff;
+        padding: 0 20px;
+        margin-left: 10px;
+        img {
+          margin-right: 5px;
+        }
+        .ethlogo1 {
+          width: 14px;
+          height: 25px;
+        }
+        .unilogo {
+          width: 25px;
+          height: 26px;
+        }
+      }
+    }
+  }
+}
+.rightImg {
+  padding-top: 9px;
+  width: 668px;
+  height: 668px;
+  position: relative;
+  margin-left: 5%;
+  & > img {
+    width: 100%;
+    height: 100%;
+  }
+  // .logo2 {
+  //   position: absolute;
+  //   top: 20px;
+  //   left: 20px;
+  // }
+}
+
+.bottomBtn {
+  width: 190px;
+  left: 50%;
+  top: 726px;
+  margin-left: -95px;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  color: #a1a1ad;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  cursor: pointer;
+  img {
+    margin-left: 10px;
+  }
+}
+.middleFeature {
+  height: 399px;
+  background: url(../../../../assets/featureCircle.png) no-repeat;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: flex-start;
+  padding: 0 8%;
+  margin-bottom: 65px;
+  .middleItem {
+    width: 25%;
+    // text-align: center;
+    p {
+      font-family: Source Sans Pro;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 40px;
+      line-height: 38px;
+      text-align: center;
+      letter-spacing: -0.6px;
+      color: #fff;
+    }
+    span {
+      display: block;
+      font-family: Source Sans Pro;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 24px;
+      line-height: 32px;
+      text-align: center;
+      letter-spacing: -0.6px;
+      color: #999999;
+      margin-left: 24px;
+    }
+    &:nth-child(2n + 1) {
+      padding-top: 80px;
+    }
+    &:nth-child(2n) {
+      padding-top: 180px;
+    }
+  }
+}
+.layerDescContainer {
+  width: 100%;
+  height: 840px;
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  .layerDesc {
+    width: 100%;
+    // padding-left: 18%;
+    // padding-right: 12%;
+    height: 700px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    // background: url(../../../../assets/bgLayer2.png) no-repeat;
+    // background-size: cover;
+    // mix-blend-mode: overlay;
+    // background-position: center center;
+    position: relative;
+    & > img {
+      width: 100%;
+      position: absolute;
+      height: 100%;
+      mix-blend-mode: overlay;
+    }
+    .layerContainer {
+      margin-left: 18%;
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+    .layerLeft {
+      position: absolute;
+      left: 0;
+      width: 642px;
+      top: 72px;
+      z-index: 10;
+      .layerTitle {
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 66px;
+        line-height: 74px;
+        letter-spacing: -1px;
+        color: #ffffff;
+      }
+      .layerInfo {
+        display: flex;
+        justify-content: flex-start;
+        p {
+          font-family: Roboto;
+          font-style: normal;
+          font-weight: 500;
+          font-size: 29px;
+          line-height: 32px;
+          letter-spacing: 1px;
+          color: #ffffff;
+          opacity: 0.6;
+        }
+        .rightInfo {
+          margin-left: 45px;
+        }
+      }
+    }
+    .layerRight {
+      position: absolute;
+      right: 12%;
+      width: 471px;
+      height: 613px;
+      // display: flex;
+      // justify-content: center;
+      // align-items: center;
+      .bCircle {
+        position: absolute;
+        width: 472px;
+        height: 472px;
+        // display: flex;
+        // justify-content: center;
+        // align-items: center;
+        left: 50%;
+        top: 50%;
+        margin-top: -236px;
+        margin-left: -236px;
+        animation: rotate 8s linear infinite;
+        & > img {
+          width: 100%;
+          // height: 100%;
+        }
+      }
+
+      .mCircle {
+        width: 380px;
+        height: 380px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin-left: -190px;
+        margin-top: -190px;
+        // display: flex;
+        // justify-content: center;
+        // align-items: center;+
+        animation: rotate 6s linear infinite;
+        // animation-delay: 0.;
+
+        & > img {
+          width: 100%;
+          // height: 100%;
+        }
+      }
+      .sCircle {
+        width: 140px;
+        height: 140px;
+        position: absolute;
+        // display: flex;
+        // justify-content: center;
+        // align-items: center;
+        left: 50%;
+        top: 50%;
+        margin-left: -70px;
+        margin-top: -70px;
+        animation: rotate 4s linear infinite;
+
+        & > img {
+          width: 100%;
+          // height: 100%;
+        }
+      }
+      .logoCircle {
+        width: 80px;
+        height: 436px;
+        position: absolute;
+        left: 50%;
+        top: 88px;
+        margin-left: -40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        animation: rotate1 14s linear infinite;
+        animation-delay: 3s;
+        img {
+          width: 80px;
+          height: 80px;
+          border-radius: 50%;
+        }
+      }
+    }
+  }
+}
+.prover {
+  height: 842px;
+  position: relative;
+  .proverLeft {
+    position: absolute;
+    left: 15%;
+    top: 88px;
+    width: 400px;
+    height: 350px;
+    .bigMine {
+      width: 268px;
+      height: 170px;
+      position: absolute;
+      left: 60%;
+      margin-left: -134px;
+      bottom: 0;
+    }
+    .smine {
+      width: 325px;
+      height: 100px;
+      position: absolute;
+      bottom: 160px;
+      left: 60%;
+      margin-left: -162.5px;
+      // transform: scale(0.9);
+      animation: scale 2s ease-in-out infinite;
+    }
+    @keyframes scale {
+      0% {
+        transform: scale(1);
+      }
+      25% {
+        transform: scale(0.85);
+      }
+      50% {
+        transform: scale(0.85);
+      }
+      75% {
+        transform: scale(1);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+    .hammer {
+      width: 224px;
+      height: 224px;
+      position: absolute;
+      left: 0;
+      bottom: 200px;
+      transform-origin: left bottom;
+      animation: hammer 2s linear infinite;
+    }
+    @keyframes hammer {
+      0% {
+        transform: rotate(0);
+      }
+      25% {
+        transform: rotate(10deg);
+      }
+      50% {
+        transform: rotate(10deg);
+      }
+      75% {
+        transform: rotate(0);
+      }
+      100% {
+        transform: rotate(0);
+      }
+    }
+  }
+  .proverRight {
+    position: absolute;
+    top: 114px;
+    right: 9%;
+    width: 720px;
+    .proverTitle {
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 66px;
+      line-height: 74px;
+      letter-spacing: -1px;
+      color: #ffffff;
+      margin-bottom: 23px;
+    }
+    .proverDesc {
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 29px;
+      line-height: 35px;
+      letter-spacing: 1px;
+      color: #ffffff;
+      opacity: 0.6;
+      & > span {
+        margin-bottom: 15px;
+      }
+    }
+  }
+}
+.middleTitle {
+  width: 1340px;
+  height: 148px;
+  margin: 0 auto;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 56px;
+  line-height: 74px;
+  text-align: center;
+  text-transform: capitalize;
+  color: #ffffff;
+  margin-bottom: 82px;
+}
+.markContainer {
+  width: 100%;
+  min-height: 276px;
+
+  & > .mark {
+    width: 1239px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 298px;
+    .markCard {
+      width: 316px;
+      margin-right: 45px;
+      background: #181923;
+      border-radius: 16px;
+      padding: 17px;
+      position: relative;
+      cursor: pointer;
+      &:last-child {
+        margin-right: 0;
+      }
+      .markTop {
+        width: 100%;
+        height: 100px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        img {
+          //   width:;
+          border-radius: 50%;
+        }
+        .rightName {
+          width: 100%;
+          font-family: Roboto;
+          font-style: normal;
+          font-weight: bold;
+          font-size: 20px;
+          text-align: center;
+          color: #ffffff;
+        }
+      }
+      .markContent {
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 20px;
+        line-height: 32px;
+        color: #ffffff;
+        opacity: 0.6;
+      }
+      .markGo {
+        display: inline-block;
+        width: 8px;
+        height: 16px;
+        position: absolute;
+        right: 18px;
+        bottom: 18px;
+        img {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+.distribution {
+  width: 100%;
+  height: 1500px;
+  .distriTitle {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 66px;
+    line-height: 74px;
+    text-align: center;
+    text-transform: capitalize;
+    color: #ffffff;
+  }
+  & > .distriDesc {
+    width: 651px;
+    margin: 0 auto;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 30px;
+    text-align: center;
+    color: #ffffff;
+    opacity: 0.6;
+    margin-bottom: 137px;
+  }
+  .distriInfos {
+    display: flex;
+    justify-content: space-evenly;
+    height: 252px;
+    padding: 0 10%;
+    margin-bottom: 165px;
+    .distriItem {
+      min-width: 274px;
+      height: 252px;
+      //   opacity: 0.25;
+      border: 1px solid rgb(26, 25, 25);
+      box-sizing: border-box;
+      border-radius: 10px;
+      padding: 35px;
+      margin-right: 2%;
+      &:last-child {
+        margin-right: 0;
+      }
+      .distriTopLogo {
+        width: 100%;
+        height: 56px;
+        margin-bottom: 17px;
+        img {
+          width: 56px;
+          height: 56px;
+        }
+      }
+      .distriMiddleDesc {
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: bold;
+        height: 56px;
+        font-size: 48px;
+        line-height: 56px;
+        color: #ffffff;
+        margin-bottom: 22px;
+      }
+      .distriBottomDesc {
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 24px;
+        color: #ffffff;
+        opacity: 0.6;
+      }
+    }
+  }
+  .mapInfo {
+    // width: 80%;
+    width: 1380px;
+    height: 742px;
+    margin: 0 auto;
+    position: relative;
+    & > img {
+      width: 100%;
+      height: 100%;
+    }
+    .leftTriangle {
+      width: 67px;
+      height: 101px;
+      position: absolute;
+      left: 159px;
+      top: 238px;
+      animation: upDown1 2s linear infinite;
+      & > img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .bottomTriangle {
+      width: 67px;
+      height: 101px;
+      position: absolute;
+      left: 653px;
+      top: 449px;
+      animation: upDown2 2s linear infinite;
+      & > img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    @keyframes upDown1 {
+      0% {
+        top: 238px;
+        transform: rotateY(0deg);
+      }
+      25% {
+        top: 228px;
+        transform: rotateY(180deg);
+      }
+      50% {
+        top: 228px;
+        transform: rotateY(180deg);
+      }
+      75% {
+        top: 238px;
+        transform: rotateY(0deg);
+      }
+      100% {
+        transform: rotateY(0deg);
+        top: 238px;
+      }
+    }
+    @keyframes upDown2 {
+      0% {
+        top: 449px;
+        transform: rotateY(0deg);
+      }
+      25% {
+        top: 439px;
+        transform: rotateY(180deg);
+      }
+      50% {
+        top: 439px;
+        transform: rotateY(180deg);
+      }
+      75% {
+        top: 449px;
+        transform: rotateY(0deg);
+      }
+      100% {
+        top: 449px;
+        transform: rotateY(0deg);
+      }
+    }
+  }
+}
+.tokenDistribution {
+  width: 100%;
+  height: auto;
+  & > .tokenTitle {
+    width: 1170px;
+    margin: 0 auto;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 66px;
+    line-height: 74px;
+    text-align: center;
+    color: #ffffff;
+    margin-bottom: 46px;
+  }
+  & > .tokenInfos {
+    // width: 80%;
+    width: 1170px;
+    height: 200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    // opacity: 0.3;
+    border-top: 3px solid rgba(62, 61, 61, 0.3);
+    border-left: 3px solid rgba(62, 61, 61, 0.3);
+    border-right: 3px solid rgba(62, 61, 61, 0.3);
+
+    border-radius: 20px 20px 0 0;
+    position: relative;
+    &:before {
+      content: '';
+      position: absolute;
+      top: 100px;
+      left: -3px;
+      width: 3px;
+      background: #131212;
+      height: 50%;
+    }
+    &::after {
+      content: '';
+      position: absolute;
+      top: 100px;
+      right: -3px;
+      width: 3px;
+      background: #131212;
+      height: 50%;
+    }
+    .tokenItem {
+      .tokenNum {
+        height: 56px;
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 48px;
+        line-height: 56px;
+        color: #ffffff;
+      }
+      .tokenNumTitle {
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 24px;
+        color: #ffffff;
+        opacity: 0.6;
+      }
+    }
+  }
+  .tokenTableInfo {
+    width: 100%;
+    height: 1518px;
+    position: relative;
+    padding-top: 1050px;
+    & > img {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0px;
+    }
+    .tokenDisImg {
+      width: 40%;
+      height: 600px;
+      // margin: 300px auto 200px;
+      position: absolute;
+      top: 300px;
+      left: 50%;
+      margin-left: -20%;
+      z-index: 1;
+      & > img {
+        width: 700px;
+        height: 420px;
+      }
+    }
+    .roadmapTitle {
+      position: relative;
+      z-index: 1;
+      width: 1200px;
+      height: 330px;
+      margin: 0 auto;
+      // padding-top: 1050px;
+      background: url(../../../../assets/roadMap.png) no-repeat;
+      background-size: 100%;
+      // background-position: 100% 100%;
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 66px;
+      line-height: 74px;
+      text-align: center;
+      color: #ffffff;
+      padding-top: 265px;
+    }
+  }
+}
+
+.roadmapInfos {
+  width: 100%;
+  height: 840px;
+  position: relative;
+  & > img {
+    width: 100%;
+    position: absolute;
+    height: 100%;
+    mix-blend-mode: overlay;
+  }
+  .roadmapItem {
+    width: 65%;
+    height: 170px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: flex-start;
+    position: relative;
+    z-index: 1;
+    .roadmapLogo {
+      width: 52px;
+      height: 169px;
+      margin-right: 141px;
+      & > img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .roadmapTime {
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 18px;
+      line-height: 26px;
+      color: #ffffff;
+      margin-right: 180px;
+    }
+    .roadmapContent {
+      width: 449px;
+      margin-right: 116px;
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 18px;
+      line-height: 26px;
+      /* or 144% */
+
+      color: #ffffff;
+      .roadmapDesc {
+        // opacity: 0.2;
+        color: rgb(145, 145, 145);
+      }
+    }
+    .roadmapBtn {
+      margin-top: 10px;
+      width: 104px;
+      height: 32px;
+      text-align: center;
+      line-height: 32px;
+      background: #45ffd2;
+      border-radius: 60px;
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 14px;
+      color: #131212;
+    }
+  }
+}
+.teamContainer {
+  min-height: 1074px;
+  width: 100%;
+  // margin: 0 auto;
+  padding: 0 15%;
+  position: relative;
+  & > img {
+    position: absolute;
+    // top: 50px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.5;
+  }
+  .teamTitle {
+    padding-top: 213px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 66px;
+    line-height: 74px;
+    text-align: center;
+    text-transform: capitalize;
+    color: #ffffff;
+    margin-bottom: 56px;
+  }
+  .teamInfos {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+
+    .teamCard {
+      width: 290px;
+      height: 270px;
+      padding: 18px 24px;
+      margin-right: 40px;
+      border: 1px solid #24e6c3;
+      box-sizing: border-box;
+      box-shadow: 0px 0px 11px 5px rgba(36, 230, 195, 0.25);
+      border-radius: 16px;
+      margin-bottom: 56px;
+      position: relative;
+      z-index: 1;
+      // &:nth-child(4n) {
+      //   margin-right: 0;
+      // }
+      .teamLogo {
+        margin-bottom: 15px;
+      }
+      .teamName {
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 24px;
+        color: #ffffff;
+        margin-bottom: 9px;
+      }
+      .teamPosition {
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 13px;
+        line-height: 15px;
+        color: #ffffff;
+        opacity: 0.6;
+        margin-bottom: 26px;
+      }
+      .teamEng {
+        margin-bottom: 20px;
+        // a {
+        height: 30px;
+        display: flex;
+        align-items: center;
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 13px;
+        line-height: 15px;
+        color: #ffffff;
+        opacity: 0.6;
+
+        & > img {
+          margin-right: 7px;
+        }
+        // }
+      }
+      .teamLinkedin {
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.footer {
+  width: 100%;
+  height: 616px;
+  padding-top: 80px;
+  background: #12100e;
+  position: relative;
+  .footerTitle {
+    width: 700px;
+    height: 38px;
+    margin: 0 auto;
+    text-align: center;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 30px;
+    // line-height: 150px;
+    color: #ffffff;
+    opacity: 0.25;
+    position: relative;
+    margin-bottom: 108px;
+    .leftPoint {
+      position: absolute;
+      display: inline-block;
+      left: 0;
+      top: 50%;
+      margin-top: -3px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #ffffff;
+      opacity: 0.2;
+    }
+    .rightPoint {
+      position: absolute;
+      display: inline-block;
+      right: 0;
+      top: 50%;
+      margin-top: -3px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #ffffff;
+      opacity: 0.2;
+    }
+  }
+  .footerInfos {
+    width: 100%;
+    padding: 0 10%;
+    display: flex;
+    // justify-content: flex-start;
+    justify-content: space-evenly;
+    .footerItemsTitle {
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 28px;
+      color: #ffffff;
+      margin-bottom: 7px;
+    }
+    .footerItems {
+      min-width: 120px;
+      margin-right: 5%;
+      &:last-child {
+        margin-right: 0;
+      }
+
+      .footerItemsList {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+
+        & > a {
+          height: 24px;
+          font-family: Roboto;
+          font-style: normal;
+          font-weight: 300;
+          font-size: 16px;
+          line-height: 24px;
+          color: #ffffff;
+          opacity: 0.6;
+          margin-bottom: 7px;
+          & > img {
+            width: 14px;
+            // height: 14px;
+            margin-right: 7px;
+          }
+        }
+      }
+      .footerItemsListEmail {
+        height: 24px;
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: 300;
+        font-size: 16px;
+        line-height: 24px;
+        color: #ffffff;
+        opacity: 0.6;
+        margin-bottom: 7px;
+      }
+      .footerItemLogo {
+        padding-top: 25px;
+      }
+    }
+  }
+  .fotterRight {
+    position: absolute;
+    left: 50%;
+    margin-left: -88px;
+    bottom: 70px;
+    width: 177px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 24px;
+    color: #ffffff;
+  }
+}
+// .footerTitles {
+//   width: 100%;
+//   padding: 0 10%;
+//   display: flex;
+//   justify-content: flex-start;
+//   .footerItemsTitle {
+//     width: 205px;
+//     font-family: Roboto;
+//     font-style: normal;
+//     font-weight: 500;
+//     font-size: 20px;
+//     line-height: 28px;
+//     color: #ffffff;
+//     margin-bottom: 7px;
+//     margin-right: 100px;
+//   }
+// }
+
+.mFirstInfo {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  .mLeftInfo {
+    // width: 80%;
+    width: 34.1rem;
+    margin: 0 auto;
+    padding-top: 9.2rem;
+    & > .infoTitle {
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 2.4rem;
+      line-height: 3.2rem;
+      /* or 133% */
+
+      text-align: center;
+      letter-spacing: -1px;
+
+      color: #ffffff;
+    }
+    & > .infoDesc {
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 1.2rem;
+      line-height: 2rem;
+      text-align: center;
+      letter-spacing: 0.1rem;
+      color: #999999;
+      margin-bottom: 2.5rem;
+      & > div {
+        margin-bottom: 1rem;
+      }
+    }
+    & > .infoBtns {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .ConnectBtn {
+        width: 17.3rem;
+        height: 4.8rem;
+        margin: 0 auto;
+        background: #24dfbe;
+        border-radius: 0.6rem;
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 1.4rem;
+        line-height: 4.8rem;
+        color: #131212;
+        text-align: center;
+        margin-bottom: 2.6rem;
+      }
+      .btnWP {
+        display: flex;
+        align-items: center;
+        height: 2.4rem;
+        margin-bottom: 0.6rem;
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 1.4rem;
+        color: #ffffff;
+        & > img {
+          width: 1.8rem;
+          height: 1.8rem;
+          margin-left: 0.4rem;
+        }
+      }
+      .btnEth {
+        display: flex;
+        align-items: center;
+        height: 2.4rem;
+        margin-bottom: 0.6rem;
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 1.4rem;
+        color: #ffffff;
+        & > img {
+          width: 1.8rem;
+          height: 1.8rem;
+          margin-left: 0.4rem;
+        }
+      }
+    }
+  }
+}
+.mMiddleFeatureContainer {
+  width: 41.4rem;
+  height: 25.2rem;
+  // height: auto;
+  align-items: center;
+  overflow-x: auto;
+  padding-left: 3.8rem;
+  padding-top: 6.2rem;
+  // padding-bottom: 1rem;
+  margin-bottom: 6rem;
+}
+.mMiddleFeature {
+  width: 70rem;
+  height: 16.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  // margin-bottom: 1rem;
+  // overflow-x: scroll;
+  .middleItem {
+    width: 15.8rem;
+    height: 18rem;
+    // height: auto;
+    border: 1px solid rgb(98, 97, 97);
+    box-sizing: border-box;
+    border-radius: 6px;
+    margin-right: 2.2rem;
+    padding: 1rem 0.6rem 0 0.9rem;
+    .featureLogo {
+      width: 2.5rem;
+      height: 2.5rem;
+      margin-bottom: 0.5rem;
+      & > img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    p {
+      height: 2.2rem;
+      margin-bottom: 0.5rem;
+      font-family: Source Sans Pro;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 1.4rem;
+      line-height: 2.2rem;
+      letter-spacing: -0.6px;
+      color: #ffffff;
+    }
+    span {
+      font-family: Source Sans Pro;
+      font-style: normal;
+      font-size: 1.2rem;
+      line-height: 1.5rem;
+      color: #999999;
+      font-weight: 400;
+    }
+  }
+}
+
+.mLayerDescContainer {
+  .layerDesc {
+    margin-bottom: 10rem;
+    .layerContainer {
+      .layerLeft {
+        width: 37.4rem;
+        margin: 0 auto;
+        margin-bottom: 1.9rem;
+        .layerTitle {
+          width: 33.8rem;
+          // height: 6.4rem;
+          font-family: Roboto;
+          font-style: normal;
+          font-weight: bold;
+          font-size: 2.4rem;
+          line-height: 3.2rem;
+          color: #ffffff;
+        }
+        .layerInfo {
+          display: flex;
+          width: 37.8rem;
+          justify-content: space-between;
+          p {
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 1.6rem;
+            line-height: 2.4rem;
+            letter-spacing: 1px;
+            color: #ffffff;
+            opacity: 0.6;
+          }
+          .leftInfo {
+            width: 50%;
+          }
+          .rightInfo {
+            width: 40%;
+          }
+        }
+      }
+      .layerRight {
+        width: 37.4rem;
+        height: 31rem;
+        margin: 0 auto;
+        // display: flex;
+        position: relative;
+        .bCircle {
+          width: 32rem;
+          height: 32rem;
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          margin-left: -16rem;
+          margin-top: -16rem;
+          z-index: 1;
+          animation: rotate 8s linear infinite;
+          & > img {
+            width: 100%;
+          }
+        }
+        .mCircle {
+          width: 24rem;
+          height: 24rem;
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          margin-left: -12rem;
+          margin-top: -12rem;
+          z-index: 1;
+          animation: rotate 6s linear infinite;
+          & > img {
+            width: 100%;
+          }
+        }
+        .sCircle {
+          width: 6rem;
+          height: 6rem;
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          margin-left: -3rem;
+          margin-top: -3rem;
+          z-index: 1;
+          animation: rotate 4s linear infinite;
+          & > img {
+            width: 100%;
+          }
+        }
+        .logoCircle {
+          width: 6rem;
+          height: 28.4rem;
+          position: absolute;
+          left: 50%;
+          top: 1.3rem;
+          margin-left: -3rem;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          align-items: center;
+          animation: rotate1 14s linear infinite;
+          animation-delay: 3s;
+          z-index: 1;
+          img {
+            width: 4rem;
+            height: 4rem;
+            border-radius: 50%;
+          }
+        }
+      }
+    }
+  }
+}
+
+.mProver {
+  width: 37.4rem;
+  margin: 0 auto;
+  margin-bottom: 7rem;
+  .proverRight {
+    margin-bottom: 4.6rem;
+    .proverTitle {
+      width: 33.8rem;
+      height: 6.4rem;
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 2.4rem;
+      line-height: 3.2rem;
+      color: #ffffff;
+      margin-bottom: 1.5rem;
+    }
+    .proverDesc {
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 1.6rem;
+      line-height: 2.4rem;
+      letter-spacing: 1px;
+      color: #ffffff;
+      opacity: 0.6;
+    }
+  }
+  .proverLeft {
+    width: 37.4rem;
+    height: 28rem;
+    position: relative;
+    .bigMine {
+      width: 18.4rem;
+      height: 10.6rem;
+      position: absolute;
+      left: 10.6rem;
+      top: 16rem;
+      & > img {
+        width: 100%;
+      }
+    }
+    .smine {
+      width: 19.5rem;
+      height: 7.4rem;
+      position: absolute;
+      left: 10rem;
+      top: 9.5rem;
+      animation: scale 2s ease-in-out infinite;
+      & > img {
+        width: 100%;
+      }
+    }
+    .hammer {
+      width: 13rem;
+      height: 13rem;
+      position: absolute;
+      left: 3.6rem;
+      top: 0;
+      transform-origin: left bottom;
+      animation: hammer 2s linear infinite;
+      & > img {
+        width: 100%;
+      }
+    }
+  }
+}
+
+.mMiddleTitle {
+  width: 34rem;
+  height: 6.4rem;
+  margin: 0 auto;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 2.4rem;
+  line-height: 3.2rem;
+  text-align: center;
+  text-transform: capitalize;
+  color: #ffffff;
+  margin-bottom: 7rem;
+}
+
+.mMarkContainer {
+  width: 41.4rem;
+  padding-left: 4rem;
+  height: 31rem;
+  overflow-x: auto;
+  margin-bottom: 7rem;
+  & > .mark {
+    width: 121.6rem;
+    height: 30.6rem;
+    display: flex;
+    justify-content: flex-start;
+    .markCard {
+      width: 31.6rem;
+      height: 28.6rem;
+      margin-right: 2.8rem;
+
+      background: #181923;
+      border-radius: 1.6rem;
+      padding: 1.7rem;
+      position: relative;
+      .markTop {
+        width: 100%;
+        height: 10rem;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        img {
+          border-radius: 50%;
+        }
+        .rightName {
+          width: 100%;
+          font-family: Roboto;
+          font-style: normal;
+          font-weight: bold;
+          font-size: 2rem;
+          text-align: center;
+          color: #ffffff;
+        }
+      }
+      .markContent {
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 2rem;
+        line-height: 3.2rem;
+        color: #ffffff;
+        opacity: 0.6;
+      }
+      .markGo {
+        display: inline-block;
+        width: 0.8rem;
+        height: 1.6rem;
+        position: absolute;
+        right: 1.8rem;
+        bottom: 1.8rem;
+        img {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+.mDistribution {
+  margin-bottom: 7.1rem;
+  & > .distriTitle {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 2.4rem;
+    line-height: 3.2rem;
+    text-align: center;
+    text-transform: capitalize;
+    color: #ffffff;
+    margin-bottom: 0.8rem;
+  }
+  & > .distriDesc {
+    width: 35.5rem;
+    height: 4rem;
+    margin: 0 auto;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.2rem;
+    line-height: 2rem;
+    text-align: center;
+    color: #ffffff;
+    opacity: 0.6;
+    margin-bottom: 4rem;
+  }
+  & > .distriInfos {
+    width: 35.4rem;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 !important;
+    .distriItem {
+      width: 16.2rem;
+      height: 15.2rem;
+      border: 1px solid rgb(26, 25, 25);
+      box-sizing: border-box;
+      border-radius: 1rem;
+      padding: 1.4rem;
+      margin-bottom: 1.9rem;
+      // margin-right: ;
+      // margin-right: 2%;
+      &:nth-child(2n - 1) {
+        margin-right: 2.6rem;
+      }
+      .distriTopLogo {
+        width: 4.26rem;
+        height: 4.11rem;
+        margin-bottom: 1.7rem;
+        & > img {
+          width: 100%;
+        }
+      }
+      .distriMiddleDesc {
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: bold;
+        height: 2.6rem;
+        font-size: 2.2rem;
+        line-height: 2.6rem;
+        color: #ffffff;
+        margin-bottom: 0.36rem;
+      }
+      .distriBottomDesc {
+        height: 2.4rem;
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 1.2rem;
+        line-height: 2.4rem;
+        color: #ffffff;
+        opacity: 0.6;
+      }
+    }
+  }
+}
+
+.mMapInfo {
+  width: 40.8rem;
+  height: 17rem;
+  margin: 0 auto;
+  position: relative;
+  & > img {
+    width: 100%;
+  }
+  & > .leftTriangle {
+    width: 2rem;
+    height: 3rem;
+    position: absolute;
+    left: 4.7rem;
+    top: 5.7rem;
+    animation: mUpDown1 2s linear infinite;
+    & > img {
+      width: 100%;
+    }
+  }
+  & > .bottomTriangle {
+    width: 2rem;
+    height: 3rem;
+    position: absolute;
+    left: 19.3rem;
+    top: 10.9rem;
+    animation: mUpDown2 2s linear infinite;
+    & > img {
+      width: 100%;
+    }
+  }
+
+  @keyframes mUpDown1 {
+    0% {
+      top: 5.7rem;
+      transform: rotateY(0deg);
+    }
+    25% {
+      top: 4.7rem;
+      transform: rotateY(180deg);
+    }
+    50% {
+      top: 4.7rem;
+      transform: rotateY(180deg);
+    }
+    75% {
+      top: 5.7rem;
+      transform: rotateY(0deg);
+    }
+    100% {
+      transform: rotateY(0deg);
+      top: 5.7rem;
+    }
+  }
+  @keyframes mUpDown2 {
+    0% {
+      top: 10.9rem;
+      transform: rotateY(0deg);
+    }
+    25% {
+      top: 9.9rem;
+      transform: rotateY(180deg);
+    }
+    50% {
+      top: 9.9rem;
+      transform: rotateY(180deg);
+    }
+    75% {
+      top: 10.9rem;
+      transform: rotateY(0deg);
+    }
+    100% {
+      transform: rotateY(0deg);
+      top: 10.9rem;
+    }
+  }
+}
+
+.mTokenDistribution {
+  & > .tokenTitle {
+    width: 37.4rem;
+    margin: 0 auto;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 2.4rem;
+    line-height: 3.2rem;
+    text-align: center;
+    color: #ffffff;
+    margin-bottom: 2.2rem;
+  }
+  & > .tokenInfos {
+    width: 37.4rem;
+    height: 20.4rem;
+
+    margin: 0 auto;
+    margin-bottom: 5rem;
+    border-top: 3px solid rgba(62, 61, 61, 0.3);
+    border-left: 3px solid rgba(62, 61, 61, 0.3);
+    border-right: 3px solid rgba(62, 61, 61, 0.3);
+    border-radius: 2rem 2rem 0 0;
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    padding: 0 2.9rem;
+    &:before {
+      content: '';
+      position: absolute;
+      top: 10.2rem;
+      left: -3px;
+      width: 3px;
+      background: #131212;
+      height: 50%;
+    }
+    &::after {
+      content: '';
+      position: absolute;
+      top: 10.2rem;
+      right: -3px;
+      width: 3px;
+      background: #131212;
+      height: 50%;
+    }
+    .tokenItem {
+      width: 50%;
+      .tokenNum {
+        height: 3rem;
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 2.2rem;
+        line-height: 3rem;
+        color: #ffffff;
+      }
+      .tokenNumTitle {
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 1.2rem;
+        line-height: 2rem;
+        color: #ffffff;
+        opacity: 0.6;
+      }
+    }
+  }
+  & > .tokenTableInfo {
+    .tokenDisImg {
+      width: 37.8rem;
+      height: 23rem;
+      margin: 0 auto;
+      margin-bottom: 7.1rem;
+      & > img {
+        width: 100%;
+      }
+    }
+
+    & > .roadmapTitle {
+      width: 34.2rem;
+      height: 8.8rem;
+      margin: 0 auto;
+      background: url(../../../../assets/roadMap.png) no-repeat;
+      background-size: 100%;
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 2.4rem;
+      padding-top: 4rem;
+      line-height: 3.2rem;
+      text-align: center;
+      color: #ffffff;
+    }
+  }
+}
+
+.mRoadmapInfos {
+  width: 37.4rem;
+  margin: 0 auto;
+  margin-bottom: 7.1rem;
+  & > .roadmapItem {
+    width: 100% !important;
+    height: 4.7rem;
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 2.8rem;
+    .roadmapLogo {
+      width: 2.61rem;
+      height: 4.7rem;
+      margin-right: 2.88rem;
+      & > img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .roadmapContent {
+      width: 20.7rem;
+      // height: 3.1rem;
+      margin-right: 2.7rem;
+      .roadmapTitle {
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 1.4rem;
+        // line-height: 3.2rem;
+        text-align: left;
+        color: #ffffff;
+        margin-bottom: 0.6rem;
+      }
+      .roadmapDesc {
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 1rem;
+        // line-height: 3.2rem;
+        text-align: left;
+        color: rgb(154, 154, 154);
+      }
+    }
+    .roadmapBtn {
+      width: 8.8rem;
+      height: 2.6rem;
+      text-align: center;
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 1.2rem;
+      line-height: 2.6rem;
+      color: #131212;
+      background: #45ffd2;
+      border-radius: 60px;
+      // padding: 0 1rem;
+    }
+  }
+}
+
+.mTeamContainer {
+  width: 41.4rem;
+  margin-bottom: 11rem;
+  & > .teamTitle {
+    width: 20.1rem;
+    height: 3.2rem;
+    margin: 0 auto;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 2.4rem;
+    line-height: 3.2rem;
+    text-align: center;
+    text-transform: capitalize;
+    color: #ffffff;
+    margin-bottom: 2.8rem;
+  }
+  .teamInfosContainer {
+    width: 41.4rem;
+    padding-left: 2.4rem;
+    overflow-y: auto;
+    .teamInfos {
+      width: 78rem;
+      // height: 45.4rem;
+      height: auto;
+      padding: 1rem 0;
+      display: flex;
+      flex-wrap: wrap;
+      // overflow-y: auto;
+      .teamCard {
+        width: 17.2rem;
+        // height: 20rem;
+        height: auto;
+        margin-right: 2.3rem;
+        margin-bottom: 3.2rem;
+        padding: 1.8rem 2.3rem 0.5rem;
+        border: 1px solid #24e6c3;
+        box-sizing: border-box;
+        box-shadow: 0px 0px 11px 5px rgba(36, 230, 195, 0.25);
+        border-radius: 16px;
+        .teamLogo {
+          margin-bottom: 1rem;
+        }
+        .teamName {
+          font-family: Roboto;
+          font-style: normal;
+          font-weight: 500;
+          font-size: 1.6rem;
+          line-height: 2.4rem;
+          color: #ffffff;
+          margin-bottom: 0.9rem;
+        }
+        .teamPosition {
+          font-family: Roboto;
+          font-style: normal;
+          font-weight: normal;
+          font-size: 1.3rem;
+          line-height: 1.5rem;
+          color: #ffffff;
+          opacity: 0.6;
+          margin-bottom: 0.5em;
+        }
+        .teamBottom {
+          height: 3rem;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          .teamEng {
+            height: 3rem;
+            display: flex;
+            align-items: center;
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 1.3rem;
+            line-height: 1.5rem;
+            color: #ffffff;
+            & > img {
+              margin-right: 0.7rem;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.mFooter {
+  width: 37.6rem;
+  margin: 0 auto;
+  & > .footerTitle {
+    width: 100%;
+    height: 3.8rem;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 1.85rem;
+    line-height: 3.8rem;
+    text-align: center;
+    color: #ffffff;
+    opacity: 0.25;
+    margin-bottom: 2.3rem;
+  }
+  & > .mFooterInfos {
+    position: relative;
+    margin-bottom: 4.4rem;
+    .footerMail {
+      height: 2.4rem;
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: 300;
+      font-size: 1.6rem;
+      line-height: 2.4rem;
+      color: #ffffff;
+      margin-bottom: 1rem;
+      opacity: 0.6;
+    }
+    a {
+      display: flex;
+      height: 2.4rem;
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: 300;
+      font-size: 1.6rem;
+      line-height: 2.4rem;
+      color: #ffffff;
+      margin-bottom: 1rem;
+      opacity: 0.6;
+      & > img {
+        // width: 1.4rem;
+        margin-right: 0.7rem;
+        width: 1.6rem;
+        height: 2.25rem;
+      }
+    }
+    :global {
+      .next-collapse {
+        border: none;
+      }
+      .next-collapse-panel-content {
+        background: none;
+      }
+      .next-collapse-panel-title {
+        height: 2.8rem;
+        background: none;
+        // padding: 8px 0;
+        padding: 0;
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 2rem;
+        line-height: 2.8rem;
+        color: #ffffff;
+        margin-bottom: 1rem;
+      }
+      .next-collapse-panel:not(:first-child) {
+        border-top: none;
+      }
+      .next-collapse .next-collapse-panel-icon {
+        right: 1.2rem;
+        color: #fff;
+        left: auto;
+        font-size: 2.5rem;
+      }
+      .next-collapse-panel-expanded > .next-collapse-panel-content {
+        padding: 0;
+        background: none;
+      }
+    }
+  }
+  & > .fotterRight {
+    width: 100%;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 1.6rem;
+    line-height: 2.4rem;
+    color: #ffffff;
+    margin-bottom: 10rem;
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 1676px) {
+  .middleFeature {
+    padding: 0 3%;
+  }
+}
+
+@media screen and (max-width: 1440px) {
+  .firstInfo {
+    width: 1380px;
+    margin-left: 40px;
+  }
+  .middleFeature {
+    width: 1440px;
+    padding: 0;
+  }
+  .layerLeft {
+    left: 3% !important;
+  }
+  .proverLeft {
+    left: 3% !important;
+  }
+  .teamContainer {
+    padding: 0 2%;
+  }
+  .roadmapItem {
+    width: 85% !important;
+  }
+  // .roadmapTitle {
+  //   width: 1 !important;
+  // }
+  .tokenDisImg {
+    left: 47% !important;
+  }
+  .distriInfos {
+    padding: 0 2% !important;
+  }
+  .proverRight {
+    right: 0 !important;
+  }
+  .layerContainer {
+    margin-left: 3% !important;
+  }
+  .footerInfos {
+    width: 1300px !important;
+    padding: 0 !important;
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(359deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes rotate1 {
+  0% {
+    transform: rotate(359deg);
+  }
+  25% {
+    transform: rotate(181deg);
+  }
+  50% {
+    transform: rotate(181deg);
+  }
+  75% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.videoContent {
+  position: absolute;
+  // left: 0;
+  top: 103px;
+  z-index: 0;
+  // width: 98.95vw;
+  overflow: hidden;
+  // height: 800px;
+  // .iframe {
+  //   position: absolute;
+  //   width: 100vw;
+  //   height: 800px;
+  // left: 50%;
+  //   top: 0;
+  // transform: translate(-50%, 0);
+  // }
+}

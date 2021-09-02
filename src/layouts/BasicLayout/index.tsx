@@ -35,16 +35,9 @@ import Footer from './components/Footer';
 interface IGetDevice {
   (width: number): 'phone' | 'tablet' | 'desktop';
 }
-export default function BasicLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function BasicLayout({ children }: { children: React.ReactNode }) {
   const getDevice: IGetDevice = (width) => {
-    const isPhone =
-      typeof navigator !== 'undefined' &&
-      navigator &&
-      navigator.userAgent.match(/phone/gi);
+    const isPhone = typeof navigator !== 'undefined' && navigator && navigator.userAgent.match(/phone/gi);
 
     if (width < 680 || isPhone) {
       return 'phone';
@@ -59,8 +52,7 @@ export default function BasicLayout({
 
   if (typeof window !== 'undefined') {
     window.addEventListener('optimizedResize', (e) => {
-      const deviceWidth =
-        (e && e.target && (e.target as Window).innerWidth) || NaN;
+      const deviceWidth = (e && e.target && (e.target as Window).innerWidth) || NaN;
       setDevice(getDevice(deviceWidth));
     });
   }
@@ -94,7 +86,7 @@ export default function BasicLayout({
           <HeaderAvatar />
         </Shell.Action> */}
         {/* <Shell.Navigation trigger={null} style={{ padding: 0, width: 280 }}> */}
-          {/* <PageNav /> */}
+        {/* <PageNav /> */}
         {/* </Shell.Navigation> */}
 
         <Shell.Content>{children}</Shell.Content>

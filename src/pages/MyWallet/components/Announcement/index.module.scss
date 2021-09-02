@@ -1,93 +1,131 @@
-  .announceBG{
-    width: 100%;
-    height: 130px;
-    padding-top: 40px;
+.announceBG {
+  width: 100%;
+  height: 108px;
+  // padding-top: 40px;
+  // position: absolute;
+  // right: 0;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.ourphil {
+  position: absolute;
+  color: white;
+  top: 0;
+  left: 0;
+  height: 100px;
+  margin: auto;
+  // padding: 15px 0px;
+  vertical-align: middle;
+  text-align: left;
+  margin-left: 25px;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  .our {
+    font-size: '22PX';
+    font-weight: 'bold';
+    width: 66%;
   }
-  
-  .ourphil{
-    position: absolute;
-    color: white;
-    top: 30%;
-    left: 0;
-    height: 100px;
-    margin: auto;
-    // padding: 15px 0px;
-    vertical-align: middle;
+}
+.announce {
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 30px;
+  width: 70%;
+  margin-left: 17%;
+  color: white;
+}
+
+.button {
+  background-color: rgba(30, 3, 61, 0.308);
+  color: white;
+  margin-left: 8px;
+  width: 75px;
+  border-radius: 25px;
+  cursor: pointer;
+}
+.testnet {
+  width: 65%;
+  height: 100%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  color: white;
+  text-align: center;
+  overflow: hidden;
+  background: #1f1d3e;
+  border-radius: 20px;
+  // display: flex;
+  // justify-content: flex-start;
+}
+.another {
+  width: 100%;
+  height: 150%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  color: white;
+  text-align: center;
+  overflow: hidden;
+}
+.announceContent {
+  overflow: hidden;
+  // color: 'rgba(243, 229, 229, 0.719)';
+  height: 40px;
+  padding-top: 0px;
+  margin-top: 0px;
+  width: 28%;
+  p {
+    color: #9d9d9d;
+    margin-block-start: 0px;
+    height: 40px;
+  }
+}
+.arrow {
+  width: 78px;
+  height: 78px;
+  top: 35%;
+  right: 1%;
+  padding-top: 28px;
+  padding-right: 10px;
+  position: absolute;
+  color: white;
+  margin: auto;
+  vertical-align: middle;
+  text-align: right;
+}
+.titleContent {
+  // padding: 26px 0 18px 65px;
+  padding-left: 65px;
+  padding-top: 26px;
+  position: absolute;
+  z-index: 2;
+  .title {
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 20px;
+    /* or 100% */
+
     text-align: left;
-    margin-left: 25px;
-
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-
-    .our{
-      font-size: "22PX"; 
-      font-weight:"bold";
-      width: 66%;
-    }
+    letter-spacing: -1px;
+    margin-bottom: 18px;
   }
-      .announce{
-        font-size: 24px;
-        font-weight: bold;
-        margin-top: 30px;
-        width: 70%;
-        margin-left: 17%;
-        color: white;
-
-      }
-
-      .button{
-        background-color:rgba(30, 3, 61, 0.308);
-        color: white;
-        margin-left: 8px;
-        width: 75px;
-        border-radius: 25px;
-        cursor: pointer;
-      }
-      .testnet{
-        width: 66%;
-        height: 100%;
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        position: relative;
-        color: white;
-        text-align: center;
-        overflow: hidden;
-      }
-      .another{
-        width: 100%;
-        height: 150%;
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        position: relative;
-        color: white;
-        text-align: center;
-        overflow: hidden;
-      }
-      .announceContent{
-        overflow: hidden;
-        color: "rgba(243, 229, 229, 0.719)";
-        height: 40px;
-        padding-top: 0px;
-        margin-top: 0px;
-        width: 28%;
-        p{
-          margin-block-start: 0px;
-          height: 40px;          
-        }
-      }
-      .arrow{
-        width: 78px;
-        height: 78px;
-        top: 35%;
-        right: 1%;
-        padding-top: 28px;
-        padding-right: 10px;
-        position: absolute;
-        color: white;
-        margin: auto;
-        vertical-align: middle;
-        text-align: right;
-      }
+  & > input {
+    width: 30em;
+    height: 36px;
+  }
+}
+.input {
+  height: 30px;
+  padding-left: 65px;
+  & > input {
+    width: 490px;
+  }
+}

@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Select, Button } from '@alifd/next';
-import {Link} from "ice";
+import { Link } from 'ice';
 import logo from '@/assets/logo.png';
 import styles from './index.module.scss';
 import store from '@/store';
@@ -10,19 +10,23 @@ import TELEGRAM from '@/assets/telegram.png';
 import TWITTER from '@/assets/twwiter.png';
 import FACEBOOK from '@/assets/facebook.png';
 import MEDIUM from '@/assets/medium.png';
-
-
+import GITTER from '@/assets/gitter.png';
+import { useMount } from 'ahooks';
 const { Option } = Select;
 
 const WalletHeader = () => {
+  const [isphone, setIsphone] = useState<boolean>(false);
   const [wallet, action] = store.useModel('wallet');
-  const telegram = "https://t.me/zkTubeProtocol";
-  const discord = "https://discord.gg/ZhcSuxhX4S";
-  const twitter = "https://twitter.com/zktubeofficial";
-  const medium = "https://zktube.medium.com";
-  const facebook = "https://www.facebook.com/zkTube.official/";
-
-
+  const telegram = 'https://t.me/zkTubeProtocol';
+  const gitter = 'https://gitter.im/zkTube-Labs/community';
+  const discord = 'https://discord.gg/ZhcSuxhX4S';
+  const twitter = 'https://twitter.com/zktubeofficial';
+  const medium = 'https://zktube.medium.com';
+  const facebook = 'https://www.facebook.com/zkTube.official/';
+  // console.log(navitation.useragent);
+  useMount(() => {
+    setIsphone(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent));
+  });
   function onChange(value) {
     console.log('value', value);
   }
@@ -33,33 +37,53 @@ const WalletHeader = () => {
 
   function compressAccount(account: string) {
     if (account.length > 10) {
-      return account.substring(0, 6) + '...' + account.substring(account.length-4, account.length);
+      return account.substring(0, 6) + '...' + account.substring(account.length - 4, account.length);
     } else {
       return account;
     }
   }
 
   return (
-    <header className={styles.header} style={{}} >
-       <Link to="#"> 
-        <img src={logo} alt="logo" width="10%" className={styles.logo} style={{padding: "10px"}}/>
-       </Link> 
-      <a href="https://wallet.zktube.io/"  target="_blank" className={styles.wallet}  style={{color: "white"}}>
+    <header className={styles.header} style={{}}>
+      <Link to="#">
+        <img
+          src={logo}
+          alt="logo"
+          width="10%"
+          className={styles.logo}
+          style={{ paddingTop: isphone ? '30px' : '18px' }}
+        />
+      </Link>
+      <a href="https://wallet.zktube.io/" target="_blank" className={styles.wallet} style={{ color: 'white' }}>
         My Wallet
       </a>
-      <a href="https://rinkeby-browser.zktube.io/" target="_blank" className={styles.wallet} style={{color: "white"}}>
+      <a href="https://rinkeby-browser.zktube.io/" target="_blank" className={styles.wallet} style={{ color: 'white' }}>
         zkTube Scan
       </a>
       <input className={styles.menubtn} type="checkbox" id="menubtn" />
-      <label className={styles.menuicon} htmlFor="menubtn"><span className={styles.navicon}></span></label>
-      <ul className={styles.menu} style={{padding: "0px", marginRight: "100px"}}>
+      <label className={styles.menuicon} htmlFor="menubtn">
+        <span className={styles.navicon}></span>
+      </label>
+      <ul className={styles.menu} style={{ padding: '0px', marginRight: '100px' }}>
         <li>
-        <a href={discord} target="_blank" title={discord}>
-          <img src={DISCORD} style={{height:"18px"}}/>
-        </a>
-          {/* <div className={styles.boxselect} style={{marginRight: "20px", width: "170px", height: "40px"}}>
+          <a href={gitter} target="_blank" title={gitter}>
+            <img src={GITTER} style={{ height: '22px' }} />
+          </a>
+        </li>
+        <li>
+          <a href={twitter} target="_blank" title={twitter}>
+            <img src={TWITTER} style={{ height: '22px' }} />
+          </a>
+        </li>
+        <li>
+          <a href={facebook} target="_blank" title={facebook}>
+            <img src={FACEBOOK} style={{ height: '22px' }} />
+          </a>
+        </li>
+
+        {/* <div className={styles.boxselect} style={{marginRight: "20px", width: "170px", height: "40px"}}>
             <Select onChange={onChange} defaultValue="Rinkeby testnet"> */}
-              {/* <Option value="ETHMain network">
+        {/* <Option value="ETHMain network">
                 <div className={styles.statuspoint} style = {{ display: "inline-block",width: "12px",height: "12px", borderRadius: "25px",
                   backgroundColor: "green",marginRight: "7px",marginBottom: "3px",verticalAlign: "middle"}} />
                 ETHMain network
@@ -69,32 +93,33 @@ const WalletHeader = () => {
                   backgroundColor: "green",marginRight: "7px",marginBottom: "3px",verticalAlign: "middle"}}/>
                 Ropsten test network
               </Option> */}
-              {/* <Option value="Rinkeby testnet">
+        {/* <Option value="Rinkeby testnet">
                 <div className={styles.statuspoint} style = {{ display: "inline-block",width: "12px",height: "12px", borderRadius: "25px",
                   backgroundColor: "green",marginRight: "7px",marginBottom: "3px",verticalAlign: "middle"}} />
                 Rinkeby testnet */}
-              {/* </Option>
+        {/* </Option>
             </Select> */}
-          {/* </div> */}
-        </li>
+        {/* </div> */}
+        {/* </li> */}
         <li>
           <a href={telegram} target="_blank" title={telegram}>
-            <img src={TELEGRAM}  style={{height:"18px"}}/>
-          </a> 
+            <img src={TELEGRAM} style={{ height: '22px' }} />
+          </a>
         </li>
+        {/* <li>
+          <a href={telegram} target="_blank" title={telegram}>
+            <img src={TELEGRAM} style={{ height: '22px' }} />
+          </a>
+        </li> */}
+
         <li>
-          <a href={twitter} target="_blank" title={twitter}>
-            <img src={TWITTER}  style={{height:"18px"}}/>
-          </a> 
-        </li>
-        <li>
-          <a href= {facebook} target="_blank" title={facebook}>
-            <img src={FACEBOOK} style={{height:"18px"}}/>
+          <a href={medium} target="_blank" title={medium}>
+            <img src={MEDIUM} style={{ height: '22px' }} />
           </a>
         </li>
         <li>
-          <a href= {medium} target="_blank" title={medium}>
-            <img src={MEDIUM} style={{height:"18px"}}/>
+          <a href={discord} target="_blank" title={discord}>
+            <img src={DISCORD} style={{ height: '22px' }} />
           </a>
         </li>
         {/* <li> 

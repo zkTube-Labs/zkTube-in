@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {Link} from "ice";
+import React, { useState } from 'react';
+import { Link } from 'ice';
 import styles from './index.module.scss';
 import { useMount } from 'ahooks';
 
@@ -40,23 +40,25 @@ const Announcement = () => {
 
   return (
     <div className={styles.testnet}>
-      <img className={styles.announceBG} src={TESTNET}/>
-      <div className={styles.ourphil}>
-        
-        <div style={{fontSize: "22PX", fontWeight:"bold", marginBottom:"5px", marginTop: "15px"}}>
-          {title}
-        </div>
-        <div id="bodyContent" className={styles.announceContent}>
-          {body}
-          {/* <div id="bodyContent"></div> */}
-        </div>
-      </div>
       <a href={articleUrl} target="_blank">
-        <div className={styles.arrow}>
-          <div style={{fontSize: "20px", fontWeight:"bold"}}>&gt;</div>
+        <img className={styles.announceBG} src={TESTNET} onClick={() => window.open(articleUrl)} />
+        <div className={styles.ourphil}>
+          <div style={{ fontSize: '22PX', fontWeight: 'bold', marginBottom: '5px', marginTop: '15px' }}>{title}</div>
+          <div id="bodyContent" className={styles.announceContent}>
+            {body}
+            {/* <div id="bodyContent"></div> */}
+          </div>
         </div>
       </a>
-    
+      {/* <div className={styles.arrow}>
+          <div style={{ fontSize: '20px', fontWeight: 'bold' }}>&gt;</div>
+        </div> */}
+      {/* <div className={styles.titleContent}>
+        <div className={styles.title}>zkTube Litepaper</div>
+        <input type="text" />
+      </div> */}
+      {/* <div className="input">
+      </div> */}
     </div>
   );
 };
