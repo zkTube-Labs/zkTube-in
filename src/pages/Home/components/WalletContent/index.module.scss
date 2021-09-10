@@ -7,9 +7,9 @@
 .topContent {
   width: 100%;
   height: 800px;
-  // background: url(../../../../assets/bgContainer.png) no-repeat;
-  // background-position: center center;
-  // background-size: cover;
+  background: url(../../../../assets/bgContainer.png) no-repeat;
+  background-position: center center;
+  background-size: cover;
   position: relative;
   margin-bottom: 166px;
   & > img {
@@ -919,6 +919,11 @@
       // }
       .teamLogo {
         margin-bottom: 15px;
+        width: 69px;
+        height: 69px;
+        & > img {
+          width: 100%;
+        }
       }
       .teamName {
         font-family: Roboto;
@@ -1048,7 +1053,7 @@
           opacity: 0.6;
           margin-bottom: 7px;
           & > img {
-            width: 14px;
+            width: 17px;
             // height: 14px;
             margin-right: 7px;
           }
@@ -1864,6 +1869,11 @@
         border-radius: 16px;
         .teamLogo {
           margin-bottom: 1rem;
+          width: 6.9rem;
+          height: 6.9rem;
+          & > img {
+            width: 100%;
+          }
         }
         .teamName {
           font-family: Roboto;
@@ -1953,8 +1963,8 @@
       & > img {
         // width: 1.4rem;
         margin-right: 0.7rem;
-        width: 1.6rem;
-        height: 2.25rem;
+        // width: 1.6rem;
+        // height: 2.25rem;
       }
     }
     :global {

@@ -32,7 +32,7 @@ import bgTable from '@/assets/bgTable.png';
 import table from '@/assets/table.png';
 import dan from '@/assets/dan.png';
 import john from '@/assets/john.png';
-import wouter from '@/assets/wouter.png';
+import raul from '@/assets/raul.png';
 import lance from '@/assets/lance.png';
 import charlene from '@/assets/charlene.png';
 import mahim from '@/assets/mahim.png';
@@ -41,18 +41,19 @@ import isabel from '@/assets/isabel.png';
 import eng from '@/assets/eng.png';
 import linkedin from '@/assets/linkedin.png';
 import bgTeam from '@/assets/bgTeam.png';
-import DISCORD from '@/assets/discord.png';
-import TELEGRAM from '@/assets/telegram.png';
-import TWITTER from '@/assets/twwiter.png';
-import FACEBOOK from '@/assets/facebook.png';
-import MEDIUM from '@/assets/medium.png';
-import GITTER from '@/assets/gitter.png';
-import mDISCORD from '@/assets/mDiscord.png';
-import mTELEGRAM from '@/assets/mTelegram.png';
-import mTWITTER from '@/assets/mTwitter.png';
-import mFACEBOOK from '@/assets/mFacebook.png';
-import mMEDIUM from '@/assets/mMedium.png';
+import DISCORD from '@/assets/icon_dis.png';
+import TELEGRAM from '@/assets/icon_tg.png';
+import TWITTER from '@/assets/icon_twitter.png';
+import FACEBOOK from '@/assets/icon_fb.png';
+import MEDIUM from '@/assets/icon_med.png';
+import GITTER from '@/assets/icon_gitter.png';
+// import mDISCORD from '@/assets/mDiscord.png';
+// import mTELEGRAM from '@/assets/mTelegram.png';
+// import mTWITTER from '@/assets/mTwitter.png';
+// import mFACEBOOK from '@/assets/mFacebook.png';
+// import mMEDIUM from '@/assets/mMedium.png';
 import YouTube from '@/assets/icon_youtube.png';
+import Reddit from '@/assets/icon_reddit.png';
 import mGITTER from '@/assets/mGitter.png';
 import logos from '@/assets/logos.png';
 import bCircle from '@/assets/bcircle.png';
@@ -89,13 +90,13 @@ const teamList = [
     eng: '',
     linkIn: 'https://www.linkedin.com/in/john-sajadi-a1295593/',
   },
-  // {
-  //   logo: wouter,
-  //   name: 'Wouter Raasveldt',
-  //   position: 'zkTube COO',
-  //   eng: '',
-  //   linkIn: 'https://www.linkedin.com/in/wouter-raasveldt/',
-  // },
+  {
+    logo: raul,
+    name: 'Raul Heraud',
+    position: 'zkTube COO',
+    eng: '',
+    linkIn: 'https://www.linkedin.com/in/raul-heraud-9102782/',
+  },
   {
     logo: lance,
     name: 'Lance Zhang',
@@ -117,20 +118,27 @@ const teamList = [
     eng: '',
     linkIn: 'https://www.linkedin.com/in/mahim-sharma-164246a4/',
   },
-  {
-    logo: travis,
-    name: 'Travis Anderson',
-    position: 'Growth Advisor',
-    eng: '',
-    linkIn: '',
-  },
-  {
-    logo: isabel,
-    name: 'Isabel Laurent',
-    position: 'Strategy Advisor',
-    eng: '',
-    linkIn: '',
-  },
+  // {
+  //   logo: travis,
+  //   name: 'Raul Heraud',
+  //   position: 'Growth Advisor',
+  //   eng: '',
+  //   linkIn: '',
+  // },
+  // {
+  //   logo: travis,
+  //   name: 'Travis Anderson',
+  //   position: 'Growth Advisor',
+  //   eng: '',
+  //   linkIn: '',
+  // },
+  // {
+  //   logo: isabel,
+  //   name: 'Isabel Laurent',
+  //   position: 'Strategy Advisor',
+  //   eng: '',
+  //   linkIn: '',
+  // },
 ];
 
 const footerList = [
@@ -197,43 +205,49 @@ const communities = [
     name: 'Gitter Group',
     href: 'https://gitter.im/zkTube-Labs/community',
     logo: GITTER,
-    mLogo: mGITTER,
+    mLogo: GITTER,
   },
   {
     name: 'Discord',
     href: 'https://discord.gg/xtVdMCr54q',
     logo: DISCORD,
-    mLogo: mDISCORD,
+    mLogo: DISCORD,
   },
   {
     name: 'Telegram',
     href: 'https://t.me/zkTubeProtocol',
     logo: TELEGRAM,
-    mLogo: mTELEGRAM,
+    mLogo: TELEGRAM,
   },
   {
     name: 'Twitter',
     href: 'https://twitter.com/zktubeofficial',
     logo: TWITTER,
-    mLogo: mTWITTER,
+    mLogo: TWITTER,
   },
   {
     name: 'Facebook',
     href: 'https://www.facebook.com/zkTube.official/',
     logo: FACEBOOK,
-    mLogo: mFACEBOOK,
+    mLogo: FACEBOOK,
   },
   {
     name: 'Medium',
     href: 'https://zktube.medium.com/',
     logo: MEDIUM,
-    mLogo: mMEDIUM,
+    mLogo: MEDIUM,
   },
   {
     name: 'YouTube',
     href: 'https://www.youtube.com/channel/UCrEy7BBc9SbwpQ-a0Ix1oFw',
     logo: YouTube,
     mLogo: YouTube,
+  },
+  {
+    name: 'Reddit',
+    href: 'https://www.reddit.com/r/zkTube_Official/',
+    logo: Reddit,
+    mLogo: Reddit,
   },
 ];
 
@@ -341,7 +355,7 @@ const WalletContent = () => {
         style={{ marginTop: isphone ? '10vh' : '103px', overflow: isphone ? 'hidden' : 'auto' }}
       >
         {/* whitepaper desc */}
-        <div className={styles.videoContent} style={{ width: `${clientWidth}px` }}>
+        {/* <div className={styles.videoContent} style={{ width: `${clientWidth}px` }}>
           <ReactPlayer
             url={video}
             playing={isPlaying}
@@ -349,8 +363,8 @@ const WalletContent = () => {
             height="100%"
             loop
             onReady={() => setisPlaying(true)}
-          />
-          {/* <iframe
+          /> */}
+        {/* <iframe
             src="https://player.vimeo.com/video/589655407?background=1&autoplay=1&loop=1&byline=0&autopause=0&title=0&transparent=1"
             loading="lazy"
             webkitallowfullscreen="true"
@@ -359,9 +373,9 @@ const WalletContent = () => {
             allowFullScreen
             className={styles.iframe}
           /> */}
-        </div>
+        {/* </div> */}
         <div className={isphone ? styles.mTopContent : styles.topContent}>
-          {/* {!isphone && <img src={bgCircle} />} */}
+          {!isphone && <img src={bgCircle} />}
           <div className={isphone ? styles.mFirstInfo : styles.firstInfo}>
             <div className={isphone ? styles.mLeftInfo : styles.leftInfo}>
               <div className={styles.infoTitle}>
@@ -455,10 +469,10 @@ const WalletContent = () => {
                 )}
               </div>
             </div>
-            {/* {!isphone && (
+            {!isphone && (
               <div className={styles.rightImg}>
-                <img src={info} /> */}
-            {/* <ReactPlayer
+                <img src={info} />
+                {/* <ReactPlayer
                   url={video}
                   playing={isPlaying}
                   width="100%"
@@ -466,8 +480,8 @@ const WalletContent = () => {
                   loop
                   onReady={() => setisPlaying(true)}
                 /> */}
-            {/* </div>
-            )} */}
+              </div>
+            )}
           </div>
           {!isphone && (
             <div className={styles.bottomBtn} onClick={() => document.getElementById('feature')?.scrollIntoView()}>
@@ -858,7 +872,7 @@ const WalletContent = () => {
                       </div>
                       <div className={styles.teamLinkedin}>
                         <a href={_.linkIn} target="_blank" rel="noreferrer">
-                          <img src={linkedin} style={{ opacity: i >= 6 ? '0.2' : '1' }} />
+                          <img src={linkedin} />
                         </a>
                       </div>
                     </div>
