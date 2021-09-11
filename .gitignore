@@ -24,3 +24,4 @@ yarn-error.log*
 index.module.scss.d.ts
 
 yarn.lock
+build.zip

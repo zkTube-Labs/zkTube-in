@@ -21,8 +21,8 @@ const WalletHeader = () => {
     },
     {
       title: 'zkTube Scan',
-      href: 'https://rinkeby-browser.zktube.io/',
-      // href: 'https://scan.zktube.io/',
+      // href: 'https://rinkeby-browser.zktube.io/',
+      href: 'https://scan.zktube.io/',
     },
     {
       title: 'FAQ',
@@ -131,8 +131,8 @@ const WalletHeader = () => {
             >
               Docs
             </a>
-            <a href="https://rinkeby-browser.zktube.io/" target="_blank" rel="noreferrer">
-              {/* <a href="https://scan.zktube.io/" target="_blank" rel="noreferrer"> */}
+            {/* <a href="https://rinkeby-browser.zktube.io/" target="_blank" rel="noreferrer"> */}
+            <a href="https://scan.zktube.io/" target="_blank" rel="noreferrer">
               zkTube Scan
             </a>
             <a href="https://docs.zktube.io/faq/" target="_blank" rel="noreferrer">

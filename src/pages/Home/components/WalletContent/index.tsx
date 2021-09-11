@@ -384,7 +384,8 @@ const WalletContent = () => {
                 ZK-Rollup and Zero-Knowledge
                 <br />
                 Proof Calculation */}
-                zkTube is a Layer 2 Protocol that Turns Mining Green, Provides Mainnet Security and Extra Privacy
+                {/* zkTube is a Layer 2 Protocol that Turns Mining Green, Provides Mainnet Security and Extra Privacy */}
+                zkTube, a first Layer 2 mining network that provides extra security and privacy.
               </div>
               <div className={styles.infoDesc}>
                 {/* zkTube is a Layer 2 protocol which uses
